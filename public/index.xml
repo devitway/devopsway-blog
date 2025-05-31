@@ -33,6 +33,306 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
 &lt;h3 id=&#34;-2-генерация-ssh-ключа&#34;&gt;🔑 2. Генерация SSH-ключа&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;💡 Ed25519 vs RSA:&lt;/strong&gt;&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h3 id="-1-установка-git-и-ssh">🗂️ 1. Установка Git и SSH</h3>
+<h4 id="-windows">🪟 Windows</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Скачать Git for Windows: https://git-scm.com/download/win</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># В установщике:</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#   [x] Git Bash | [x] OpenSSH | [x] &#34;Use external OpenSSH&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Проверка:</span>
+</span></span><span class="line"><span class="cl">git --version
+</span></span><span class="line"><span class="cl">ssh -V
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Где хранятся ключи: C:\Users\%USERNAME%\.ssh\</span>
+</span></span></code></pre></div><h4 id="-linux-ubuntudebian">🐧 Linux (Ubuntu/Debian)</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt update <span class="o">&amp;&amp;</span> sudo apt install git openssh-client xclip -y
+</span></span><span class="line"><span class="cl">git --version
+</span></span><span class="line"><span class="cl">ssh -V
+</span></span></code></pre></div><h4 id="-macos">🍎 macOS</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">xcode-select --install  <span class="c1"># Установит Git + SSH</span>
+</span></span><span class="line"><span class="cl">git --version
+</span></span><span class="line"><span class="cl">ssh -V
+</span></span></code></pre></div><hr>
+<h3 id="-2-генерация-ssh-ключа">🔑 2. Генерация SSH-ключа</h3>
+<p><strong>💡 Ed25519 vs RSA:</strong></p>
+<ul>
+<li><strong>Ed25519</strong>: Современный, быстрый, короткие ключи (рекомендуется)</li>
+<li><strong>RSA</strong>: Совместим со старыми системами, длиннее</li>
+</ul>
+<p>⚠️ <strong>Рекомендация: Всегда используйте passphrase!</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Современный алгоритм (предпочтительно):</span>
+</span></span><span class="line"><span class="cl">ssh-keygen -t ed25519 -a <span class="m">100</span> -C <span class="s2">&#34;your_email@example.com&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Для legacy-систем или корпоративных требований:</span>
+</span></span><span class="line"><span class="cl">ssh-keygen -t rsa -b <span class="m">4096</span> -C <span class="s2">&#34;your_email@example.com&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># При генерации:</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 1. Путь: ~/.ssh/id_ed25519 (по умолчанию, нажмите Enter)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 2. Passphrase: ОБЯЗАТЕЛЬНО установите сложный пароль!</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 3. Повторите passphrase</span>
+</span></span></code></pre></div><p><strong>Настройка прав доступа (Linux/macOS):</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">chmod <span class="m">700</span> ~/.ssh
+</span></span><span class="line"><span class="cl">chmod <span class="m">600</span> ~/.ssh/id_*
+</span></span><span class="line"><span class="cl">chmod <span class="m">644</span> ~/.ssh/id_*.pub
+</span></span></code></pre></div><hr>
+<h3 id="-3-настройка-github">🔄 3. Настройка GitHub</h3>
+<p><strong>Скопируйте публичный ключ:</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Windows (Git Bash):</span>
+</span></span><span class="line"><span class="cl">cat ~/.ssh/id_ed25519.pub <span class="p">|</span> clip
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Linux:</span>
+</span></span><span class="line"><span class="cl">cat ~/.ssh/id_ed25519.pub <span class="p">|</span> xclip -selection clipboard
+</span></span><span class="line"><span class="cl"><span class="c1"># или если xclip не установлен:</span>
+</span></span><span class="line"><span class="cl">cat ~/.ssh/id_ed25519.pub
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># macOS:</span>
+</span></span><span class="line"><span class="cl">cat ~/.ssh/id_ed25519.pub <span class="p">|</span> pbcopy
+</span></span></code></pre></div><p><strong>В GitHub:</strong></p>
+<ol>
+<li>Перейдите: Settings → SSH and GPG Keys → New SSH Key</li>
+<li>Title: Описательное имя (например, &ldquo;MacBook Pro 2024&rdquo;)</li>
+<li>Key type: Authentication Key</li>
+<li>Вставьте ключ и сохраните</li>
+</ol>
+<hr>
+<h3 id="-4-запуск-ssh-agent-критично">⚙️ 4. Запуск ssh-agent (критично!)</h3>
+<p><strong>Для всех ОС:</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">eval</span> <span class="s2">&#34;</span><span class="k">$(</span>ssh-agent -s<span class="k">)</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">ssh-add ~/.ssh/id_ed25519  <span class="c1"># Введите passphrase при запросе</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Проверка загруженных ключей:</span>
+</span></span><span class="line"><span class="cl">ssh-add -l
+</span></span></code></pre></div><p><strong>Автозагрузка при старте:</strong></p>
+<p><strong>Linux/macOS</strong> (добавить в ~/.bashrc или ~/.zshrc):</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># SSH Agent auto-start</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> -z <span class="s2">&#34;</span><span class="k">$(</span>pgrep ssh-agent<span class="k">)</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">eval</span> <span class="s2">&#34;</span><span class="k">$(</span>ssh-agent -s<span class="k">)</span><span class="s2">&#34;</span> &gt; /dev/null
+</span></span><span class="line"><span class="cl">  ssh-add ~/.ssh/id_ed25519 2&gt;/dev/null
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span></code></pre></div><p><strong>Windows Git Bash</strong> (добавить в ~/.bashrc):</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cat <span class="s">&lt;&lt;EOF &gt;&gt; ~/.bashrc
+</span></span></span><span class="line"><span class="cl"><span class="s"># SSH Agent auto-start for Windows
+</span></span></span><span class="line"><span class="cl"><span class="s">env=~/.ssh/agent.env
+</span></span></span><span class="line"><span class="cl"><span class="s">
+</span></span></span><span class="line"><span class="cl"><span class="s">agent_load_env () { test -f &#34;\$env&#34; &amp;&amp; . &#34;\$env&#34; &gt;| /dev/null ; }
+</span></span></span><span class="line"><span class="cl"><span class="s">
+</span></span></span><span class="line"><span class="cl"><span class="s">agent_start () {
+</span></span></span><span class="line"><span class="cl"><span class="s">    (umask 077; ssh-agent &gt;| &#34;\$env&#34;)
+</span></span></span><span class="line"><span class="cl"><span class="s">    . &#34;\$env&#34; &gt;| /dev/null ;
+</span></span></span><span class="line"><span class="cl"><span class="s">}
+</span></span></span><span class="line"><span class="cl"><span class="s">
+</span></span></span><span class="line"><span class="cl"><span class="s">agent_load_env
+</span></span></span><span class="line"><span class="cl"><span class="s">
+</span></span></span><span class="line"><span class="cl"><span class="s"># agent_run_state: 0=agent running w/ key; 1=agent w/o key; 2=agent not running
+</span></span></span><span class="line"><span class="cl"><span class="s">agent_run_state=\$(ssh-add -l &gt;| /dev/null 2&gt;&amp;1; echo \$?)
+</span></span></span><span class="line"><span class="cl"><span class="s">
+</span></span></span><span class="line"><span class="cl"><span class="s">if [ ! &#34;\$SSH_AUTH_SOCK&#34; ] || [ \$agent_run_state = 2 ]; then
+</span></span></span><span class="line"><span class="cl"><span class="s">    agent_start
+</span></span></span><span class="line"><span class="cl"><span class="s">    ssh-add ~/.ssh/id_ed25519
+</span></span></span><span class="line"><span class="cl"><span class="s">elif [ &#34;\$SSH_AUTH_SOCK&#34; ] &amp;&amp; [ \$agent_run_state = 1 ]; then
+</span></span></span><span class="line"><span class="cl"><span class="s">    ssh-add ~/.ssh/id_ed25519
+</span></span></span><span class="line"><span class="cl"><span class="s">fi
+</span></span></span><span class="line"><span class="cl"><span class="s">
+</span></span></span><span class="line"><span class="cl"><span class="s">unset env
+</span></span></span><span class="line"><span class="cl"><span class="s">EOF</span>
+</span></span></code></pre></div><hr>
+<h3 id="-5-настройка-git-базовая-конфигурация">✅ 5. Настройка Git (базовая конфигурация)</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Установите имя пользователя и email (обязательно!):</span>
+</span></span><span class="line"><span class="cl">git config --global user.name <span class="s2">&#34;Ваше Имя&#34;</span>
+</span></span><span class="line"><span class="cl">git config --global user.email <span class="s2">&#34;your_email@example.com&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Проверка настроек:</span>
+</span></span><span class="line"><span class="cl">git config --global --list
+</span></span></code></pre></div><hr>
+<h3 id="-6-проверка-подключения">🧪 6. Проверка подключения</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ssh -T git@github.com
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># ✅ Ожидаемый успешный ответ:</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># &#34;Hi username! You&#39;ve successfully authenticated, but GitHub does not provide shell access.&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># ❌ При ошибках используйте verbose режим:</span>
+</span></span><span class="line"><span class="cl">ssh -vT git@github.com
+</span></span></code></pre></div><hr>
+<h3 id="-типичные-ошибки-и-решения">🚨 Типичные ошибки и решения</h3>
+<h4 id="1-permission-denied-publickey">1. <strong>Permission denied (publickey)</strong></h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Диагностика:</span>
+</span></span><span class="line"><span class="cl">ssh -vT git@github.com
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Возможные причины:</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># - Ключ не добавлен в GitHub</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># - Ключ не загружен в ssh-agent</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># - Неверные права доступа к файлам</span>
+</span></span></code></pre></div><h4 id="2-ключ-не-добавлен-в-ssh-agent">2. <strong>Ключ не добавлен в ssh-agent</strong></h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Проверка загруженных ключей:</span>
+</span></span><span class="line"><span class="cl">ssh-add -L
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Если пусто, добавьте ключ:</span>
+</span></span><span class="line"><span class="cl">ssh-add ~/.ssh/id_ed25519
+</span></span></code></pre></div><h4 id="3-неверные-права-доступа-linuxmacos">3. <strong>Неверные права доступа (Linux/macOS)</strong></h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Исправление прав:</span>
+</span></span><span class="line"><span class="cl">chmod <span class="m">700</span> ~/.ssh
+</span></span><span class="line"><span class="cl">chmod <span class="m">600</span> ~/.ssh/id_ed25519
+</span></span><span class="line"><span class="cl">chmod <span class="m">644</span> ~/.ssh/id_ed25519.pub
+</span></span></code></pre></div><h4 id="4-конфликт-url-репозитория">4. <strong>Конфликт URL репозитория</strong></h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 🔴 Неправильно (HTTPS):</span>
+</span></span><span class="line"><span class="cl">git clone https://github.com/user/repo.git
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 🟢 Правильно (SSH):</span>
+</span></span><span class="line"><span class="cl">git clone git@github.com:user/repo.git
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Изменение существующего репозитория:</span>
+</span></span><span class="line"><span class="cl">git remote set-url origin git@github.com:user/repo.git
+</span></span></code></pre></div><h4 id="5-ssh-agent-не-запущен">5. <strong>ssh-agent не запущен</strong></h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Проверка:</span>
+</span></span><span class="line"><span class="cl">ps aux <span class="p">|</span> grep ssh-agent
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Если не запущен:</span>
+</span></span><span class="line"><span class="cl"><span class="nb">eval</span> <span class="s2">&#34;</span><span class="k">$(</span>ssh-agent -s<span class="k">)</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">ssh-add ~/.ssh/id_ed25519
+</span></span></code></pre></div><h4 id="6-passphrase-запрашивается-каждый-раз">6. <strong>Passphrase запрашивается каждый раз</strong></h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Для Linux/macOS - установите keychain:</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Ubuntu/Debian:</span>
+</span></span><span class="line"><span class="cl">sudo apt install keychain
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># macOS уже имеет встроенную поддержку</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Для постоянного хранения на macOS:</span>
+</span></span><span class="line"><span class="cl">ssh-add --apple-use-keychain ~/.ssh/id_ed25519
+</span></span></code></pre></div><hr>
+<h3 id="-расширенный-чеклист-самопроверки">🧪 Расширенный чеклист самопроверки</h3>
+<ul>
+<li><input disabled="" type="checkbox"> ssh-keygen выполнен без ошибок</li>
+<li><input disabled="" type="checkbox"> Установлена надёжная passphrase</li>
+<li><input disabled="" type="checkbox"> Права доступа к файлам настроены корректно</li>
+<li><input disabled="" type="checkbox"> Публичный ключ добавлен в GitHub (Settings → SSH Keys)</li>
+<li><input disabled="" type="checkbox"> ssh-agent запущен: <code>ps aux | grep ssh-agent</code></li>
+<li><input disabled="" type="checkbox"> Ключ добавлен в агент: <code>ssh-add -l</code></li>
+<li><input disabled="" type="checkbox"> Git настроен: <code>git config --global user.name</code> и <code>user.email</code></li>
+<li><input disabled="" type="checkbox"> Репозиторий использует SSH-URL: <code>git remote -v</code></li>
+<li><input disabled="" type="checkbox"> Тест подключения успешен: <code>ssh -T git@github.com</code></li>
+<li><input disabled="" type="checkbox"> Можете клонировать приватный репозиторий без ввода пароля</li>
+</ul>
+<hr>
+<h3 id="-для-продвинутых-несколько-аккаунтов">🚀 Для продвинутых: Несколько аккаунтов</h3>
+<h4 id="1-создайте-отдельные-ключи">1. Создайте отдельные ключи</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Личный ключ (уже создан):</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ~/.ssh/id_ed25519</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Рабочий ключ:</span>
+</span></span><span class="line"><span class="cl">ssh-keygen -t ed25519 -f ~/.ssh/id_github_work -C <span class="s2">&#34;work@company.com&#34;</span>
+</span></span></code></pre></div><h4 id="2-настройте-sshconfig">2. Настройте ~/.ssh/config</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># Личный аккаунт
+</span></span><span class="line"><span class="cl">Host github.com-personal
+</span></span><span class="line"><span class="cl">  HostName github.com
+</span></span><span class="line"><span class="cl">  User git
+</span></span><span class="line"><span class="cl">  IdentityFile ~/.ssh/id_ed25519
+</span></span><span class="line"><span class="cl">  IdentitiesOnly yes
+</span></span><span class="line"><span class="cl">  AddKeysToAgent yes
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># Рабочий аккаунт
+</span></span><span class="line"><span class="cl">Host github.com-work
+</span></span><span class="line"><span class="cl">  HostName github.com
+</span></span><span class="line"><span class="cl">  User git
+</span></span><span class="line"><span class="cl">  IdentityFile ~/.ssh/id_github_work
+</span></span><span class="line"><span class="cl">  IdentitiesOnly yes
+</span></span><span class="line"><span class="cl">  AddKeysToAgent yes
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># Для MacOS добавьте:
+</span></span><span class="line"><span class="cl"># UseKeychain yes
+</span></span></code></pre></div><h4 id="3-использование">3. Использование</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Клонирование с указанием хоста:</span>
+</span></span><span class="line"><span class="cl">git clone git@github.com-work:company/project.git
+</span></span><span class="line"><span class="cl">git clone git@github.com-personal:username/personal-project.git
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Настройка существующего репозитория:</span>
+</span></span><span class="line"><span class="cl">git remote set-url origin git@github.com-work:company/project.git
+</span></span></code></pre></div><h4 id="4-настройка-git-для-разных-проектов">4. Настройка Git для разных проектов</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># В рабочих проектах:</span>
+</span></span><span class="line"><span class="cl">git config user.name <span class="s2">&#34;Work Name&#34;</span>
+</span></span><span class="line"><span class="cl">git config user.email <span class="s2">&#34;work@company.com&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># В личных проектах:</span>
+</span></span><span class="line"><span class="cl">git config user.name <span class="s2">&#34;Personal Name&#34;</span>
+</span></span><span class="line"><span class="cl">git config user.email <span class="s2">&#34;personal@email.com&#34;</span>
+</span></span></code></pre></div><hr>
+<h3 id="-безопасность-и-backup-ключей">🔐 Безопасность и backup ключей</h3>
+<h4 id="рекомендации-по-безопасности">Рекомендации по безопасности</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 1. Регулярно проверяйте активные ключи в GitHub:</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Settings → SSH and GPG keys → Review and remove unused keys</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 2. Используйте разные ключи для разных целей</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 3. Устанавливайте срок действия для ключей (для RSA):</span>
+</span></span><span class="line"><span class="cl">ssh-keygen -t rsa -b <span class="m">4096</span> -V +52w -C <span class="s2">&#34;expires-in-1-year@email.com&#34;</span>
+</span></span></code></pre></div><h4 id="backup-ключей">Backup ключей</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Создание backup (зашифрованного):</span>
+</span></span><span class="line"><span class="cl">tar -czf ssh-keys-backup-<span class="k">$(</span>date +%Y%m%d<span class="k">)</span>.tar.gz ~/.ssh/
+</span></span><span class="line"><span class="cl">gpg -c ssh-keys-backup-<span class="k">$(</span>date +%Y%m%d<span class="k">)</span>.tar.gz
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Или используйте системы управления паролями (1Password, Bitwarden)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># для хранения приватных ключей</span>
+</span></span></code></pre></div><h4 id="восстановление">Восстановление</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Распаковка backup:</span>
+</span></span><span class="line"><span class="cl">gpg -d ssh-keys-backup-20241201.tar.gz.gpg <span class="p">|</span> tar -xzf -
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Восстановление прав:</span>
+</span></span><span class="line"><span class="cl">chmod <span class="m">700</span> ~/.ssh
+</span></span><span class="line"><span class="cl">chmod <span class="m">600</span> ~/.ssh/id_*
+</span></span><span class="line"><span class="cl">chmod <span class="m">644</span> ~/.ssh/id_*.pub
+</span></span></code></pre></div><hr>
+<h3 id="-дополнительные-инструменты">🔧 Дополнительные инструменты</h3>
+<h4 id="ssh-config-для-удобства">SSH Config для удобства</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># ~/.ssh/config
+</span></span><span class="line"><span class="cl">Host *
+</span></span><span class="line"><span class="cl">  AddKeysToAgent yes
+</span></span><span class="line"><span class="cl">  UseKeychain yes  # только для macOS
+</span></span><span class="line"><span class="cl">  ServerAliveInterval 60
+</span></span><span class="line"><span class="cl">  ServerAliveCountMax 30
+</span></span></code></pre></div><h4 id="алиасы-для-удобства">Алиасы для удобства</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Добавить в ~/.bashrc или ~/.zshrc:</span>
+</span></span><span class="line"><span class="cl"><span class="nb">alias</span> ssh-test<span class="o">=</span><span class="s2">&#34;ssh -T git@github.com&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">alias</span> ssh-keys<span class="o">=</span><span class="s2">&#34;ssh-add -l&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">alias</span> git-ssh<span class="o">=</span><span class="s2">&#34;git remote set-url origin \$(git remote get-url origin | sed &#39;s|https://github.com/|git@github.com:|&#39;)&#34;</span>
+</span></span></code></pre></div><hr>
+<h3 id="-дополнительные-ресурсы">🔗 Дополнительные ресурсы</h3>
+<ul>
+<li><a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh">Официальный гайд GitHub</a></li>
+<li><a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent">Генерация SSH ключей</a></li>
+<li><a href="https://www.ssh.com/academy/ssh/config">Настройка SSH Config</a></li>
+<li><a href="https://docs.github.com/en/authentication/troubleshooting-ssh">Решение проблем SSH</a></li>
+</ul>
+<hr>
+<h3 id="-итоги-дня">🧠 Итоги дня</h3>
+<p>🔑 <strong>Ключевые принципы:</strong></p>
+<ul>
+<li>SSH безопаснее и удобнее HTTPS для постоянной работы</li>
+<li>Passphrase обязательна для защиты приватных ключей</li>
+<li>ssh-agent избавляет от постоянного ввода passphrase</li>
+<li>~/.ssh/config упрощает работу с множественными аккаунтами</li>
+<li>Регулярное обслуживание ключей повышает безопасность</li>
+</ul>
+<p>✅ <strong>Проверка готовности:</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Всё работает, если эта команда выполняется без запроса пароля:</span>
+</span></span><span class="line"><span class="cl">git clone git@github.com:octocat/Hello-World.git
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> Hello-World
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;# Test&#34;</span> &gt;&gt; README.md
+</span></span><span class="line"><span class="cl">git add README.md
+</span></span><span class="line"><span class="cl">git commit -m <span class="s2">&#34;Test commit via SSH&#34;</span>
+</span></span><span class="line"><span class="cl">git push
+</span></span></code></pre></div><p>💬 <strong>Ваш челлендж:</strong> Настройте SSH для двух разных GitHub аккаунтов и переключайтесь между ними без ввода паролей!</p>
+<hr>
+<h3 id="-быстрая-помощь">🆘 Быстрая помощь</h3>
+<p><strong>Если что-то пошло не так:</strong></p>
+<ol>
+<li><code>ssh -vT git@github.com</code> — подробная диагностика</li>
+<li><code>ssh-add -l</code> — проверка загруженных ключей</li>
+<li><code>git remote -v</code> — проверка URL репозитория</li>
+<li>Перезапустите терминал и повторите настройку ssh-agent</li>
+</ol>
+<p><strong>Критичные команды для запоминания:</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ssh -T git@github.com              <span class="c1"># Тест подключения</span>
+</span></span><span class="line"><span class="cl">ssh-add ~/.ssh/id_ed25519          <span class="c1"># Добавить ключ в агент</span>
+</span></span><span class="line"><span class="cl">git remote set-url origin git@github.com:user/repo.git  <span class="c1"># Переключить на SSH</span>
+</span></span></code></pre></div><p>📱 Telegram: <a href="https://t.me/DevITWay">@DevITWay</a></p>
+<p>🌐 Сайт: <a href="devopsway.ru">devopsway.ru</a></p>
+]]></content:encoded>
     </item>
   </channel>
 </rss>

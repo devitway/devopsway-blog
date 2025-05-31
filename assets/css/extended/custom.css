@@ -1,44 +1,133 @@
-/* Убираем рамки у блоков кода */
+/* Улучшенная читаемость блоков кода */
 .highlight {
-    border: none !important;
-    box-shadow: none !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 8px;
     margin: 1rem 0;
+    overflow: hidden;
 }
 
 /* Стили для inline кода */
 code {
     background-color: var(--code-bg) !important;
-    border: none !important;
+    color: var(--content) !important;
+    border: 1px solid var(--border) !important;
     border-radius: 4px;
     padding: 2px 6px;
     font-size: 0.9em;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
 }
 
 /* Стили для блоков кода */
 pre {
     background-color: var(--code-bg) !important;
+    color: var(--content) !important;
     border: none !important;
-    border-radius: 8px;
+    border-radius: 0;
     padding: 1rem;
     overflow-x: auto;
-    margin: 1rem 0;
+    margin: 0;
+    line-height: 1.5;
 }
 
 pre code {
     background: none !important;
     border: none !important;
     padding: 0;
+    color: inherit !important;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
 }
 
-/* Убираем номера строк если нужно */
+/* Специальные стили для bash/shell команд */
+.language-bash pre,
+.language-shell pre,
+.language-cmd pre {
+    background-color: #1e1e1e !important;
+    color: #d4d4d4 !important;
+}
+
+/* Светлая тема */
+[data-theme="light"] .language-bash pre,
+[data-theme="light"] .language-shell pre,
+[data-theme="light"] .language-cmd pre {
+    background-color: #f8f8f8 !important;
+    color: #333333 !important;
+    border: 1px solid #e1e1e1 !important;
+}
+
+/* Темная тема */
+[data-theme="dark"] .language-bash pre,
+[data-theme="dark"] .language-shell pre,
+[data-theme="dark"] .language-cmd pre {
+    background-color: #2d2d2d !important;
+    color: #f8f8f2 !important;
+    border: 1px solid #444444 !important;
+}
+
+/* Улучшенная типографика для кода */
+.highlight table {
+    margin: 0;
+    border: none;
+}
+
+.highlight td {
+    padding: 0;
+    border: none;
+}
+
+/* Убираем номера строк для лучшей читаемости */
 .chroma .lnt {
     display: none;
 }
 
-/* Чистый вид для блоков bash */
-.language-bash,
-.language-cmd,
-.language-shell {
-    border: none !important;
-    box-shadow: none !important;
+/* Заголовок блока кода */
+.highlight::before {
+    content: attr(data-lang);
+    display: block;
+    background-color: var(--theme);
+    color: var(--primary);
+    padding: 0.5rem 1rem;
+    font-size: 0.8em;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border);
+}
+
+/* Кнопка копирования */
+.highlight .copy-button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: var(--theme);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.7rem;
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.highlight .copy-button:hover {
+    opacity: 1;
+    background: var(--hljs-bg);
+}
+
+/* Контрастность для переменных в bash */
+.language-bash .nv,
+.language-shell .nv {
+    color: #ff6b6b !important;
+    font-weight: 600;
+}
+
+/* Контрастность для строк */
+.language-bash .s1,
+.language-bash .s2,
+.language-shell .s1,
+.language-shell .s2 {
+    color: #a8e6cf !important;
+}
+
+/* Контрастность для команд */
+.language-bash .nb,
+.language-shell .nb {
+    color: #ffd93d !important;
+    font-weight: 600;
 }
