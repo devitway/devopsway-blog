@@ -21,8 +21,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          submodules: recursive
           fetch-depth: 0
+
+      - name: Initialize Git submodules
+        run: |
+          git submodule update --init --recursive
+          echo "=== CHECKING SUBMODULES ==="
+          git submodule status
+          echo "=== THEMES DIRECTORY ==="
+          ls -la themes/
+          echo "=== PAPERMOD THEME ==="
+          ls -la themes/PaperMod/ || echo "PaperMod theme not found"
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
@@ -35,22 +44,34 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Debug - Show Hugo version
-        run: hugo version
-
-      - name: Debug - List content structure
+      - name: Debug - Show Hugo version and environment
         run: |
-          echo "=== CONTENT STRUCTURE ==="
+          hugo version
+          echo "=== HUGO ENV ==="
+          hugo env
+          echo "=== CONFIG CHECK ==="
+          hugo config
+
+      - name: Debug - Content structure
+        run: |
+          echo "=== ROOT DIRECTORY ==="
           ls -la
           echo "=== CONTENT DIRECTORY ==="
           ls -la content/
-          echo "=== THEMES DIRECTORY ==="
-          ls -la themes/ || echo "No themes directory"
+          echo "=== POSTS DIRECTORY ==="
+          ls -la content/posts/ || echo "No posts directory"
 
-      - name: Build
+      - name: Build site
         run: |
-          echo "=== BUILDING SITE ==="
-          hugo --minify
+          echo "=== BUILDING HUGO SITE ==="
+          hugo --minify --gc --cleanDestinationDir
+
+      - name: Debug - Check build output
+        run: |
+          echo "=== PUBLIC DIRECTORY ==="
+          ls -la public/
+          echo "=== INDEX FILE ==="
+          ls -la public/index.html || echo "No index.html found"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

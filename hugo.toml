@@ -22,11 +22,12 @@ buildFuture = false
 buildExpired = false
 
 # =============================================================================
-# PAGINATION
+# PAGINATION (обновлено для Hugo v0.128+)
 # =============================================================================
 
-paginate = 10
-paginatePath = "page"
+[pagination]
+pagerSize = 10
+path = "page"
 
 # =============================================================================
 # МИНИФИКАЦИЯ И ОПТИМИЗАЦИЯ
@@ -331,7 +332,7 @@ useSessionStorage = false
 disable = true
 simple = true
 
-[privacy.twitter]
+[privacy.x]
 disable = false
 enableDNT = true
 simple = true
