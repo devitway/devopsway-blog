@@ -1,0 +1,49 @@
+baseURL = "https://devopsway.ru"
+languageCode = "ru"
+title = "DevOps Way - Практические гайды"
+theme = "PaperMod"
+
+[params]
+env = "production"
+title = "DevOps Way"
+description = "Практические DevOps гайды"
+ShowReadingTime = true
+ShowShareButtons = true
+ShowPostNavLinks = true
+ShowBreadCrumbs = true
+ShowCodeCopyButtons = true
+ShowToc = true
+ShowRssButtonInSectionTermList = true
+
+[params.homeInfoParams]
+Title = "🚀 Добро пожаловать в DevOps Way!"
+Content = "Практические гайды по DevOps, которые работают в реальных проектах"
+
+[[params.socialIcons]]
+name = "telegram"
+url = "https://t.me/devopsway_channel"
+
+[menu]
+[[menu.main]]
+identifier = "posts"
+name = "📚 Посты"
+url = "/posts/"
+weight = 10
+
+[[menu.main]]
+identifier = "categories"
+name = "🏷️ Категории"
+url = "/categories/"
+weight = 20
+
+[markup]
+[markup.highlight]
+style = "github"
+lineNos = true
+
+[outputs]
+home = ["HTML", "RSS", "JSON"]
+
+[taxonomies]
+category = "categories"
+tag = "tags"
