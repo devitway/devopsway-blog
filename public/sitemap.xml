@@ -2,85 +2,85 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/posts/day-00-git-basics/</loc>
+    <loc>https://devitway.github.io/devopsway-blog/posts/day-00-git-basics/</loc>
     <lastmod>2025-01-15T10:00:00+03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/categories/devops-essentials/</loc>
+    <loc>https://devitway.github.io/devopsway-blog/categories/devops-essentials/</loc>
     <lastmod>2025-01-15T10:00:00+03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/about/</loc>
+    <loc>https://devitway.github.io/devopsway-blog/about/</loc>
     <lastmod>2025-01-15T10:00:00+03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/posts/</loc>
+    <loc>https://devitway.github.io/devopsway-blog/posts/</loc>
     <lastmod>2025-01-15T10:00:00+03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/</loc>
+    <loc>https://devitway.github.io/devopsway-blog/</loc>
     <lastmod>2025-01-15T10:00:00+03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/tags/automation/</loc>
+    <loc>https://devitway.github.io/devopsway-blog/tags/automation/</loc>
     <lastmod>2025-01-15T10:00:00+03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/tags/beginner/</loc>
+    <loc>https://devitway.github.io/devopsway-blog/tags/beginner/</loc>
     <lastmod>2025-01-15T10:00:00+03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/tags/devops/</loc>
+    <loc>https://devitway.github.io/devopsway-blog/tags/devops/</loc>
     <lastmod>2025-01-15T10:00:00+03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/tags/git/</loc>
+    <loc>https://devitway.github.io/devopsway-blog/tags/git/</loc>
     <lastmod>2025-01-15T10:00:00+03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/tags/github/</loc>
+    <loc>https://devitway.github.io/devopsway-blog/tags/github/</loc>
     <lastmod>2025-01-15T10:00:00+03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/tags/security/</loc>
+    <loc>https://devitway.github.io/devopsway-blog/tags/security/</loc>
     <lastmod>2025-01-15T10:00:00+03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/tags/ssh/</loc>
+    <loc>https://devitway.github.io/devopsway-blog/tags/ssh/</loc>
     <lastmod>2025-01-15T10:00:00+03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/tags/</loc>
+    <loc>https://devitway.github.io/devopsway-blog/tags/</loc>
     <lastmod>2025-01-15T10:00:00+03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/categories/</loc>
+    <loc>https://devitway.github.io/devopsway-blog/categories/</loc>
     <lastmod>2025-01-15T10:00:00+03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/search/</loc>
+    <loc>https://devitway.github.io/devopsway-blog/search/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/categories/essentials/</loc>
+    <loc>https://devitway.github.io/devopsway-blog/categories/essentials/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/series/</loc>
+    <loc>https://devitway.github.io/devopsway-blog/series/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
