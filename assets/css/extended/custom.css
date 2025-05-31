@@ -1,133 +1,427 @@
-/* Улучшенная читаемость блоков кода */
+/* =============================================================================
+   КАРДИНАЛЬНОЕ ИСПРАВЛЕНИЕ ЧИТАЕМОСТИ БЛОКОВ КОДА
+   ============================================================================= */
+
+/* ПОЛНОЕ ПЕРЕОПРЕДЕЛЕНИЕ СТИЛЕЙ БЛОКОВ КОДА */
+
+/* Контейнер блока кода */
 .highlight {
-    border: 1px solid var(--border) !important;
-    border-radius: 8px;
-    margin: 1rem 0;
-    overflow: hidden;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 8px !important;
+    margin: 1.5rem 0 !important;
+    overflow: hidden !important;
+    position: relative !important;
+    background: #f8fafc !important;
 }
 
-/* Стили для inline кода */
-code {
-    background-color: var(--code-bg) !important;
-    color: var(--content) !important;
-    border: 1px solid var(--border) !important;
-    border-radius: 4px;
-    padding: 2px 6px;
-    font-size: 0.9em;
-    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-}
-
-/* Стили для блоков кода */
+/* Основной блок кода */
 pre {
-    background-color: var(--code-bg) !important;
-    color: var(--content) !important;
+    background: #f8fafc !important;
+    color: #2d3748 !important;
     border: none !important;
-    border-radius: 0;
-    padding: 1rem;
-    overflow-x: auto;
-    margin: 0;
-    line-height: 1.5;
+    border-radius: 0 !important;
+    padding: 1.25rem !important;
+    overflow-x: auto !important;
+    margin: 0 !important;
+    line-height: 1.6 !important;
+    font-size: 0.9rem !important;
+    font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace !important;
 }
 
+/* Код внутри pre */
 pre code {
-    background: none !important;
+    background: transparent !important;
+    color: #2d3748 !important;
     border: none !important;
-    padding: 0;
-    color: inherit !important;
-    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    padding: 0 !important;
+    font-size: inherit !important;
+    font-family: inherit !important;
+    white-space: pre !important;
+    word-break: normal !important;
+    word-wrap: normal !important;
 }
 
-/* Специальные стили для bash/shell команд */
+/* =============================================================================
+   ТЕМНАЯ ТЕМА - БЛОКИ КОДА
+   ============================================================================= */
+
+[data-theme="dark"] .highlight,
+.dark .highlight,
+html[data-theme="dark"] .highlight {
+    background: #1a202c !important;
+    border: 1px solid #4a5568 !important;
+}
+
+[data-theme="dark"] pre,
+.dark pre,
+html[data-theme="dark"] pre {
+    background: #1a202c !important;
+    color: #e2e8f0 !important;
+}
+
+[data-theme="dark"] pre code,
+.dark pre code,
+html[data-theme="dark"] pre code {
+    color: #e2e8f0 !important;
+}
+
+/* =============================================================================
+   СПЕЦИАЛЬНЫЕ ЯЗЫКИ - ПРИНУДИТЕЛЬНОЕ ПЕРЕОПРЕДЕЛЕНИЕ
+   ============================================================================= */
+
+/* Bash/Shell - всегда темный фон для лучшей читаемости */
+.language-bash .highlight,
+.language-shell .highlight,
+.language-cmd .highlight {
+    background: #1a1a1a !important;
+    border: 1px solid #404040 !important;
+}
+
 .language-bash pre,
 .language-shell pre,
 .language-cmd pre {
-    background-color: #1e1e1e !important;
-    color: #d4d4d4 !important;
+    background: #1a1a1a !important;
+    color: #ffffff !important;
+    border: none !important;
 }
 
-/* Светлая тема */
-[data-theme="light"] .language-bash pre,
-[data-theme="light"] .language-shell pre,
-[data-theme="light"] .language-cmd pre {
-    background-color: #f8f8f8 !important;
-    color: #333333 !important;
-    border: 1px solid #e1e1e1 !important;
+.language-bash pre code,
+.language-shell pre code,
+.language-cmd pre code {
+    color: #ffffff !important;
+    background: transparent !important;
 }
 
-/* Темная тема */
-[data-theme="dark"] .language-bash pre,
-[data-theme="dark"] .language-shell pre,
-[data-theme="dark"] .language-cmd pre {
-    background-color: #2d2d2d !important;
-    color: #f8f8f2 !important;
-    border: 1px solid #444444 !important;
+/* =============================================================================
+   INLINE КОД - ИСПРАВЛЕНИЯ
+   ============================================================================= */
+
+/* Базовые стили inline кода */
+code {
+    background: #f1f5f9 !important;
+    color: #1e293b !important;
+    border: 1px solid #cbd5e0 !important;
+    border-radius: 4px !important;
+    padding: 2px 6px !important;
+    font-size: 0.875rem !important;
+    font-weight: 600 !important;
+    font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace !important;
+    word-break: break-word !important;
 }
 
-/* Улучшенная типографика для кода */
-.highlight table {
-    margin: 0;
-    border: none;
+/* Inline код - темная тема */
+[data-theme="dark"] code:not(pre code),
+.dark code:not(pre code),
+html[data-theme="dark"] code:not(pre code) {
+    background: #2d3748 !important;
+    color: #f7fafc !important;
+    border: 1px solid #4a5568 !important;
 }
 
-.highlight td {
-    padding: 0;
-    border: none;
+/* =============================================================================
+   SYNTAX HIGHLIGHTING - УЛУЧШЕННАЯ КОНТРАСТНОСТЬ
+   ============================================================================= */
+
+/* Комментарии */
+.highlight .c,
+.highlight .c1,
+.highlight .cm {
+    color: #6b7280 !important;
+    font-style: italic !important;
 }
 
-/* Убираем номера строк для лучшей читаемости */
-.chroma .lnt {
-    display: none;
+/* Строки */
+.highlight .s,
+.highlight .s1,
+.highlight .s2,
+.highlight .se {
+    color: #059669 !important;
+    font-weight: 500 !important;
 }
 
-/* Заголовок блока кода */
-.highlight::before {
-    content: attr(data-lang);
-    display: block;
-    background-color: var(--theme);
-    color: var(--primary);
-    padding: 0.5rem 1rem;
-    font-size: 0.8em;
-    font-weight: 600;
-    border-bottom: 1px solid var(--border);
+/* Ключевые слова */
+.highlight .k,
+.highlight .kd,
+.highlight .kn,
+.highlight .kt {
+    color: #7c3aed !important;
+    font-weight: 600 !important;
 }
+
+/* Числа */
+.highlight .m,
+.highlight .mi,
+.highlight .mf {
+    color: #dc2626 !important;
+    font-weight: 500 !important;
+}
+
+/* Переменные */
+.highlight .n,
+.highlight .nv,
+.highlight .nb {
+    color: #1f2937 !important;
+    font-weight: 500 !important;
+}
+
+/* Операторы */
+.highlight .o,
+.highlight .ow {
+    color: #374151 !important;
+    font-weight: 600 !important;
+}
+
+/* Темная тема - syntax highlighting */
+[data-theme="dark"] .highlight .c,
+[data-theme="dark"] .highlight .c1,
+[data-theme="dark"] .highlight .cm,
+.dark .highlight .c,
+.dark .highlight .c1,
+.dark .highlight .cm {
+    color: #9ca3af !important;
+}
+
+[data-theme="dark"] .highlight .s,
+[data-theme="dark"] .highlight .s1,
+[data-theme="dark"] .highlight .s2,
+[data-theme="dark"] .highlight .se,
+.dark .highlight .s,
+.dark .highlight .s1,
+.dark .highlight .s2,
+.dark .highlight .se {
+    color: #10b981 !important;
+}
+
+[data-theme="dark"] .highlight .k,
+[data-theme="dark"] .highlight .kd,
+[data-theme="dark"] .highlight .kn,
+[data-theme="dark"] .highlight .kt,
+.dark .highlight .k,
+.dark .highlight .kd,
+.dark .highlight .kn,
+.dark .highlight .kt {
+    color: #8b5cf6 !important;
+}
+
+[data-theme="dark"] .highlight .m,
+[data-theme="dark"] .highlight .mi,
+[data-theme="dark"] .highlight .mf,
+.dark .highlight .m,
+.dark .highlight .mi,
+.dark .highlight .mf {
+    color: #f87171 !important;
+}
+
+[data-theme="dark"] .highlight .n,
+[data-theme="dark"] .highlight .nv,
+[data-theme="dark"] .highlight .nb,
+.dark .highlight .n,
+.dark .highlight .nv,
+.dark .highlight .nb {
+    color: #e5e7eb !important;
+}
+
+[data-theme="dark"] .highlight .o,
+[data-theme="dark"] .highlight .ow,
+.dark .highlight .o,
+.dark .highlight .ow {
+    color: #d1d5db !important;
+}
+
+/* =============================================================================
+   МОБИЛЬНАЯ ОПТИМИЗАЦИЯ
+   ============================================================================= */
+
+@media screen and (max-width: 768px) {
+    
+    /* Блоки кода на мобильных */
+    .highlight {
+        margin: 1rem -1rem !important;
+        border-radius: 0 !important;
+        border-left: none !important;
+        border-right: none !important;
+    }
+    
+    pre {
+        font-size: 0.8rem !important;
+        padding: 1rem !important;
+        line-height: 1.5 !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+    
+    /* Inline код на мобильных */
+    code:not(pre code) {
+        font-size: 0.8rem !important;
+        padding: 2px 5px !important;
+        font-weight: 700 !important;
+    }
+    
+    /* Улучшенная прокрутка для блоков кода */
+    pre::-webkit-scrollbar {
+        height: 8px !important;
+    }
+    
+    pre::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.1) !important;
+        border-radius: 4px !important;
+    }
+    
+    pre::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.3) !important;
+        border-radius: 4px !important;
+    }
+    
+    pre::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 0, 0, 0.5) !important;
+    }
+}
+
+/* Очень маленькие экраны */
+@media screen and (max-width: 480px) {
+    pre {
+        font-size: 0.75rem !important;
+        padding: 0.75rem !important;
+    }
+    
+    code:not(pre code) {
+        font-size: 0.75rem !important;
+        font-weight: 800 !important;
+    }
+}
+
+/* =============================================================================
+   ДОПОЛНИТЕЛЬНЫЕ УЛУЧШЕНИЯ
+   ============================================================================= */
 
 /* Кнопка копирования */
 .highlight .copy-button {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    background: var(--theme);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 0.25rem 0.5rem;
-    font-size: 0.7rem;
-    cursor: pointer;
-    opacity: 0.7;
+    position: absolute !important;
+    top: 0.75rem !important;
+    right: 0.75rem !important;
+    background: rgba(255, 255, 255, 0.9) !important;
+    color: #374151 !important;
+    border: 1px solid #d1d5db !important;
+    border-radius: 4px !important;
+    padding: 0.25rem 0.5rem !important;
+    font-size: 0.75rem !important;
+    cursor: pointer !important;
+    opacity: 0.8 !important;
+    transition: all 0.2s ease !important;
+    z-index: 10 !important;
 }
 
 .highlight .copy-button:hover {
-    opacity: 1;
-    background: var(--hljs-bg);
+    opacity: 1 !important;
+    background: rgba(255, 255, 255, 1) !important;
+    transform: translateY(-1px) !important;
 }
 
-/* Контрастность для переменных в bash */
-.language-bash .nv,
-.language-shell .nv {
-    color: #ff6b6b !important;
-    font-weight: 600;
+[data-theme="dark"] .highlight .copy-button,
+.dark .highlight .copy-button {
+    background: rgba(45, 55, 72, 0.9) !important;
+    color: #f7fafc !important;
+    border: 1px solid #4a5568 !important;
 }
 
-/* Контрастность для строк */
-.language-bash .s1,
-.language-bash .s2,
-.language-shell .s1,
-.language-shell .s2 {
-    color: #a8e6cf !important;
+[data-theme="dark"] .highlight .copy-button:hover,
+.dark .highlight .copy-button:hover {
+    background: rgba(45, 55, 72, 1) !important;
 }
 
-/* Контрастность для команд */
-.language-bash .nb,
-.language-shell .nb {
-    color: #ffd93d !important;
-    font-weight: 600;
+/* Заголовок блока кода (если используется) */
+.highlight::before {
+    content: attr(data-lang) !important;
+    display: block !important;
+    background: #e5e7eb !important;
+    color: #374151 !important;
+    padding: 0.5rem 1rem !important;
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    border-bottom: 1px solid #d1d5db !important;
+}
+
+[data-theme="dark"] .highlight::before,
+.dark .highlight::before {
+    background: #374151 !important;
+    color: #e5e7eb !important;
+    border-bottom: 1px solid #4a5568 !important;
+}
+
+/* Улучшенное выделение текста в блоках кода */
+pre code::selection {
+    background: rgba(59, 130, 246, 0.3) !important;
+    color: inherit !important;
+}
+
+pre code::-moz-selection {
+    background: rgba(59, 130, 246, 0.3) !important;
+    color: inherit !important;
+}
+
+/* Сглаживание шрифтов для лучшей читаемости */
+pre,
+pre code,
+code {
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+    text-rendering: optimizeLegibility !important;
+}
+
+/* =============================================================================
+   ПРИНУДИТЕЛЬНОЕ ПЕРЕОПРЕДЕЛЕНИЕ ВСЕХ ВОЗМОЖНЫХ КОНФЛИКТОВ
+   ============================================================================= */
+
+/* Убираем все возможные наследования стилей */
+.post-content .highlight,
+.content .highlight,
+article .highlight {
+    background: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+}
+
+.post-content pre,
+.content pre,
+article pre {
+    background: #f8fafc !important;
+    color: #2d3748 !important;
+}
+
+.post-content pre code,
+.content pre code,
+article pre code {
+    color: #2d3748 !important;
+    background: transparent !important;
+}
+
+/* Темная тема - принудительное переопределение */
+[data-theme="dark"] .post-content .highlight,
+[data-theme="dark"] .content .highlight,
+[data-theme="dark"] article .highlight,
+.dark .post-content .highlight,
+.dark .content .highlight,
+.dark article .highlight {
+    background: #1a202c !important;
+    border: 1px solid #4a5568 !important;
+}
+
+[data-theme="dark"] .post-content pre,
+[data-theme="dark"] .content pre,
+[data-theme="dark"] article pre,
+.dark .post-content pre,
+.dark .content pre,
+.dark article pre {
+    background: #1a202c !important;
+    color: #e2e8f0 !important;
+}
+
+[data-theme="dark"] .post-content pre code,
+[data-theme="dark"] .content pre code,
+[data-theme="dark"] article pre code,
+.dark .post-content pre code,
+.dark .content pre code,
+.dark article pre code {
+    color: #e2e8f0 !important;
 }
