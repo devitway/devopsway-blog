@@ -7,6 +7,16 @@
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
+    <loc>http://localhost:1313/categories/devops-essentials/</loc>
+    <lastmod>2025-01-15T10:00:00+03:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>http://localhost:1313/about/</loc>
+    <lastmod>2025-01-15T10:00:00+03:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
     <loc>http://localhost:1313/posts/</loc>
     <lastmod>2025-01-15T10:00:00+03:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -28,11 +38,6 @@
     <priority>0.5</priority>
   </url><url>
     <loc>http://localhost:1313/tags/devops/</loc>
-    <lastmod>2025-01-15T10:00:00+03:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/categories/devops-essentials/</loc>
     <lastmod>2025-01-15T10:00:00+03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
