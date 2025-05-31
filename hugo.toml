@@ -68,3 +68,16 @@ page = ["HTML"]
 section = ["HTML", "RSS"]
 taxonomy = ["HTML", "RSS"]
 term = ["HTML", "RSS"]
+
+[menu]
+[[menu.main]]
+identifier = "posts"
+name = "📚 Все посты"
+url = "/posts/"
+weight = 10
+
+[[menu.main]]
+identifier = "about"
+name = "👨‍💻 О проекте"
+url = "/about/"
+weight = 30
