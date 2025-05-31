@@ -165,9 +165,15 @@
       "canvas:Создать новый холст": false,
       "daily-notes:Сегодняшняя заметка": false,
       "templates:Вставить шаблон": false,
-      "command-palette:Открыть палитру команд": false
+      "command-palette:Открыть палитру команд": false,
+      "obsidian-git:Open Git source control": false
     }
   },
   "active": "d4610022ce9552cf",
-  "lastOpenFiles": []
+  "lastOpenFiles": [
+    "categories/essentials/_index.md",
+    "categories/essentials",
+    "categories/_index.md",
+    "categories"
+  ]
 }

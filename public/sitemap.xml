@@ -6,10 +6,12 @@
   </url><url>
     <loc>http://localhost:1313/posts/</loc>
   </url><url>
+    <loc>http://localhost:1313/categories/essentials/</loc>
+  </url><url>
     <loc>http://localhost:1313/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/</loc>
-  </url><url>
     <loc>http://localhost:1313/tags/</loc>
+  </url><url>
+    <loc>http://localhost:1313/categories/</loc>
   </url>
 </urlset>

@@ -14,19 +14,29 @@ ShowBreadCrumbs = true
 ShowCodeCopyButtons = true
 ShowToc = true
 ShowRssButtonInSectionTermList = true
+ShowFullTextinRSS = true
 
 [params.homeInfoParams]
 Title = "🚀 Добро пожаловать в DevOps Way!"
-Content = "Практические гайды по DevOps, которые работают в реальных проектах"
+Content = """
+Практические гайды по DevOps, которые работают в реальных проектах.
+
+📚 **Категории:**
+- 🔧 DevOps Essentials - основы для начинающих
+- 🔒 Security - безопасность инфраструктуры  
+- ⚡ Automation - автоматизация процессов
+- 📊 Monitoring - мониторинг и алертинг
+- 🚀 CI/CD - пайплайны и деплоймент
+"""
 
 [[params.socialIcons]]
 name = "telegram"
-url = "https://t.me/devopsway_channel"
+url = "https://t.me/devitway"
 
 [menu]
 [[menu.main]]
 identifier = "posts"
-name = "📚 Посты"
+name = "📚 Все посты"
 url = "/posts/"
 weight = 10
 
@@ -36,9 +46,13 @@ name = "🏷️ Категории"
 url = "/categories/"
 weight = 20
 
+[taxonomies]
+category = "categories"
+tag = "tags"
+
 [markup]
 [markup.highlight]
-style = "github"
+style = "github-dark"
 lineNos = false
 codeFences = true
 guessSyntax = true
@@ -53,7 +67,7 @@ unsafe = true
 
 [outputs]
 home = ["HTML", "RSS", "JSON"]
-
-[taxonomies]
-category = "categories"
-tag = "tags"
+page = ["HTML"]
+section = ["HTML", "RSS"]
+taxonomy = ["HTML", "RSS"]
+term = ["HTML", "RSS"]
