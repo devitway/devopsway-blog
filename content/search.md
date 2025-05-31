@@ -2,7 +2,7 @@
 title: "🔍 Поиск по сайту"
 layout: "search"
 placeholder: "Поиск по гайдам DevOps..."
-description: "Поиск по всем постам и практическим гайдам DevOps Way. Найдите инструкции по Docker, Kubernetes, CI/CD, мониторингу и автоматизации."
+description: "Поиск по всем постам и практическим гайдам DevOps Way"
 summary: "Быстрый поиск по базе знаний DevOps гайдов"
 showToc: false
 searchHidden: true
@@ -25,9 +25,6 @@ sitemap_priority: 0.8
 
 - [DevOps Essentials](/categories/devops-essentials/) - основы для начинающих
 - [Git и SSH](/posts/day-00-git-basics/) - настройка и troubleshooting
-- [Docker](/tags/docker/) - контейнеризация приложений
-- [CI/CD](/tags/ci-cd/) - автоматизация деплоя
-- [Monitoring](/tags/monitoring/) - мониторинг и алертинг
 
 ---
 
