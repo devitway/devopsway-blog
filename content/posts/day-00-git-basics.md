@@ -1,5 +1,25 @@
 ---
-📦 День Zero: Git + SSH – Подключение к GitHub как профи 
+title: "📦 День Zero: Git + SSH – Подключение к GitHub как профи"
+date: 2025-01-15T10:00:00+03:00
+draft: false
+categories: ["DevOps Essentials"]
+tags: ["git", "ssh", "github", "devops", "начинающие", "безопасность"]
+description: "Полный практический гайд по настройке SSH для GitHub: генерация ключей Ed25519/RSA, настройка ssh-agent, работа с несколькими аккаунтами, backup и безопасность"
+weight: 1
+showToc: true
+TocOpen: false
+hidemeta: false
+comments: true
+disableShare: false
+searchHidden: false
+cover:
+    image: ""
+    alt: "Git SSH Setup Guide"
+    caption: "Безопасная настройка SSH для GitHub"
+    relative: false
+    hidden: false
+---
+
 🔒 Категория: DevOps Essentials 
 💡 Цель: Настроить безопасный SSH-доступ к GitHub на любой ОС
 
