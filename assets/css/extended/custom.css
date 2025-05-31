@@ -1,0 +1,44 @@
+/* Убираем рамки у блоков кода */
+.highlight {
+    border: none !important;
+    box-shadow: none !important;
+    margin: 1rem 0;
+}
+
+/* Стили для inline кода */
+code {
+    background-color: var(--code-bg) !important;
+    border: none !important;
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 0.9em;
+}
+
+/* Стили для блоков кода */
+pre {
+    background-color: var(--code-bg) !important;
+    border: none !important;
+    border-radius: 8px;
+    padding: 1rem;
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+
+pre code {
+    background: none !important;
+    border: none !important;
+    padding: 0;
+}
+
+/* Убираем номера строк если нужно */
+.chroma .lnt {
+    display: none;
+}
+
+/* Чистый вид для блоков bash */
+.language-bash,
+.language-cmd,
+.language-shell {
+    border: none !important;
+    box-shadow: none !important;
+}
