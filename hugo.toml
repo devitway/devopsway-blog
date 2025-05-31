@@ -2,7 +2,7 @@
 # БАЗОВЫЕ НАСТРОЙКИ HUGO
 # =============================================================================
 
-baseURL = "https://devitway.github.io/devopsway-blog"
+baseURL = "https://devitway.github.io/devopsway-blog/"
 languageCode = "ru"
 defaultContentLanguage = "ru"
 title = "DevOps Way - Практические гайды"
@@ -22,35 +22,12 @@ buildFuture = false
 buildExpired = false
 
 # =============================================================================
-# PAGINATION (новый синтаксис Hugo v0.128+)
+# PAGINATION
 # =============================================================================
 
 [pagination]
 pagerSize = 10
 path = "page"
-
-# =============================================================================
-# МИНИФИКАЦИЯ И ОПТИМИЗАЦИЯ
-# =============================================================================
-
-[minify]
-disableXML = true
-minifyOutput = true
-
-[minify.tdewolff.html]
-keepDefaultAttrVals = false
-keepDocumentTags = true
-keepEndTags = true
-keepQuotes = false
-keepWhitespace = false
-
-[minify.tdewolff.css]
-precision = 1
-keepCSS2 = true
-
-[minify.tdewolff.js]
-precision = 1
-keepVarNames = false
 
 # =============================================================================
 # OUTPUTS И ФОРМАТЫ
@@ -215,46 +192,6 @@ name = "rss"
 url = "/feed.xml"
 
 # =============================================================================
-# КОММЕНТАРИИ GISCUS (настроить позже)
-# =============================================================================
-
-[params.giscus]
-repo = "devitway/devopsway-blog"
-repoId = "YOUR_REPO_ID"  # Получить с giscus.app после настройки Discussions
-category = "Comments"
-categoryId = "YOUR_CATEGORY_ID"  # Получить с giscus.app
-mapping = "pathname"
-strict = "0"
-reactionsEnabled = "1"
-emitMetadata = "0"
-inputPosition = "bottom"
-theme = "preferred_color_scheme"
-lang = "ru"
-crossorigin = "anonymous"
-
-# =============================================================================
-# ASSETS И МЕДИА
-# =============================================================================
-
-[params.assets]
-favicon = "/favicon.ico"
-favicon16x16 = "/favicon-16x16.png"
-favicon32x32 = "/favicon-32x32.png"
-apple_touch_icon = "/apple-touch-icon.png"
-safari_pinned_tab = "/safari-pinned-tab.svg"
-disableHLJS = false
-disableFingerprinting = false
-
-# =============================================================================
-# РЕДАКТИРОВАНИЕ ПОСТОВ
-# =============================================================================
-
-[params.editPost]
-URL = "https://github.com/devitway/devopsway-blog/tree/main/content"
-Text = "📝 Предложить изменения"
-appendFilePath = true
-
-# =============================================================================
 # НАВИГАЦИОННОЕ МЕНЮ
 # =============================================================================
 
@@ -290,32 +227,7 @@ url = "https://t.me/devitway"
 weight = 40
 
 # =============================================================================
-# RELATED CONTENT
-# =============================================================================
-
-[related]
-includeNewer = true
-threshold = 80
-toLower = false
-
-[[related.indices]]
-name = "keywords"
-weight = 100
-
-[[related.indices]]
-name = "tags"
-weight = 80
-
-[[related.indices]]
-name = "categories"
-weight = 60
-
-[[related.indices]]
-name = "date"
-weight = 10
-
-# =============================================================================
-# PRIVACY НАСТРОЙКИ (GDPR) - исправлено для Hugo v0.141+
+# PRIVACY НАСТРОЙКИ
 # =============================================================================
 
 [privacy]
@@ -347,7 +259,7 @@ disable = false
 privacyEnhanced = true
 
 # =============================================================================
-# БЕЗОПАСНОСТЬ (исправлено для совместимости)
+# БЕЗОПАСНОСТЬ
 # =============================================================================
 
 [security]
@@ -373,7 +285,7 @@ publishDate = ["publishDate", "date"]
 expiryDate = ["expiryDate"]
 
 # =============================================================================
-# ДОПОЛНИТЕЛЬНЫЕ ЯЗЫКИ (для будущего развития)
+# LANGUAGES
 # =============================================================================
 
 [languages]
@@ -381,9 +293,3 @@ expiryDate = ["expiryDate"]
 languageName = "Русский"
 weight = 1
 title = "DevOps Way - Практические гайды"
-
-# Будущее развитие - английская версия
-# [languages.en]
-# languageName = "English"
-# weight = 2
-# title = "DevOps Way - Practical Guides"

@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://devitway.github.io/devopsway-blog/sitemap.xml
+
+# Disallow admin pages
+Disallow: /admin/
+Disallow: /.git/
+Disallow: /themes/
+
+# Allow major search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+# Crawl delay
+Crawl-delay: 1
