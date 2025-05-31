@@ -1,6 +1,7 @@
 baseURL = "https://devitway.github.io/devopsway-blog"
 languageCode = "ru"
 title = "DevOps Way - Практические гайды"
+googleAnalytics = "G-B9KCE8TFRB"
 theme = "PaperMod"
 
 [params]
