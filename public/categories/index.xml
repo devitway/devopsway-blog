@@ -6,14 +6,6 @@
     <description>Recent content in Categories on DevOps Way - Практические гайды</description>
     <generator>Hugo -- 0.147.5</generator>
     <language>ru</language>
-    <lastBuildDate>Fri, 30 May 2025 18:30:00 +0300</lastBuildDate>
     <atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Essentials</title>
-      <link>http://localhost:1313/categories/essentials/</link>
-      <pubDate>Fri, 30 May 2025 18:30:00 +0300</pubDate>
-      <guid>http://localhost:1313/categories/essentials/</guid>
-      <description></description>
-    </item>
   </channel>
 </rss>

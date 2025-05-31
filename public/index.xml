@@ -6,21 +6,33 @@
     <description>Recent content in 🚀 DevOps Way on DevOps Way - Практические гайды</description>
     <generator>Hugo -- 0.147.5</generator>
     <language>ru</language>
-    <lastBuildDate>Fri, 30 May 2025 18:30:00 +0300</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>☸️ Kubernetes введение</title>
-      <link>http://localhost:1313/posts/kubernetes-intro/</link>
-      <pubDate>Fri, 30 May 2025 18:30:00 +0300</pubDate>
-      <guid>http://localhost:1313/posts/kubernetes-intro/</guid>
-      <description>Первые шаги в мире Kubernetes</description>
-    </item>
-    <item>
-      <title>📦 День Zero: Git &#43; SSH – Подключение к GitHub как профи</title>
+      <title></title>
       <link>http://localhost:1313/posts/day-00-git-basics/</link>
-      <pubDate>Fri, 30 May 2025 17:30:00 +0300</pubDate>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/day-00-git-basics/</guid>
-      <description>Настройка безопасного SSH-доступа к GitHub на любой ОС</description>
+      <description>&lt;h3 id=&#34;-1-установка-git-и-ssh&#34;&gt;🗂️ 1. Установка Git и SSH&lt;/h3&gt;
+&lt;h4 id=&#34;-windows&#34;&gt;🪟 Windows&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Скачать Git for Windows: https://git-scm.com/download/win&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# В установщике:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;#   [x] Git Bash | [x] OpenSSH | [x] &amp;#34;Use external OpenSSH&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Проверка:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git --version
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ssh -V
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Где хранятся ключи: C:\Users\%USERNAME%\.ssh\&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;-linux-ubuntudebian&#34;&gt;🐧 Linux (Ubuntu/Debian)&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt update &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; sudo apt install git openssh-client xclip -y
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git --version
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ssh -V
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;-macos&#34;&gt;🍎 macOS&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;xcode-select --install  &lt;span class=&#34;c1&#34;&gt;# Установит Git + SSH&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git --version
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ssh -V
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;-2-генерация-ssh-ключа&#34;&gt;🔑 2. Генерация SSH-ключа&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;💡 Ed25519 vs RSA:&lt;/strong&gt;&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

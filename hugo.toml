@@ -39,7 +39,17 @@ weight = 20
 [markup]
 [markup.highlight]
 style = "github"
-lineNos = true
+lineNos = false
+codeFences = true
+guessSyntax = true
+hl_Lines = ""
+lineNumbersInTable = false
+noClasses = false
+tabWidth = 4
+
+[markup.goldmark]
+[markup.goldmark.renderer]
+unsafe = true
 
 [outputs]
 home = ["HTML", "RSS", "JSON"]
