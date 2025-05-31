@@ -11,20 +11,23 @@ theme = "PaperMod"
 # Google Analytics
 googleAnalytics = "G-B9KCE8TFRB"
 
-# Pagination
-paginate = 10
-paginatePath = "page"
-
 # SEO и производительность
 enableRobotsTXT = true
 canonifyURLs = true
-enableGitInfo = true
 enableEmoji = true
 
 # Сборка
 buildDrafts = false
 buildFuture = false
 buildExpired = false
+
+# =============================================================================
+# PAGINATION (новый синтаксис Hugo v0.128+)
+# =============================================================================
+
+[pagination]
+pagerSize = 10
+path = "page"
 
 # =============================================================================
 # МИНИФИКАЦИЯ И ОПТИМИЗАЦИЯ
@@ -146,7 +149,7 @@ ShowWordCount = true
 ShowRssButtonInSectionTermList = true
 ShowToc = true
 TocOpen = false
-ShowLastMod = true
+ShowLastMod = false
 ShowFullTextinRSS = true
 
 # Поиск
@@ -312,7 +315,7 @@ name = "date"
 weight = 10
 
 # =============================================================================
-# PRIVACY НАСТРОЙКИ (GDPR)
+# PRIVACY НАСТРОЙКИ (GDPR) - исправлено для Hugo v0.141+
 # =============================================================================
 
 [privacy]
@@ -329,7 +332,7 @@ useSessionStorage = false
 disable = true
 simple = true
 
-[privacy.twitter]
+[privacy.x]
 disable = false
 enableDNT = true
 simple = true
@@ -344,12 +347,12 @@ disable = false
 privacyEnhanced = true
 
 # =============================================================================
-# БЕЗОПАСНОСТЬ
+# БЕЗОПАСНОСТЬ (исправлено для совместимости)
 # =============================================================================
 
 [security]
 [security.exec]
-allow = ['^(dart-)?sass(-embedded)?$', '^go$', '^npx$', '^postcss$']
+allow = ['^(dart-)?sass(-embedded)?$', '^go$', '^npx$', '^postcss$', '^git$']
 osEnv = ['(?i)^((HTTPS?|NO)_PROXY|PATH(EXT)?|APPDATA|TE?MP|TERM|GO\w+|(XDG_CONFIG_)?HOME|USERPROFILE|SSH_AUTH_SOCK|DISPLAY|LANG|SYSTEMDRIVE)$']
 
 [security.funcs]
@@ -365,7 +368,7 @@ urls = ['.*']
 
 [frontmatter]
 date = ["date", "publishDate", "lastmod"]
-lastmod = [":git", "lastmod", "date", "publishDate"]
+lastmod = ["lastmod", "date", "publishDate"]
 publishDate = ["publishDate", "date"]
 expiryDate = ["expiryDate"]
 
