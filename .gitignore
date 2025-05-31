@@ -1,0 +1,108 @@
+# ===== HUGO BUILD =====
+# Сгенерированные файлы Hugo
+public/
+resources/
+.hugo_build.lock
+
+# Кэш Hugo
+.cache/
+resources/_gen/
+
+# ===== OBSIDIAN =====
+# Персональные настройки Obsidian
+.obsidian/workspace.json
+.obsidian/workspace
+.obsidian/workspace-mobile.json
+.obsidian/hotkeys.json
+.obsidian/appearance.json
+.obsidian/core-plugins.json
+.obsidian/community-plugins.json
+.obsidian/app.json
+
+# НЕ игнорируем важные настройки Obsidian
+# !.obsidian/graph.json
+# !.obsidian/templates.json
+
+# ===== NODE.JS =====
+# Зависимости (если есть)
+node_modules/
+npm-debug.log*
+package-lock.json
+
+# ===== ОПЕРАЦИОННАЯ СИСТЕМА =====
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+
+# ===== РЕДАКТОРЫ =====
+# VSCode
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+
+# Vim
+*.swp
+*.swo
+
+# Emacs
+*~
+\#*\#
+
+# ===== ВРЕМЕННЫЕ ФАЙЛЫ =====
+*.tmp
+*.temp
+.tmp/
+temp/
+*.log
+*.bak
+*.backup
+
+# ===== GIT =====
+*.orig
+
+# ===== РАЗРАБОТКА =====
+# Локальные конфиги
+.env
+.env.local
+.env.production
+
+# Тестовые файлы
+test-*
+*-test.*
+
+# ===== HUGO СПЕЦИФИЧНОЕ =====
+# Черновики (если нужно)
+# content/drafts/
+# content/private/
+
+# Локальные ресурсы
+assets/jsconfig.json
+
+# ===== КОММЕНТАРИИ =====
+# Раскомментируйте если нужно игнорировать:
+#
+# Все изображения:
+# *.png
+# *.jpg
+# *.jpeg
+# *.gif
+# *.svg
+#
+# Определенные папки контента:
+# content/private/
+# content/drafts/
