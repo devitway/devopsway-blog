@@ -1,14 +1,325 @@
-<!doctype html><html lang=ru dir=auto><head><meta name=generator content="Hugo 0.147.5"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>DevOps Way - Практические гайды</title><meta name=keywords content="DevOps,Docker,Kubernetes,CI/CD,Monitoring,Automation,Infrastructure,Git,SSH,Ansible,Terraform,Jenkins,GitHub Actions,Prometheus,Grafana"><meta name=description content="DevOps Way - практические гайды по автоматизации, CI/CD, мониторингу и управлению инфраструктурой. Пошаговые инструкции для DevOps инженеров всех уровней."><meta name=author content="DevOps Way"><link rel=canonical href=http://localhost:1313/><link crossorigin=anonymous href=http://localhost:1313/assets/css/stylesheet.f5c429424c21e3747d5c6a58fb68624c6c390f488f8ededdbefbbee58d91fb44.css integrity="sha256-9cQpQkwh43R9XGpY+2hiTGw5D0iPjt7dvvu+5Y2R+0Q=" rel="preload stylesheet" as=style><link rel=icon href=http://localhost:1313/favicon.ico><link rel=icon type=image/png sizes=16x16 href=http://localhost:1313/favicon-16x16.png><link rel=icon type=image/png sizes=32x32 href=http://localhost:1313/favicon-32x32.png><link rel=apple-touch-icon href=http://localhost:1313/apple-touch-icon.png><link rel=mask-icon href=http://localhost:1313/safari-pinned-tab.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate type=application/rss+xml href=http://localhost:1313/feed.xml><link rel=alternate type=application/json href=http://localhost:1313/index.json><link rel=alternate hreflang=ru href=http://localhost:1313/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51)}.list{background:var(--theme)}.list:not(.dark)::-webkit-scrollbar-track{background:0 0}.list:not(.dark)::-webkit-scrollbar-thumb{border-color:var(--theme)}}</style></noscript><script async src="https://www.googletagmanager.com/gtag/js?id=G-B9KCE8TFRB"></script><script>var dnt,doNotTrack=!1;if(!0&&(dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes"),!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-B9KCE8TFRB")}</script><meta property="og:url" content="http://localhost:1313/"><meta property="og:site_name" content="DevOps Way - Практические гайды"><meta property="og:title" content="🚀 DevOps Way"><meta property="og:description" content="DevOps Way - практические гайды по автоматизации, CI/CD, мониторингу и управлению инфраструктурой. Пошаговые инструкции для DevOps инженеров всех уровней."><meta property="og:locale" content="ru"><meta property="og:type" content="website"><meta property="og:image" content="http://localhost:1313/images/devopsway-og.png"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="http://localhost:1313/images/devopsway-og.png"><meta name=twitter:title content="🚀 DevOps Way"><meta name=twitter:description content="DevOps Way - практические гайды по автоматизации, CI/CD, мониторингу и управлению инфраструктурой. Пошаговые инструкции для DevOps инженеров всех уровней."><script type=application/ld+json>{"@context":"https://schema.org","@type":"Organization","name":"DevOps Way - Практические гайды","url":"http://localhost:1313/","description":"DevOps Way - практические гайды по автоматизации, CI/CD, мониторингу и управлению инфраструктурой. Пошаговые инструкции для DevOps инженеров всех уровней.","logo":"http://localhost:1313/favicon.ico","sameAs":["https://t.me/devitway","https://github.com/devitway","/feed.xml"]}</script></head><body class=list id=top><script>localStorage.getItem("pref-theme")==="dark"?document.body.classList.add("dark"):localStorage.getItem("pref-theme")==="light"?document.body.classList.remove("dark"):window.matchMedia("(prefers-color-scheme: dark)").matches&&document.body.classList.add("dark")</script><header class=header><nav class=nav><div class=logo><a href=http://localhost:1313/ accesskey=h title="DevOps Way - Практические гайды (Alt + H)">DevOps Way - Практические гайды</a><div class=logo-switches><button id=theme-toggle accesskey=t title="(Alt + T)" aria-label="Toggle theme">
-<svg id="moon" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-<svg id="sun" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu><li><a href=http://localhost:1313/posts/ title="📚 Все посты"><span>📚 Все посты</span></a></li><li><a href=http://localhost:1313/categories/ title="🏷️ Категории"><span>🏷️ Категории</span></a></li><li><a href=http://localhost:1313/search/ title="🔍 Поиск"><span>🔍 Поиск</span></a></li><li><a href=http://localhost:1313/about/ title="👨‍💻 О проекте"><span>👨‍💻 О проекте</span></a></li><li><a href=https://t.me/devitway title="💬 Telegram"><span>💬 Telegram</span>&nbsp;
-<svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg></a></li></ul></nav></header><main class=main><article class="first-entry home-info"><header class=entry-header><h1>🚀 DevOps Way - Практические гайды</h1></header><div class=entry-content><p><strong>Практические DevOps инструкции, которые реально работают в production!</strong></p><p>🎯 <strong>Аудитория:</strong> DevOps инженеры всех уровней<br>📚 <strong>Формат:</strong> пошаговые гайды + troubleshooting<br>⚡ <strong>Фокус:</strong> практика над теорией, проверенные решения</p><p><strong>📂 Основные категории:</strong></p><ul><li>🔧 <strong>DevOps Essentials</strong> - основы для новичков</li><li>🔒 <strong>Security</strong> - безопасность инфраструктуры</li><li>⚡ <strong>Automation</strong> - автоматизация процессов</li><li>📊 <strong>Monitoring</strong> - мониторинг и алертинг</li><li>🚀 <strong>CI/CD</strong> - пайплайны и деплоймент</li></ul><p>💡 <strong>Почему DevOps Way:</strong></p><ul><li>Все инструкции тестируются в реальных условиях</li><li>Никакой воды - только практические решения</li><li>Troubleshooting типичных проблем</li><li>Copy-paste команды для быстрого старта</li></ul><p>👉 <a href=https://t.me/devitway>Подписывайтесь на Telegram</a> для уведомлений о новых постах!</p></div><footer class=entry-footer><div class=social-icons><a href=https://t.me/devitway target=_blank rel="noopener noreferrer me" title=Telegram><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.198 2.433a2.242 2.242.0 00-1.022.215l-8.609 3.33c-2.068.8-4.133 1.598-5.724 2.21a405.15 405.15.0 01-2.849 1.09c-.42.147-.99.332-1.473.901-.728.968.193 1.798.919 2.286 1.61.516 3.275 1.009 4.654 1.472.509 1.793.997 3.592 1.48 5.388.16.36.506.494.864.498l-.002.018s.281.028.555-.038a2.1 2.1.0 00.933-.517c.345-.324 1.28-1.244 1.811-1.764l3.999 2.952.032.018s.442.311 1.09.355c.324.022.75-.04 1.116-.308.37-.27.613-.702.728-1.196.342-1.492 2.61-12.285 2.997-14.072l-.01.042c.27-1.006.17-1.928-.455-2.474a1.654 1.654.0 00-1.034-.407z"/></svg>
-</a><a href=https://github.com/devitway target=_blank rel="noopener noreferrer me" title=Github><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37.0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44.0 0020 4.77 5.07 5.07.0 0019.91 1S18.73.65 16 2.48a13.38 13.38.0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07.0 005 4.77 5.44 5.44.0 003.5 8.55c0 5.42 3.3 6.61 6.44 7A3.37 3.37.0 009 18.13V22"/></svg>
-</a><a href=http://localhost:1313/feed.xml target=_blank rel="noopener noreferrer me" title=Rss><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 019 9"/><path d="M4 4a16 16 0 0116 16"/><circle cx="5" cy="19" r="1"/></svg></a></div></footer></article><article class=post-entry><header class=entry-header><h2 class=entry-hint-parent>📦 День Zero: Git + SSH – Подключение к GitHub как профи</h2></header><div class=entry-content><p>🔒 Категория: DevOps Essentials 💡 Цель: Настроить безопасный SSH-доступ к GitHub на любой ОС
+<!DOCTYPE html>
+<html lang="ru" dir="auto">
+
+<head>
+	<meta name="generator" content="Hugo 0.147.5"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>DevOps Way - Практические гайды</title>
+<meta name="keywords" content="DevOps, Docker, Kubernetes, CI/CD, Monitoring, Automation, Infrastructure, Git, SSH, Ansible, Terraform, Jenkins, GitHub Actions, Prometheus, Grafana">
+<meta name="description" content="DevOps Way - практические гайды по автоматизации, CI/CD, мониторингу и управлению инфраструктурой. Пошаговые инструкции для DevOps инженеров всех уровней.">
+<meta name="author" content="DevOps Way">
+<link rel="canonical" href="http://localhost:1313/">
+<link crossorigin="anonymous" href="http://localhost:1313/assets/css/stylesheet.9e435980162da08bf07c1ab758030d82f5f77766ded8d380f61e490261b06b73.css" integrity="sha256-nkNZgBYtoIvwfBq3WAMNgvX3d2be2NOA9h5JAmGwa3M=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" type="application/rss+xml" href="http://localhost:1313/feed.xml">
+<link rel="alternate" type="application/json" href="http://localhost:1313/index.json">
+<link rel="alternate" hreflang="ru" href="http://localhost:1313/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-B9KCE8TFRB"></script>
+      <script>
+        var doNotTrack = false;
+        if ( true ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-B9KCE8TFRB');
+        }
+      </script><meta property="og:url" content="http://localhost:1313/">
+  <meta property="og:site_name" content="DevOps Way - Практические гайды">
+  <meta property="og:title" content="🚀 DevOps Way">
+  <meta property="og:description" content="DevOps Way - практические гайды по автоматизации, CI/CD, мониторингу и управлению инфраструктурой. Пошаговые инструкции для DevOps инженеров всех уровней.">
+  <meta property="og:locale" content="ru">
+  <meta property="og:type" content="website">
+      <meta property="og:image" content="http://localhost:1313/images/devopsway-og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://localhost:1313/images/devopsway-og.png">
+<meta name="twitter:title" content="🚀 DevOps Way">
+<meta name="twitter:description" content="DevOps Way - практические гайды по автоматизации, CI/CD, мониторингу и управлению инфраструктурой. Пошаговые инструкции для DevOps инженеров всех уровней.">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "DevOps Way - Практические гайды",
+  "url": "http://localhost:1313/",
+  "description": "DevOps Way - практические гайды по автоматизации, CI/CD, мониторингу и управлению инфраструктурой. Пошаговые инструкции для DevOps инженеров всех уровней.",
+  "logo": "http://localhost:1313/favicon.ico",
+  "sameAs": [
+      "https://t.me/devitway", "https://github.com/devitway", "/feed.xml"
+  ]
+}
+</script>
+</head>
+
+<body class="list" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="DevOps Way - Практические гайды (Alt + H)">DevOps Way - Практические гайды</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/posts/" title="📚 Все посты">
+                    <span>📚 Все посты</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/categories/" title="🏷️ Категории">
+                    <span>🏷️ Категории</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/search/" title="🔍 Поиск">
+                    <span>🔍 Поиск</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/about/" title="👨‍💻 О проекте">
+                    <span>👨‍💻 О проекте</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://t.me/devitway" title="💬 Telegram">
+                    <span>💬 Telegram</span>&nbsp;
+                    <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12">
+                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                        <path d="M15 3h6v6"></path>
+                        <path d="M10 14L21 3"></path>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main"> 
+<article class="first-entry home-info">
+    <header class="entry-header">
+        <h1>🚀 DevOps Way - Практические гайды</h1>
+    </header>
+    <div class="entry-content">
+        <p><strong>Практические DevOps инструкции, которые реально работают в production!</strong></p>
+<p>🎯 <strong>Аудитория:</strong> DevOps инженеры всех уровней<br>
+📚 <strong>Формат:</strong> пошаговые гайды + troubleshooting<br>
+⚡ <strong>Фокус:</strong> практика над теорией, проверенные решения</p>
+<p><strong>📂 Основные категории:</strong></p>
+<ul>
+<li>🔧 <strong>DevOps Essentials</strong> - основы для новичков</li>
+<li>🔒 <strong>Security</strong> - безопасность инфраструктуры</li>
+<li>⚡ <strong>Automation</strong> - автоматизация процессов</li>
+<li>📊 <strong>Monitoring</strong> - мониторинг и алертинг</li>
+<li>🚀 <strong>CI/CD</strong> - пайплайны и деплоймент</li>
+</ul>
+<p>💡 <strong>Почему DevOps Way:</strong></p>
+<ul>
+<li>Все инструкции тестируются в реальных условиях</li>
+<li>Никакой воды - только практические решения</li>
+<li>Troubleshooting типичных проблем</li>
+<li>Copy-paste команды для быстрого старта</li>
+</ul>
+<p>👉 <a href="https://t.me/devitway">Подписывайтесь на Telegram</a> для уведомлений о новых постах!</p>
+
+    </div>
+    <footer class="entry-footer">
+        <div class="social-icons" >
+    <a href="https://t.me/devitway" target="_blank" rel="noopener noreferrer me"
+        title="Telegram">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+    stroke-linecap="round" stroke-linejoin="round">
+    <path
+        d="M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-8.609 3.33c-2.068.8-4.133 1.598-5.724 2.21a405.15 405.15 0 0 1-2.849 1.09c-.42.147-.99.332-1.473.901-.728.968.193 1.798.919 2.286 1.61.516 3.275 1.009 4.654 1.472.509 1.793.997 3.592 1.48 5.388.16.36.506.494.864.498l-.002.018s.281.028.555-.038a2.1 2.1 0 0 0 .933-.517c.345-.324 1.28-1.244 1.811-1.764l3.999 2.952.032.018s.442.311 1.09.355c.324.022.75-.04 1.116-.308.37-.27.613-.702.728-1.196.342-1.492 2.61-12.285 2.997-14.072l-.01.042c.27-1.006.17-1.928-.455-2.474a1.654 1.654 0 0 0-1.034-.407z" />
+</svg>
+    </a>
+    <a href="https://github.com/devitway" target="_blank" rel="noopener noreferrer me"
+        title="Github">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+    stroke-linecap="round" stroke-linejoin="round">
+    <path
+        d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+    </path>
+</svg>
+    </a>
+    <a href="http://localhost:1313/feed.xml" target="_blank" rel="noopener noreferrer me"
+        title="Rss">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+    stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 11a9 9 0 0 1 9 9" />
+    <path d="M4 4a16 16 0 0 1 16 16" />
+    <circle cx="5" cy="19" r="1" />
+</svg>
+    </a>
+</div>
+
+    </footer>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">📦 День Zero: Git &#43; SSH – Подключение к GitHub как профи
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>🔒 Категория: DevOps Essentials 💡 Цель: Настроить безопасный SSH-доступ к GitHub на любой ОС
 🧠 Чему вы научитесь:
-Установка Git/SSH на Win/Linux/macOS Генерация SSH-ключей (Ed25519/RSA) + понимание различий Привязка ключа к GitHub Проверка и отладка подключения Работа с несколькими аккаунтами [NEW] Backup и безопасность ключей [NEW] ⚠️ Критично перед стартом:
-Закройте все терминалы (нужен чистый сеанс) Проверьте отсутствие конфликтующих ключей: bash ls -al ~/.ssh Создайте резервную копию существующих ключей при наличии 🗂️ 1. Установка Git и SSH 🪟 Windows # Скачать Git for Windows: https://git-scm.com/download/win # В установщике: # [x] Git Bash | [x] OpenSSH | [x] "Use external OpenSSH" # Проверка: git --version ssh -V # Где хранятся ключи: C:\Users\%USERNAME%\.ssh\ 🐧 Linux (Ubuntu/Debian) sudo apt update && sudo apt install git openssh-client xclip -y git --version ssh -V 🍎 macOS xcode-select --install # Установит Git + SSH git --version ssh -V 🔑 2. Генерация SSH-ключа 💡 Ed25519 vs RSA:
-...</p></div><footer class=entry-footer><span title='2025-01-15 10:00:00 +0300 MSK'>15 января 2025</span>&nbsp;·&nbsp;6 минут&nbsp;·&nbsp;1 слово&nbsp;·&nbsp;DevOps Way</footer><a class=entry-link aria-label="post link to 📦 День Zero: Git + SSH – Подключение к GitHub как профи" href=http://localhost:1313/posts/day-00-git-basics/></a></article></main><footer class=footer><span>&copy; 2025 <a href=http://localhost:1313/>DevOps Way - Практические гайды</a></span> ·
-<span>Powered by
-<a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a> &
-<a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg viewBox="0 0 12 6" fill="currentColor"><path d="M12 6H0l6-6z"/></svg>
-</a><script>let menu=document.getElementById("menu");menu&&(menu.scrollLeft=localStorage.getItem("menu-scroll-position"),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}),document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var t=this.getAttribute("href").substr(1);window.matchMedia("(prefers-reduced-motion: reduce)").matches?document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({behavior:"smooth"}),t==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${t}`)})})</script><script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{document.body.className.includes("dark")?(document.body.classList.remove("dark"),localStorage.setItem("pref-theme","light")):(document.body.classList.add("dark"),localStorage.setItem("pref-theme","dark"))})</script></body></html>
+Установка Git/SSH на Win/Linux/macOS Генерация SSH-ключей (Ed25519/RSA) &#43; понимание различий Привязка ключа к GitHub Проверка и отладка подключения Работа с несколькими аккаунтами [NEW] Backup и безопасность ключей [NEW] ⚠️ Критично перед стартом:
+Закройте все терминалы (нужен чистый сеанс) Проверьте отсутствие конфликтующих ключей: bash ls -al ~/.ssh Создайте резервную копию существующих ключей при наличии 🗂️ 1. Установка Git и SSH 🪟 Windows # Скачать Git for Windows: https://git-scm.com/download/win # В установщике: # [x] Git Bash | [x] OpenSSH | [x] &#34;Use external OpenSSH&#34; # Проверка: git --version ssh -V # Где хранятся ключи: C:\Users\%USERNAME%\.ssh\ 🐧 Linux (Ubuntu/Debian) sudo apt update &amp;&amp; sudo apt install git openssh-client xclip -y git --version ssh -V 🍎 macOS xcode-select --install # Установит Git &#43; SSH git --version ssh -V 🔑 2. Генерация SSH-ключа 💡 Ed25519 vs RSA:
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2025-01-15 10:00:00 +0300 MSK'>15 января 2025</span>&nbsp;·&nbsp;6 минут&nbsp;·&nbsp;1 слово&nbsp;·&nbsp;DevOps Way</footer>
+  <a class="entry-link" aria-label="post link to 📦 День Zero: Git &#43; SSH – Подключение к GitHub как профи" href="http://localhost:1313/posts/day-00-git-basics/"></a>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2025 <a href="http://localhost:1313/">DevOps Way - Практические гайды</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>
