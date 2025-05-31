@@ -1,8 +1,8 @@
 baseURL = "https://devitway.github.io/devopsway-blog"
 languageCode = "ru"
 title = "DevOps Way - Практические гайды"
-googleAnalytics = "G-B9KCE8TFRB"
 theme = "PaperMod"
+googleAnalytics = "G-B9KCE8TFRB"
 
 [params]
 env = "production"
@@ -46,12 +46,6 @@ identifier = "categories"
 name = "🏷️ Категории"
 url = "/categories/"
 weight = 20
-
-[[menu.main]]
-identifier = "about"
-name = "👨‍💻 О проекте"
-url = "/about/"
-weight = 30
 
 [taxonomies]
 category = "categories"

@@ -1,39 +1,22 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
-  <channel>
-    <title>🚀 DevOps Way on DevOps Way - Практические гайды</title>
-    <link>https://devitway.github.io/devopsway-blog/</link>
-    <description>Recent content in 🚀 DevOps Way on DevOps Way - Практические гайды</description>
-    <generator>Hugo -- 0.147.5</generator>
-    <language>ru</language>
-    <atom:link href="https://devitway.github.io/devopsway-blog/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title></title>
-      <link>https://devitway.github.io/devopsway-blog/posts/day-00-git-basics/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://devitway.github.io/devopsway-blog/posts/day-00-git-basics/</guid>
-      <description>&lt;h3 id=&#34;-1-установка-git-и-ssh&#34;&gt;🗂️ 1. Установка Git и SSH&lt;/h3&gt;
-&lt;h4 id=&#34;-windows&#34;&gt;🪟 Windows&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8b949e;font-style:italic&#34;&gt;# Скачать Git for Windows: https://git-scm.com/download/win&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8b949e;font-style:italic&#34;&gt;# В установщике:&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8b949e;font-style:italic&#34;&gt;#   [x] Git Bash | [x] OpenSSH | [x] &amp;#34;Use external OpenSSH&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8b949e;font-style:italic&#34;&gt;# Проверка:&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git --version
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ssh -V
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8b949e;font-style:italic&#34;&gt;# Где хранятся ключи: C:\Users\%USERNAME%\.ssh\&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;-linux-ubuntudebian&#34;&gt;🐧 Linux (Ubuntu/Debian)&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt update &lt;span style=&#34;color:#ff7b72;font-weight:bold&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; sudo apt install git openssh-client xclip -y
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git --version
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ssh -V
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;-macos&#34;&gt;🍎 macOS&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;xcode-select --install  &lt;span style=&#34;color:#8b949e;font-style:italic&#34;&gt;# Установит Git + SSH&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git --version
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ssh -V
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
-&lt;h3 id=&#34;-2-генерация-ssh-ключа&#34;&gt;🔑 2. Генерация SSH-ключа&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;💡 Ed25519 vs RSA:&lt;/strong&gt;&lt;/p&gt;</description>
-      <content:encoded><![CDATA[<h3 id="-1-установка-git-и-ssh">🗂️ 1. Установка Git и SSH</h3>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>🚀 DevOps Way on DevOps Way - Практические гайды</title><link>https://devitway.github.io/devopsway-blog/</link><description>Recent content in 🚀 DevOps Way on DevOps Way - Практические гайды</description><generator>Hugo -- 0.147.5</generator><language>ru</language><lastBuildDate>Wed, 15 Jan 2025 10:00:00 +0300</lastBuildDate><atom:link href="https://devitway.github.io/devopsway-blog/index.xml" rel="self" type="application/rss+xml"/><item><title>📦 День Zero: Git + SSH – Подключение к GitHub как профи</title><link>https://devitway.github.io/devopsway-blog/posts/day-00-git-basics/</link><pubDate>Wed, 15 Jan 2025 10:00:00 +0300</pubDate><guid>https://devitway.github.io/devopsway-blog/posts/day-00-git-basics/</guid><description>Полный практический гайд по настройке SSH для GitHub: генерация ключей Ed25519/RSA, настройка ssh-agent, работа с несколькими аккаунтами, backup и безопасность ключей</description><content:encoded><![CDATA[<p>🔒 Категория: DevOps Essentials
+💡 Цель: Настроить безопасный SSH-доступ к GitHub на любой ОС</p>
+<p>🧠 Чему вы научитесь:</p>
+<ul>
+<li>Установка Git/SSH на Win/Linux/macOS</li>
+<li>Генерация SSH-ключей (Ed25519/RSA) + понимание различий</li>
+<li>Привязка ключа к GitHub</li>
+<li>Проверка и отладка подключения</li>
+<li>Работа с несколькими аккаунтами [NEW]</li>
+<li>Backup и безопасность ключей [NEW]</li>
+</ul>
+<p>⚠️ Критично перед стартом:</p>
+<ul>
+<li>Закройте все терминалы (нужен чистый сеанс)</li>
+<li>Проверьте отсутствие конфликтующих ключей: <pre> <code>bash ls -al ~/.ssh </code> </pre></li>
+<li>Создайте резервную копию существующих ключей при наличии</li>
+</ul>
+<hr>
+<h3 id="-1-установка-git-и-ssh">🗂️ 1. Установка Git и SSH</h3>
 <h4 id="-windows">🪟 Windows</h4>
 <div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"># Скачать Git for Windows: https://git-scm.com/download/win</span>
 </span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"># В установщике:</span>
@@ -332,7 +315,4 @@
 </span></span><span style="display:flex;"><span>git remote set-url origin git@github.com:user/repo.git  <span style="color:#8b949e;font-style:italic"># Переключить на SSH</span>
 </span></span></code></pre></div><p>📱 Telegram: <a href="https://t.me/DevITWay">@DevITWay</a></p>
 <p>🌐 Сайт: <a href="devopsway.ru">devopsway.ru</a></p>
-]]></content:encoded>
-    </item>
-  </channel>
-</rss>
+]]></content:encoded></item></channel></rss>

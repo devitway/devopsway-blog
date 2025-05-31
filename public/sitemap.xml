@@ -1,17 +1,1 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-  xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  <url>
-    <loc>https://devitway.github.io/devopsway-blog/posts/day-00-git-basics/</loc>
-  </url><url>
-    <loc>https://devitway.github.io/devopsway-blog/posts/</loc>
-  </url><url>
-    <loc>https://devitway.github.io/devopsway-blog/categories/essentials/</loc>
-  </url><url>
-    <loc>https://devitway.github.io/devopsway-blog/</loc>
-  </url><url>
-    <loc>https://devitway.github.io/devopsway-blog/tags/</loc>
-  </url><url>
-    <loc>https://devitway.github.io/devopsway-blog/categories/</loc>
-  </url>
-</urlset>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml"><url><loc>https://devitway.github.io/devopsway-blog/posts/day-00-git-basics/</loc><lastmod>2025-01-15T10:00:00+03:00</lastmod></url><url><loc>https://devitway.github.io/devopsway-blog/about/</loc><lastmod>2025-01-15T10:00:00+03:00</lastmod></url><url><loc>https://devitway.github.io/devopsway-blog/posts/</loc><lastmod>2025-01-15T10:00:00+03:00</lastmod></url><url><loc>https://devitway.github.io/devopsway-blog/</loc><lastmod>2025-01-15T10:00:00+03:00</lastmod></url><url><loc>https://devitway.github.io/devopsway-blog/tags/automation/</loc><lastmod>2025-01-15T10:00:00+03:00</lastmod></url><url><loc>https://devitway.github.io/devopsway-blog/tags/beginner/</loc><lastmod>2025-01-15T10:00:00+03:00</lastmod></url><url><loc>https://devitway.github.io/devopsway-blog/tags/devops/</loc><lastmod>2025-01-15T10:00:00+03:00</lastmod></url><url><loc>https://devitway.github.io/devopsway-blog/categories/devops-essentials/</loc><lastmod>2025-01-15T10:00:00+03:00</lastmod></url><url><loc>https://devitway.github.io/devopsway-blog/tags/git/</loc><lastmod>2025-01-15T10:00:00+03:00</lastmod></url><url><loc>https://devitway.github.io/devopsway-blog/tags/github/</loc><lastmod>2025-01-15T10:00:00+03:00</lastmod></url><url><loc>https://devitway.github.io/devopsway-blog/tags/security/</loc><lastmod>2025-01-15T10:00:00+03:00</lastmod></url><url><loc>https://devitway.github.io/devopsway-blog/tags/ssh/</loc><lastmod>2025-01-15T10:00:00+03:00</lastmod></url><url><loc>https://devitway.github.io/devopsway-blog/tags/</loc><lastmod>2025-01-15T10:00:00+03:00</lastmod></url><url><loc>https://devitway.github.io/devopsway-blog/categories/</loc><lastmod>2025-01-15T10:00:00+03:00</lastmod></url><url><loc>https://devitway.github.io/devopsway-blog/search/</loc></url><url><loc>https://devitway.github.io/devopsway-blog/categories/essentials/</loc></url></urlset>
