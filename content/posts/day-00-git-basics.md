@@ -1,23 +1,38 @@
 ---
 title: "📦 День Zero: Git + SSH – Подключение к GitHub как профи"
 date: 2025-01-15T10:00:00+03:00
+lastmod: 2025-01-15T10:00:00+03:00
 draft: false
-categories: ["DevOps Essentials"]
-tags: ["git", "ssh", "github", "devops", "начинающие", "безопасность"]
-description: "Полный практический гайд по настройке SSH для GitHub: генерация ключей Ed25519/RSA, настройка ssh-agent, работа с несколькими аккаунтами, backup и безопасность"
 weight: 1
+categories: ["DevOps Essentials"]
+tags: ["git", "ssh", "github", "devops", "automation", "security", "beginner"]
+author: "DevOps Way"
+description: "Полный практический гайд по настройке SSH для GitHub: генерация ключей Ed25519/RSA, настройка ssh-agent, работа с несколькими аккаунтами, backup и безопасность ключей"
+canonical: ""
 showToc: true
 TocOpen: false
 hidemeta: false
 comments: true
+disableHLJS: false
 disableShare: false
+hideSummary: false
 searchHidden: false
+ShowReadingTime: true
+ShowBreadCrumbs: true
+ShowPostNavLinks: true
+ShowWordCount: true
+ShowRssButtonInSectionTermList: true
+UseHugoToc: true
 cover:
     image: ""
-    alt: "Git SSH Setup Guide"
-    caption: "Безопасная настройка SSH для GitHub"
+    alt: "Git SSH настройка для GitHub"
+    caption: "Безопасная настройка SSH ключей для работы с GitHub"
     relative: false
     hidden: false
+editPost:
+    URL: ""
+    Text: "Предложить изменения"
+    appendFilePath: true
 ---
 
 🔒 Категория: DevOps Essentials 
