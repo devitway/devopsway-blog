@@ -489,4 +489,4 @@ git remote set-url origin git@github.com:user/repo.git  # Переключить
 
 📱 Telegram: [@DevITWay](https://t.me/DevITWay)
 
-🌐 Сайт: [devopsway.ru](devopsway.ru)
+🌐 Сайт: [devopsway.ru](https://devopsway.ru/)
