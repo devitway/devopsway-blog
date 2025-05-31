@@ -2,7 +2,7 @@
 # БАЗОВЫЕ НАСТРОЙКИ HUGO
 # =============================================================================
 
-baseURL = "https://devitway.github.io/devopsway-blog/"
+baseURL = "https://devitway.github.io/devopsway-blog"
 languageCode = "ru"
 defaultContentLanguage = "ru"
 title = "DevOps Way - Практические гайды"
@@ -25,9 +25,31 @@ buildExpired = false
 # PAGINATION
 # =============================================================================
 
-[pagination]
-pagerSize = 10
-path = "page"
+paginate = 10
+paginatePath = "page"
+
+# =============================================================================
+# МИНИФИКАЦИЯ И ОПТИМИЗАЦИЯ
+# =============================================================================
+
+[minify]
+disableXML = true
+minifyOutput = true
+
+[minify.tdewolff.html]
+keepDefaultAttrVals = false
+keepDocumentTags = true
+keepEndTags = true
+keepQuotes = false
+keepWhitespace = false
+
+[minify.tdewolff.css]
+precision = 1
+keepCSS2 = true
+
+[minify.tdewolff.js]
+precision = 1
+keepVarNames = false
 
 # =============================================================================
 # OUTPUTS И ФОРМАТЫ
@@ -192,6 +214,46 @@ name = "rss"
 url = "/feed.xml"
 
 # =============================================================================
+# КОММЕНТАРИИ GISCUS (настроить позже)
+# =============================================================================
+
+[params.giscus]
+repo = "devitway/devopsway-blog"
+repoId = "YOUR_REPO_ID"
+category = "Comments"
+categoryId = "YOUR_CATEGORY_ID"
+mapping = "pathname"
+strict = "0"
+reactionsEnabled = "1"
+emitMetadata = "0"
+inputPosition = "bottom"
+theme = "preferred_color_scheme"
+lang = "ru"
+crossorigin = "anonymous"
+
+# =============================================================================
+# ASSETS И МЕДИА
+# =============================================================================
+
+[params.assets]
+favicon = "/favicon.ico"
+favicon16x16 = "/favicon-16x16.png"
+favicon32x32 = "/favicon-32x32.png"
+apple_touch_icon = "/apple-touch-icon.png"
+safari_pinned_tab = "/safari-pinned-tab.svg"
+disableHLJS = false
+disableFingerprinting = false
+
+# =============================================================================
+# РЕДАКТИРОВАНИЕ ПОСТОВ
+# =============================================================================
+
+[params.editPost]
+URL = "https://github.com/devitway/devopsway-blog/tree/main/content"
+Text = "📝 Предложить изменения"
+appendFilePath = true
+
+# =============================================================================
 # НАВИГАЦИОННОЕ МЕНЮ
 # =============================================================================
 
@@ -227,7 +289,32 @@ url = "https://t.me/devitway"
 weight = 40
 
 # =============================================================================
-# PRIVACY НАСТРОЙКИ
+# RELATED CONTENT
+# =============================================================================
+
+[related]
+includeNewer = true
+threshold = 80
+toLower = false
+
+[[related.indices]]
+name = "keywords"
+weight = 100
+
+[[related.indices]]
+name = "tags"
+weight = 80
+
+[[related.indices]]
+name = "categories"
+weight = 60
+
+[[related.indices]]
+name = "date"
+weight = 10
+
+# =============================================================================
+# PRIVACY НАСТРОЙКИ (GDPR)
 # =============================================================================
 
 [privacy]
@@ -244,7 +331,7 @@ useSessionStorage = false
 disable = true
 simple = true
 
-[privacy.x]
+[privacy.twitter]
 disable = false
 enableDNT = true
 simple = true
@@ -285,7 +372,7 @@ publishDate = ["publishDate", "date"]
 expiryDate = ["expiryDate"]
 
 # =============================================================================
-# LANGUAGES
+# ЯЗЫКИ
 # =============================================================================
 
 [languages]
