@@ -1,148 +1,242 @@
 {{- define "main" }}
-<header class="page-header">
-  <div class="breadcrumbs">
-    <a href="{{ .Site.BaseURL }}">Home</a>
-  </div>
-  <h1>{{ .Title }}</h1>
-  {{- if .Params.description }}
-  <div class="post-description">{{ .Params.description }}</div>
-  {{- end }}
-</header>
-
-<div class="post-content">
-  {{ .Content }}
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs">
+      <a href="{{ .Site.BaseURL }}">Home</a>
+    </div>
+    <h1 class="post-title">{{ .Title }}</h1>
+    <div class="post-description">{{ .Params.description }}</div>
+  </header>
   
-  <div id="searchbox">
-    <input id="searchInput" autofocus placeholder="{{ .Params.placeholder | default "Поиск..." }}" aria-label="search" type="search" autocomplete="off">
-    <div id="searchResults"></div>
+  <div class="post-content">
+    {{ .Content }}
+    
+    <div class="search-container">
+      <input 
+        id="search" 
+        type="text"
+        placeholder="{{ .Params.placeholder | default "Поиск по гайдам..." }}"
+        autocomplete="off"
+        style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 16px; margin: 20px 0;"
+      />
+      
+      <div id="search-stats" style="margin: 10px 0; color: var(--secondary); font-size: 14px;"></div>
+      <div id="search-results"></div>
+      <div id="no-results" style="display: none; text-align: center; color: var(--secondary); margin: 40px 0;">
+        <p>🔍 Ничего не найдено</p>
+        <p>Попробуйте изменить поисковый запрос или <a href="/posts/">просмотрите все посты</a></p>
+      </div>
+    </div>
   </div>
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.6.2/fuse.min.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  let fuse;
-  let searchIndex;
-  
-  // Загружаем индекс поиска
-  fetch('{{ "index.json" | absURL }}')
-    .then(response => response.json())
-    .then(data => {
-      searchIndex = data;
-      fuse = new Fuse(data, {
-        keys: ['title', 'content', 'summary', 'tags'],
-        includeScore: true,
-        threshold: 0.3,
-        minMatchCharLength: 2
-      });
-    });
-
-  const searchInput = document.getElementById('searchInput');
-  const searchResults = document.getElementById('searchResults');
-
-  searchInput.addEventListener('input', function() {
-    const query = this.value;
-    
-    if (query.length < 2) {
-      searchResults.innerHTML = '';
-      return;
-    }
-
-    if (!fuse) {
-      searchResults.innerHTML = '<p>Загрузка индекса поиска...</p>';
-      return;
-    }
-
-    const results = fuse.search(query);
-    
-    if (results.length === 0) {
-      searchResults.innerHTML = '<p>Ничего не найдено по запросу "' + query + '"</p>';
-      return;
-    }
-
-    let resultsHTML = '<h3>Результаты поиска:</h3><div class="search-results-list">';
-    
-    results.slice(0, 10).forEach(result => {
-      const item = result.item;
-      resultsHTML += `
-        <article class="search-result-item">
-          <h4><a href="${item.permalink}">${item.title}</a></h4>
-          <p>${item.summary || item.content.substring(0, 150) + '...'}</p>
-          <div class="search-meta">
-            ${item.tags ? item.tags.map(tag => `<span class="tag">${tag}</span>`).join(' ') : ''}
-          </div>
-        </article>
-      `;
-    });
-    
-    resultsHTML += '</div>';
-    searchResults.innerHTML = resultsHTML;
-  });
-});
-</script>
+</article>
 
 <style>
-#searchbox {
-  margin: 2rem 0;
-}
-
-#searchInput {
-  width: 100%;
-  padding: 1rem;
-  border: 2px solid var(--border);
-  border-radius: 8px;
-  font-size: 1.1rem;
-  background: var(--theme);
-  color: var(--content);
-}
-
-#searchInput:focus {
-  outline: none;
-  border-color: var(--primary);
-}
-
-.search-results-list {
+.search-container {
   margin-top: 2rem;
 }
 
-.search-result-item {
-  padding: 1.5rem;
+.search-result {
   border: 1px solid var(--border);
   border-radius: 8px;
-  margin-bottom: 1rem;
-  background: var(--theme);
+  padding: 1.5rem;
+  margin: 1rem 0;
+  background: var(--entry);
+  transition: all 0.2s ease;
 }
 
-.search-result-item h4 {
+.search-result:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.search-result h3 {
   margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
 }
 
-.search-result-item h4 a {
+.search-result h3 a {
   color: var(--primary);
   text-decoration: none;
 }
 
-.search-result-item h4 a:hover {
+.search-result h3 a:hover {
   text-decoration: underline;
 }
 
-.search-result-item p {
-  margin: 0.5rem 0;
+.search-result-meta {
+  font-size: 0.875rem;
   color: var(--secondary);
+  margin: 0.5rem 0;
 }
 
-.search-meta {
-  margin-top: 0.5rem;
+.search-result-tags {
+  margin: 0.5rem 0;
 }
 
-.tag {
+.search-result-tags .tag {
+  display: inline-block;
   background: var(--code-bg);
-  color: var(--content);
+  color: var(--primary);
   padding: 0.2rem 0.5rem;
   border-radius: 4px;
-  font-size: 0.8rem;
-  margin-right: 0.5rem;
+  font-size: 0.75rem;
+  margin: 0 0.25rem 0.25rem 0;
+  text-decoration: none;
+}
+
+.search-result-summary {
+  margin: 1rem 0 0 0;
+  line-height: 1.6;
+}
+
+.search-highlight {
+  background: yellow;
+  font-weight: bold;
+}
+
+[data-theme="dark"] .search-highlight {
+  background: #4a5568;
+  color: #ffd700;
 }
 </style>
 
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const searchInput = document.getElementById('search');
+  const searchResults = document.getElementById('search-results');
+  const searchStats = document.getElementById('search-stats');
+  const noResults = document.getElementById('no-results');
+  
+  let fuse;
+  let searchData = [];
+
+  // Загрузка данных для поиска
+  fetch('{{ .Site.BaseURL }}index.json')
+    .then(response => response.json())
+    .then(data => {
+      searchData = data;
+      fuse = new Fuse(data, {
+        keys: [
+          { name: 'title', weight: 0.4 },
+          { name: 'content', weight: 0.3 },
+          { name: 'summary', weight: 0.2 },
+          { name: 'tags', weight: 0.1 }
+        ],
+        threshold: 0.3,
+        includeMatches: true,
+        minMatchCharLength: 2,
+        includeScore: true
+      });
+      
+      // Если есть параметр поиска в URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const query = urlParams.get('q');
+      if (query) {
+        searchInput.value = query;
+        performSearch(query);
+      }
+      
+      console.log(`Загружено ${data.length} страниц для поиска`);
+    })
+    .catch(error => {
+      console.error('Ошибка загрузки данных для поиска:', error);
+      searchStats.innerHTML = '<span style="color: red;">Ошибка загрузки данных для поиска</span>';
+    });
+
+  searchInput.addEventListener('input', function(e) {
+    const query = e.target.value.trim();
+    
+    // Обновить URL без перезагрузки страницы
+    const url = new URL(window.location);
+    if (query) {
+      url.searchParams.set('q', query);
+    } else {
+      url.searchParams.delete('q');
+    }
+    window.history.replaceState({}, '', url);
+    
+    performSearch(query);
+  });
+
+  function performSearch(query) {
+    if (!fuse || query.length < 2) {
+      searchResults.innerHTML = '';
+      searchStats.innerHTML = '';
+      noResults.style.display = 'none';
+      return;
+    }
+
+    const results = fuse.search(query);
+    displayResults(results, query);
+  }
+
+  function displayResults(results, query) {
+    if (results.length === 0) {
+      searchResults.innerHTML = '';
+      searchStats.innerHTML = '';
+      noResults.style.display = 'block';
+      return;
+    }
+
+    noResults.style.display = 'none';
+    searchStats.innerHTML = `Найдено: <strong>${results.length}</strong> ${getResultWord(results.length)}`;
+
+    const html = results.map(result => {
+      const item = result.item;
+      const score = (1 - result.score) * 100;
+      
+      return `
+        <div class="search-result">
+          <h3><a href="${item.permalink}">${highlightText(item.title, query)}</a></h3>
+          
+          <div class="search-result-meta">
+            Релевантность: ${score.toFixed(0)}%
+            ${item.date ? `• ${formatDate(item.date)}` : ''}
+          </div>
+          
+          ${item.tags && item.tags.length > 0 ? `
+            <div class="search-result-tags">
+              ${item.tags.map(tag => `<a href="/tags/${tag.toLowerCase()}/" class="tag">${tag}</a>`).join('')}
+            </div>
+          ` : ''}
+          
+          <div class="search-result-summary">
+            ${highlightText(item.summary || item.content.substring(0, 200) + '...', query)}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    searchResults.innerHTML = html;
+  }
+
+  function highlightText(text, query) {
+    if (!query) return text;
+    
+    const regex = new RegExp(`(${escapeRegex(query)})`, 'gi');
+    return text.replace(regex, '<span class="search-highlight">$1</span>');
+  }
+
+  function escapeRegex(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  function getResultWord(count) {
+    if (count % 10 === 1 && count % 100 !== 11) return 'результат';
+    if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(count % 100)) return 'результата';
+    return 'результатов';
+  }
+
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('ru-RU', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  }
+});
+</script>
 {{- end }}

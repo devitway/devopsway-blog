@@ -35,8 +35,197 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Build
-        run: hugo --minify
+      # Отладка - проверка структуры проекта
+      - name: Debug - Project structure
+        run: |
+          echo "=== PROJECT STRUCTURE ==="
+          echo "Working directory: $(pwd)"
+          echo "Repository contents:"
+          ls -la
+          echo ""
+          echo "=== CONTENT STRUCTURE ==="
+          find content -type f -name "*.md" | sort
+          echo ""
+          echo "=== LAYOUTS STRUCTURE ==="
+          find layouts -type f 2>/dev/null | sort || echo "No layouts directory"
+          echo ""
+          echo "=== THEME CHECK ==="
+          ls -la themes/ 2>/dev/null || echo "No themes directory"
+          echo ""
+          echo "=== HUGO VERSION ==="
+          hugo version
+          echo ""
+          echo "=== HUGO CONFIG CHECK ==="
+          hugo config | head -20
+
+      # Проверка конфигурации Hugo
+      - name: Validate Hugo configuration
+        run: |
+          echo "=== VALIDATING HUGO CONFIG ==="
+          hugo config --format yaml > config-check.yaml
+          echo "Base URL: $(hugo config | grep baseURL || echo 'baseURL not found')"
+          echo "Title: $(hugo config | grep title || echo 'title not found')"
+          echo "Theme: $(hugo config | grep theme || echo 'theme not found')"
+
+      # Проверка критических файлов
+      - name: Check critical files
+        run: |
+          echo "=== CHECKING CRITICAL FILES ==="
+          
+          echo "Checking about page:"
+          if [ -f "content/about.md" ]; then
+            echo "✅ content/about.md exists"
+            head -10 content/about.md
+          elif [ -f "content/about/_index.md" ]; then
+            echo "⚠️  Found content/about/_index.md (should be content/about.md)"
+          else
+            echo "❌ No about page found"
+          fi
+          
+          echo ""
+          echo "Checking search page:"
+          if [ -f "content/search.md" ]; then
+            echo "✅ content/search.md exists"
+            head -5 content/search.md
+          else
+            echo "❌ content/search.md not found"
+          fi
+          
+          echo ""
+          echo "Checking search layout:"
+          if [ -f "layouts/_default/search.html" ]; then
+            echo "✅ layouts/_default/search.html exists"
+          else
+            echo "❌ layouts/_default/search.html not found"
+          fi
+
+      # Сборка сайта
+      - name: Build site
+        run: |
+          echo "=== BUILDING SITE ==="
+          hugo --minify --verbose --debug
+
+      # Проверка результатов сборки
+      - name: Debug - Build results
+        run: |
+          echo "=== BUILD RESULTS ==="
+          echo "Public directory contents:"
+          ls -la public/
+          echo ""
+          
+          echo "=== CHECKING NAVIGATION PAGES ==="
+          
+          echo "About page:"
+          if [ -d "public/about/" ]; then
+            echo "✅ public/about/ directory exists"
+            ls -la public/about/
+          else
+            echo "❌ public/about/ directory not found"
+          fi
+          
+          echo ""
+          echo "Search page:"
+          if [ -d "public/search/" ]; then
+            echo "✅ public/search/ directory exists"
+            ls -la public/search/
+          else
+            echo "❌ public/search/ directory not found"
+          fi
+          
+          echo ""
+          echo "Categories page:"
+          if [ -d "public/categories/" ]; then
+            echo "✅ public/categories/ directory exists"
+            ls -la public/categories/
+          else
+            echo "❌ public/categories/ directory not found"
+          fi
+          
+          echo ""
+          echo "Posts page:"
+          if [ -d "public/posts/" ]; then
+            echo "✅ public/posts/ directory exists"
+            ls -la public/posts/
+          else
+            echo "❌ public/posts/ directory not found"
+          fi
+          
+          echo ""
+          echo "=== CHECKING FEED FILES ==="
+          if [ -f "public/index.json" ]; then
+            echo "✅ public/index.json exists (for search)"
+            echo "Size: $(wc -c < public/index.json) bytes"
+          else
+            echo "❌ public/index.json not found"
+          fi
+          
+          if [ -f "public/feed.xml" ]; then
+            echo "✅ public/feed.xml exists"
+          else
+            echo "❌ public/feed.xml not found"
+          fi
+
+      # Проверка HTML файлов на ошибки
+      - name: Validate HTML structure
+        run: |
+          echo "=== HTML VALIDATION ==="
+          
+          echo "Checking main pages HTML:"
+          for page in "index.html" "about/index.html" "search/index.html" "categories/index.html" "posts/index.html"; do
+            if [ -f "public/$page" ]; then
+              echo "✅ $page exists"
+              # Проверяем базовую структуру HTML
+              if grep -q "<html" "public/$page" && grep -q "</html>" "public/$page"; then
+                echo "   ✅ Valid HTML structure"
+              else
+                echo "   ❌ Invalid HTML structure"
+              fi
+            else
+              echo "❌ $page not found"
+            fi
+          done
+          
+          echo ""
+          echo "Checking navigation links:"
+          if [ -f "public/index.html" ]; then
+            echo "Navigation links in main page:"
+            grep -o 'href="[^"]*"' public/index.html | grep -E "(about|search|categories|posts)" || echo "No navigation links found"
+          fi
+
+      # Тест доступности страниц
+      - name: Test page accessibility
+        run: |
+          echo "=== TESTING PAGE STRUCTURE ==="
+          
+          # Проверяем наличие обязательных элементов
+          for page in "about/index.html" "search/index.html"; do
+            if [ -f "public/$page" ]; then
+              echo "Testing $page:"
+              
+              # Проверяем заголовок
+              if grep -q "<title>" "public/$page"; then
+                echo "  ✅ Has title tag"
+              else
+                echo "  ❌ Missing title tag"
+              fi
+              
+              # Проверяем основной контент
+              if grep -q "<main" "public/$page" || grep -q "class=\"main\"" "public/$page"; then
+                echo "  ✅ Has main content area"
+              else
+                echo "  ❌ Missing main content area"
+              fi
+              
+              # Для поиска проверяем наличие скрипта
+              if [[ "$page" == "search/index.html" ]]; then
+                if grep -q "fuse.js" "public/$page"; then
+                  echo "  ✅ Has search functionality"
+                else
+                  echo "  ❌ Missing search functionality"
+                fi
+              fi
+            fi
+          done
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
@@ -53,3 +242,17 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        
+      # Проверка после деплоя
+      - name: Post-deploy validation
+        run: |
+          echo "=== POST-DEPLOY CHECK ==="
+          echo "Site URL: ${{ steps.deployment.outputs.page_url }}"
+          echo "Deployment completed successfully!"
+          echo ""
+          echo "🔍 Manual checks needed:"
+          echo "1. Visit: ${{ steps.deployment.outputs.page_url }}about/"
+          echo "2. Visit: ${{ steps.deployment.outputs.page_url }}search/"
+          echo "3. Visit: ${{ steps.deployment.outputs.page_url }}categories/"
+          echo "4. Test navigation menu"
+          echo "5. Test search functionality"
