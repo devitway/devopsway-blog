@@ -2,85 +2,85 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://devitway.github.io/devopsway-blog/posts/day-00-git-basics/</loc>
+    <loc>https://devopsway.ru/posts/day-00-git-basics/</loc>
     <lastmod>2025-01-15T10:00:00+03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://devitway.github.io/devopsway-blog/categories/devops-essentials/</loc>
+    <loc>https://devopsway.ru/categories/devops-essentials/</loc>
     <lastmod>2025-01-15T10:00:00+03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://devitway.github.io/devopsway-blog/about/</loc>
+    <loc>https://devopsway.ru/about/</loc>
     <lastmod>2025-01-15T10:00:00+03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://devitway.github.io/devopsway-blog/posts/</loc>
+    <loc>https://devopsway.ru/posts/</loc>
     <lastmod>2025-01-15T10:00:00+03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://devitway.github.io/devopsway-blog/</loc>
+    <loc>https://devopsway.ru/</loc>
     <lastmod>2025-01-15T10:00:00+03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://devitway.github.io/devopsway-blog/tags/automation/</loc>
+    <loc>https://devopsway.ru/tags/automation/</loc>
     <lastmod>2025-01-15T10:00:00+03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://devitway.github.io/devopsway-blog/tags/beginner/</loc>
+    <loc>https://devopsway.ru/tags/beginner/</loc>
     <lastmod>2025-01-15T10:00:00+03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://devitway.github.io/devopsway-blog/tags/devops/</loc>
+    <loc>https://devopsway.ru/tags/devops/</loc>
     <lastmod>2025-01-15T10:00:00+03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://devitway.github.io/devopsway-blog/tags/git/</loc>
+    <loc>https://devopsway.ru/tags/git/</loc>
     <lastmod>2025-01-15T10:00:00+03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://devitway.github.io/devopsway-blog/tags/github/</loc>
+    <loc>https://devopsway.ru/tags/github/</loc>
     <lastmod>2025-01-15T10:00:00+03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://devitway.github.io/devopsway-blog/tags/security/</loc>
+    <loc>https://devopsway.ru/tags/security/</loc>
     <lastmod>2025-01-15T10:00:00+03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://devitway.github.io/devopsway-blog/tags/ssh/</loc>
+    <loc>https://devopsway.ru/tags/ssh/</loc>
     <lastmod>2025-01-15T10:00:00+03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://devitway.github.io/devopsway-blog/tags/</loc>
+    <loc>https://devopsway.ru/tags/</loc>
     <lastmod>2025-01-15T10:00:00+03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://devitway.github.io/devopsway-blog/categories/</loc>
+    <loc>https://devopsway.ru/categories/</loc>
     <lastmod>2025-01-15T10:00:00+03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://devitway.github.io/devopsway-blog/search/</loc>
+    <loc>https://devopsway.ru/search/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://devitway.github.io/devopsway-blog/categories/essentials/</loc>
+    <loc>https://devopsway.ru/categories/essentials/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://devitway.github.io/devopsway-blog/series/</loc>
+    <loc>https://devopsway.ru/series/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
