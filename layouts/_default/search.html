@@ -1,0 +1,148 @@
+{{- define "main" }}
+<header class="page-header">
+  <div class="breadcrumbs">
+    <a href="{{ .Site.BaseURL }}">Home</a>
+  </div>
+  <h1>{{ .Title }}</h1>
+  {{- if .Params.description }}
+  <div class="post-description">{{ .Params.description }}</div>
+  {{- end }}
+</header>
+
+<div class="post-content">
+  {{ .Content }}
+  
+  <div id="searchbox">
+    <input id="searchInput" autofocus placeholder="{{ .Params.placeholder | default "Поиск..." }}" aria-label="search" type="search" autocomplete="off">
+    <div id="searchResults"></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.6.2/fuse.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  let fuse;
+  let searchIndex;
+  
+  // Загружаем индекс поиска
+  fetch('{{ "index.json" | absURL }}')
+    .then(response => response.json())
+    .then(data => {
+      searchIndex = data;
+      fuse = new Fuse(data, {
+        keys: ['title', 'content', 'summary', 'tags'],
+        includeScore: true,
+        threshold: 0.3,
+        minMatchCharLength: 2
+      });
+    });
+
+  const searchInput = document.getElementById('searchInput');
+  const searchResults = document.getElementById('searchResults');
+
+  searchInput.addEventListener('input', function() {
+    const query = this.value;
+    
+    if (query.length < 2) {
+      searchResults.innerHTML = '';
+      return;
+    }
+
+    if (!fuse) {
+      searchResults.innerHTML = '<p>Загрузка индекса поиска...</p>';
+      return;
+    }
+
+    const results = fuse.search(query);
+    
+    if (results.length === 0) {
+      searchResults.innerHTML = '<p>Ничего не найдено по запросу "' + query + '"</p>';
+      return;
+    }
+
+    let resultsHTML = '<h3>Результаты поиска:</h3><div class="search-results-list">';
+    
+    results.slice(0, 10).forEach(result => {
+      const item = result.item;
+      resultsHTML += `
+        <article class="search-result-item">
+          <h4><a href="${item.permalink}">${item.title}</a></h4>
+          <p>${item.summary || item.content.substring(0, 150) + '...'}</p>
+          <div class="search-meta">
+            ${item.tags ? item.tags.map(tag => `<span class="tag">${tag}</span>`).join(' ') : ''}
+          </div>
+        </article>
+      `;
+    });
+    
+    resultsHTML += '</div>';
+    searchResults.innerHTML = resultsHTML;
+  });
+});
+</script>
+
+<style>
+#searchbox {
+  margin: 2rem 0;
+}
+
+#searchInput {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  font-size: 1.1rem;
+  background: var(--theme);
+  color: var(--content);
+}
+
+#searchInput:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.search-results-list {
+  margin-top: 2rem;
+}
+
+.search-result-item {
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  background: var(--theme);
+}
+
+.search-result-item h4 {
+  margin: 0 0 0.5rem 0;
+}
+
+.search-result-item h4 a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.search-result-item h4 a:hover {
+  text-decoration: underline;
+}
+
+.search-result-item p {
+  margin: 0.5rem 0;
+  color: var(--secondary);
+}
+
+.search-meta {
+  margin-top: 0.5rem;
+}
+
+.tag {
+  background: var(--code-bg);
+  color: var(--content);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  margin-right: 0.5rem;
+}
+</style>
+
+{{- end }}
