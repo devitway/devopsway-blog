@@ -35,13 +35,11 @@ editPost:
     appendFilePath: true
 ---
 
-🔒 Категория: Security & DevOps Essentials  
-💡 Цель: Настроить централизованную систему аутентификации FreeIPA
-
 🔒 Категория: DevOps Essentials / Identity Management  
 💡 Цель: Развернуть полнофункциональный FreeIPA сервер с LDAP, CA и DNS для централизованного управления идентификацией в DevOps инфраструктуре
 
 🧠 Чему вы научитесь:
+
 - Установка и настройка FreeIPA сервера на Ubuntu
 - Конфигурация встроенного LDAP, Certificate Authority и DNS
 - Интеграция с DevOps инструментами (GitLab, Ansible)
@@ -51,6 +49,7 @@ editPost:
 - Бэкап и восстановление конфигурации
 
 ⚠️ Критично перед стартом:
+
 - Ubuntu 22.04 LTS (минимум 4GB RAM, 20GB диск)
 - Статический IP адрес и настроенный FQDN
 - Права sudo на сервере
@@ -61,36 +60,34 @@ editPost:
 
 ### 🏗️ Архитектура FreeIPA компонентов
 
-```mermaid
 graph TB
-    subgraph "FreeIPA Server"
-        DS[Directory Server<br/>389-ds-base]
-        KDC[Kerberos KDC<br/>krb5-kdc]
-        CA[Certificate Authority<br/>dogtag-pki]
-        DNS[DNS Server<br/>bind9]
-        HTTP[Web Interface<br/>httpd]
+    subgraph FreeIPA ["FreeIPA Server"]
+        DS["Directory Server<br/>389-ds-base"]
+        KDC["Kerberos KDC<br/>krb5-kdc"]
+        CA["Certificate Authority<br/>dogtag-pki"]
+        DNS["DNS Server<br/>bind9"]
+        HTTP["Web Interface<br/>httpd"]
+    end
+
+    subgraph Tools ["DevOps Tools"]
+        GitLab["GitLab"]
+        Ansible["Ansible Tower"]
+        Grafana["Grafana"]
     end
     
-    subgraph "DevOps Tools"
-        GitLab[GitLab]
-        Ansible[Ansible Tower]
-        Grafana[Grafana]
+    subgraph Clients ["Client Systems"]
+        Linux["Linux Clients"]
+        Windows["Windows AD"]
+        Mobile["Mobile Apps"]
     end
     
-    subgraph "Clients"
-        Linux[Linux Clients]
-        Windows[Windows AD]
-        Mobile[Mobile Apps]
-    end
+    DS -.->|LDAP Auth| Tools
+    CA -.->|SSL Certs| Tools
+    KDC -.->|SSO| Tools
+    DNS -.->|Name Resolution| Tools
     
-    DS --> |LDAP Auth| DevOps Tools
-    CA --> |SSL Certs| DevOps Tools
-    KDC --> |SSO| DevOps Tools
-    DNS --> |Name Resolution| DevOps Tools
-    
-    DevOps Tools --> |Authentication| Clients
-    HTTP --> |Management| DevOps Tools
-```
+    Tools -.->|Authentication| Clients
+    HTTP -.->|Management| Tools
 
 ---
 
@@ -732,6 +729,7 @@ sudo chronyc makestep
 ### 🧪 Расширенный чеклист самопроверки
 
 #### ✅ Системные требования
+
 - [ ] Ubuntu 22.04 LTS установлен
 - [ ] Минимум 4GB RAM доступно
 - [ ] 20GB свободного места на диске
@@ -742,15 +740,17 @@ sudo chronyc makestep
 - [ ] DNS резолвинг работает
 
 #### ✅ FreeIPA установка
+
 - [ ] Все пакеты FreeIPA установлены
 - [ ] Установка завершилась без ошибок
-- [ ] Web UI доступен (https://ipa.devops.local)
+- [ ] Web UI доступен (<https://ipa.devops.local>)
 - [ ] Directory Server запущен
 - [ ] Kerberos KDC работает
 - [ ] DNS сервер отвечает
 - [ ] Certificate Authority функционирует
 
 #### ✅ Аутентификация и авторизация
+
 - [ ] `kinit admin` работает без ошибок
 - [ ] LDAP поиск возвращает результаты
 - [ ] Пользователи создаются успешно
@@ -759,12 +759,14 @@ sudo chronyc makestep
 - [ ] SSL сертификаты выпускаются
 
 #### ✅ Интеграция с DevOps
+
 - [ ] GitLab интегрирован с FreeIPA
 - [ ] Ansible использует LDAP для inventory
 - [ ] Grafana подключен к LDAP
 - [ ] Сертификаты распространены на сервисы
 
 #### ✅ Мониторинг и обслуживание
+
 - [ ] Скрипты мониторинга настроены
 - [ ] Логирование работает корректно
 - [ ] Backup процедуры настроены
@@ -773,9 +775,10 @@ sudo chronyc makestep
 
 ---
 
-### 🧠 Итоги 
+### 🧠 Итоги
 
 🔑 **Ключевые принципы:**
+
 - FreeIPA обеспечивает централизованное управление идентификацией
 - Интегрированные сервисы (LDAP, DNS, CA, Kerberos) упрощают администрирование
 - Service accounts обеспечивают безопасную интеграцию с DevOps инструментами
