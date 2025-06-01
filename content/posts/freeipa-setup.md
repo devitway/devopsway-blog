@@ -60,36 +60,38 @@ editPost:
 
 ### 🏗️ Архитектура FreeIPA компонентов
 
-graph TB
-    subgraph FreeIPA ["FreeIPA Server"]
-        DS["Directory Server<br/>389-ds-base"]
-        KDC["Kerberos KDC<br/>krb5-kdc"]
-        CA["Certificate Authority<br/>dogtag-pki"]
-        DNS["DNS Server<br/>bind9"]
-        HTTP["Web Interface<br/>httpd"]
-    end
-
-    subgraph Tools ["DevOps Tools"]
-        GitLab["GitLab"]
-        Ansible["Ansible Tower"]
-        Grafana["Grafana"]
-    end
+```mermaid
+flowchart TB
+    DS[Directory Server<br/>389-ds-base]
+    KDC[Kerberos KDC<br/>krb5-kdc]
+    CA[Certificate Authority<br/>dogtag-pki]
+    DNS[DNS Server<br/>bind9]
+    HTTP[Web Interface<br/>httpd]
     
-    subgraph Clients ["Client Systems"]
-        Linux["Linux Clients"]
-        Windows["Windows AD"]
-        Mobile["Mobile Apps"]
-    end
+    GitLab[GitLab]
+    Ansible[Ansible Tower]
+    Grafana[Grafana]
     
-    DS -.->|LDAP Auth| Tools
-    CA -.->|SSL Certs| Tools
-    KDC -.->|SSO| Tools
-    DNS -.->|Name Resolution| Tools
+    Linux[Linux Clients]
+    Windows[Windows AD]
+    Mobile[Mobile Apps]
     
-    Tools -.->|Authentication| Clients
-    HTTP -.->|Management| Tools
-
----
+    DS --> GitLab
+    DS --> Ansible
+    DS --> Grafana
+    
+    CA --> GitLab
+    CA --> Ansible
+    CA --> Grafana
+    
+    KDC --> GitLab
+    KDC --> Ansible
+    KDC --> Grafana
+    
+    GitLab --> Linux
+    GitLab --> Windows
+    GitLab --> Mobile
+```
 
 ### 🚀 1. Подготовка системы
 
