@@ -1,13 +1,13 @@
 ---
-title: "📦 День 15: Настройка FreeIPA сервера для DevOps команды"
-date: 2025-01-16T10:00:00+03:00
-lastmod: 2025-01-16T10:00:00+03:00
+title: "📦 Настройка FreeIPA сервера для DevOps команды"
+date: 2025-06-01T10:00:00+03:00
+lastmod: 2025-06-01T10:00:00+03:00
 draft: false
-weight: 15
-categories: ["DevOps Essentials"]
-tags: ["freeipa", "ldap", "identity", "authentication", "devops", "security", "ssl", "kerberos"]
+weight: 2
+categories: ["Security", "DevOps Essentials"]
+tags: ["freeipa", "ldap", "kerberos", "dns", "ca", "linux", "security", "authentication", "centos", "rhel"]
 author: "DevOps Way"
-description: "Полный практический гайд по развертыванию FreeIPA сервера: LDAP, Certificate Authority, DNS, интеграция с GitLab, Ansible, Grafana и troubleshooting"
+description: "Пошаговый гайд по установке и настройке FreeIPA сервера: DNS, Kerberos, LDAP, CA. Настройка клиентов, управление пользователями и группами, интеграция с sudo"
 canonical: ""
 showToc: true
 TocOpen: false
@@ -25,8 +25,8 @@ ShowRssButtonInSectionTermList: true
 UseHugoToc: true
 cover:
     image: ""
-    alt: "FreeIPA сервер настройка для DevOps"
-    caption: "Централизованное управление идентификацией в DevOps инфраструктуре"
+    alt: "FreeIPA установка и настройка"
+    caption: "Централизованная аутентификация с FreeIPA"
     relative: false
     hidden: false
 editPost:
@@ -34,6 +34,9 @@ editPost:
     Text: "Предложить изменения"
     appendFilePath: true
 ---
+
+🔒 Категория: Security & DevOps Essentials  
+💡 Цель: Настроить централизованную систему аутентификации FreeIPA
 
 🔒 Категория: DevOps Essentials / Identity Management  
 💡 Цель: Развернуть полнофункциональный FreeIPA сервер с LDAP, CA и DNS для централизованного управления идентификацией в DevOps инфраструктуре
