@@ -1,4 +1,5 @@
-<pre class="mermaid">
-    {{- .Inner | htmlEscape | safeHTML }}
-  </pre>
-  {{ .Page.Store.Set "hasMermaid" true }}
+
+<!-- layouts/_default/_markup/render-codeblock-mermaid.html -->
+<div class="mermaid">
+    {{- .Inner | safeHTML }}
+    </div>
