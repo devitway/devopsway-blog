@@ -1,0 +1,211 @@
+{{ if .Store.Get "hasMermaid" }}
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@latest/dist/mermaid.esm.min.mjs';
+  
+  // Определяем тему на основе PaperMod
+  function getCurrentTheme() {
+    return document.body.classList.contains('dark') ? 'dark' : 'base';
+  }
+  
+  // Инициализируем Mermaid с правильной темой
+  function initMermaid() {
+    const theme = getCurrentTheme();
+    
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: theme,
+      flowchart: {
+        useMaxWidth: true,
+        htmlLabels: true,
+        curve: 'cardinal'
+      },
+      sequence: {
+        diagramMarginX: 50,
+        diagramMarginY: 10,
+        actorMargin: 50,
+        width: 150,
+        height: 65,
+        boxMargin: 10,
+        boxTextMargin: 5,
+        noteMargin: 10,
+        messageMargin: 35
+      },
+      gantt: {
+        titleTopMargin: 25,
+        barHeight: 20,
+        fontFamily: '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif',
+        fontSize: 11,
+        gridLineStartPadding: 35,
+        bottomPadding: 25,
+        rightPadding: 100
+      },
+      pie: {
+        textPosition: 0.75
+      },
+      journey: {
+        diagramMarginX: 50,
+        diagramMarginY: 10,
+        leftMargin: 150,
+        width: 150,
+        height: 50,
+        boxMargin: 10,
+        boxTextMargin: 5,
+        noteMargin: 10,
+        messageMargin: 35
+      }
+    });
+  }
+  
+  // Перерисовка диаграмм при смене темы
+  function rerenderMermaidDiagrams() {
+    const newTheme = getCurrentTheme();
+    
+    // Сохраняем оригинальный контент и очищаем обработанные диаграммы
+    document.querySelectorAll('.mermaid').forEach((element) => {
+      const originalContent = element.getAttribute('data-original');
+      if (originalContent) {
+        element.innerHTML = originalContent;
+        element.removeAttribute('data-processed');
+      }
+    });
+    
+    // Переинициализируем Mermaid с новой темой
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: newTheme,
+      flowchart: {
+        useMaxWidth: true,
+        htmlLabels: true,
+        curve: 'cardinal'
+      },
+      sequence: {
+        diagramMarginX: 50,
+        diagramMarginY: 10,
+        actorMargin: 50,
+        width: 150,
+        height: 65,
+        boxMargin: 10,
+        boxTextMargin: 5,
+        noteMargin: 10,
+        messageMargin: 35
+      },
+      gantt: {
+        titleTopMargin: 25,
+        barHeight: 20,
+        fontFamily: '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif',
+        fontSize: 11,
+        gridLineStartPadding: 35,
+        bottomPadding: 25,
+        rightPadding: 100
+      }
+    });
+    
+    // Рендерим диаграммы заново
+    mermaid.run({
+      querySelector: '.mermaid'
+    });
+  }
+  
+  // Отслеживаем изменения темы в PaperMod
+  const observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+      if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+        // Небольшая задержка для корректного переключения
+        setTimeout(rerenderMermaidDiagrams, 100);
+      }
+    });
+  });
+  
+  // Запускаем наблюдение за изменениями class на body
+  observer.observe(document.body, {
+    attributes: true,
+    attributeFilter: ['class']
+  });
+  
+  // Инициализируем Mermaid при загрузке страницы
+  document.addEventListener('DOMContentLoaded', function() {
+    initMermaid();
+  });
+  
+  // Fallback для случаев, когда DOMContentLoaded уже произошел
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMermaid);
+  } else {
+    initMermaid();
+  }
+</script>
+
+<!-- Дополнительные стили для Mermaid диаграмм -->
+<style>
+  .mermaid-wrapper {
+    margin: 1.5rem 0;
+    text-align: center;
+  }
+  
+  .mermaid {
+    background: var(--code-bg, #f8f8f8);
+    border: 1px solid var(--border, #e1e4e8);
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 0 auto;
+    max-width: 100%;
+    overflow-x: auto;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  }
+  
+  /* Темная тема */
+  [data-theme="dark"] .mermaid,
+  .dark .mermaid {
+    background: var(--code-bg, #2d3748);
+    border-color: var(--border, #4a5568);
+    color: var(--content, #e2e8f0);
+  }
+  
+  /* Адаптивность для мобильных */
+  @media (max-width: 768px) {
+    .mermaid {
+      font-size: 12px;
+      padding: 0.5rem;
+    }
+    
+    .mermaid-wrapper {
+      margin: 1rem -1rem; /* Выходим за границы контейнера */
+    }
+  }
+  
+  /* Стили для скроллбара в диаграммах */
+  .mermaid::-webkit-scrollbar {
+    height: 8px;
+  }
+  
+  .mermaid::-webkit-scrollbar-track {
+    background: var(--code-bg, #f1f1f1);
+    border-radius: 4px;
+  }
+  
+  .mermaid::-webkit-scrollbar-thumb {
+    background: var(--border, #c1c1c1);
+    border-radius: 4px;
+  }
+  
+  .mermaid::-webkit-scrollbar-thumb:hover {
+    background: var(--tertiary, #a1a1a1);
+  }
+  
+  /* Стили для темной темы скроллбара */
+  [data-theme="dark"] .mermaid::-webkit-scrollbar-track,
+  .dark .mermaid::-webkit-scrollbar-track {
+    background: var(--code-bg, #2d3748);
+  }
+  
+  [data-theme="dark"] .mermaid::-webkit-scrollbar-thumb,
+  .dark .mermaid::-webkit-scrollbar-thumb {
+    background: var(--border, #4a5568);
+  }
+  
+  [data-theme="dark"] .mermaid::-webkit-scrollbar-thumb:hover,
+  .dark .mermaid::-webkit-scrollbar-thumb:hover {
+    background: var(--tertiary, #718096);
+  }
+</style>
+{{ end }}
