@@ -740,6 +740,7 @@ echo "3. Прочитайте руководство: cat TEAM_COMMIT_GUIDE.md"
 EOF
 
 chmod +x setup-team-standards.sh
+./setup-team-standards.sh
 ```
 
 ---
