@@ -1031,7 +1031,5 @@ style D fill:#f3e5f5
 Перейти к Дню 2: Merge Hell →
 {{< /button >}}
 
-```
 📱 **Telegram:** [@DevITWay](https://t.me/DevITWay)  
 🌐 **Сайт:** [devopsway.ru](https://devopsway.ru)
-
