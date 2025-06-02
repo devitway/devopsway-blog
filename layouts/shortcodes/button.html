@@ -1,0 +1,9 @@
+{{- $href := .Get "href" | default "#" -}}
+{{- $class := .Get "class" | default "btn-primary" -}}
+{{- $target := .Get "target" | default "_self" -}}
+{{- $icon := .Get "icon" -}}
+
+<a href="{{ $href }}" class="button {{ $class }}" target="{{ $target }}">
+  {{ if $icon }}<i class="{{ $icon }}"></i>{{ end }}
+  {{ .Inner | markdownify }}
+</a>
