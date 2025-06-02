@@ -1,0 +1,9 @@
+<details class="expand-container">
+    <summary class="expand-header">
+      <span class="expand-icon">▶</span>
+      {{ .Get 0 | default "Развернуть" }}
+    </summary>
+    <div class="expand-content">
+      {{ .Inner | markdownify }}
+    </div>
+  </details>
