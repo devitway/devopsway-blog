@@ -620,7 +620,7 @@ git team-stats     # Статистика команды
 
 - Шаблон: `cat .gitmessage.txt`
 - Валидация: `git quality-check`
-- Стандарты: [ссылка]
+- Стандарты: [Conventional Commits](https://www.conventionalcommits.org)
 
 ```
 
