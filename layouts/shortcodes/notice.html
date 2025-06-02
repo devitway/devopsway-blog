@@ -1,0 +1,9 @@
+<div class="notice notice-{{ .Get 0 | default "info" }}">
+    <div class="notice-title">
+      {{ if eq (.Get 0) "warning" }}⚠️{{ else if eq (.Get 0) "danger" }}🚨{{ else if eq (.Get 0) "success" }}✅{{ else }}ℹ️{{ end }}
+      {{ .Get 1 | default "Примечание" }}
+    </div>
+    <div class="notice-content">
+      {{ .Inner | markdownify }}
+    </div>
+  </div>
