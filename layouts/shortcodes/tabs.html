@@ -1,0 +1,28 @@
+<div class="tabs-container">
+    <div class="tabs-nav">
+      {{ range $index, $tab := split (.Get 0) "," }}
+      <button class="tab-button{{ if eq $index 0 }} active{{ end }}" onclick="showTab(event, 'tab-{{ $index }}')">
+        {{ trim $tab " " }}
+      </button>
+      {{ end }}
+    </div>
+    <div class="tabs-content">
+      {{ .Inner }}
+    </div>
+  </div>
+  
+  <script>
+  function showTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tab-content");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tab-button");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+  </script>
