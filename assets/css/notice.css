@@ -1,0 +1,35 @@
+.notice {
+    margin: 1rem 0;
+    padding: 1rem;
+    border-left: 4px solid;
+    border-radius: 4px;
+  }
+  
+  .notice-info {
+    background-color: #e3f2fd;
+    border-color: #2196f3;
+    color: #0d47a1;
+  }
+  
+  .notice-warning {
+    background-color: #fff3e0;
+    border-color: #ff9800;
+    color: #e65100;
+  }
+  
+  .notice-danger {
+    background-color: #ffebee;
+    border-color: #f44336;
+    color: #c62828;
+  }
+  
+  .notice-success {
+    background-color: #e8f5e8;
+    border-color: #4caf50;
+    color: #2e7d32;
+  }
+  
+  .notice-title {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
