@@ -191,9 +191,9 @@ cat << 'EOF' > STRUCTURED_COMMITS_GUIDE.md
 ## Формат:
 <тип>(<область>): <описание>
 
-[необязательное тело]
+Подробное объяснение изменений (если нужно)
 
-[необязательный футер]
+Closes: #123
 
 ## Типы:
 - **feat**: новая функциональность
@@ -620,8 +620,7 @@ git team-stats     # Статистика команды
 
 - Шаблон: `cat .gitmessage.txt`
 - Валидация: `git quality-check`
-- Стандарты: https://conventionalcommits.org
-EOF
+- Стандарты: [ссылка]
 
 ```
 
@@ -881,7 +880,7 @@ Closes: PORTFOLIO-001"
 
 ### 🔗 Дополнительные ресурсы
 
-- [Conventional Commits](https://conventionalcommits.org/) - официальная спецификация
+- [Conventional Commits][ссылка] - официальная спецификация
 - [Commitlint](https://commitlint.js.org/) - инструмент валидации коммитов
 - [Husky](https://typicode.github.io/husky/) - Git хуки для JavaScript проектов
 - [Semantic Versioning](https://semver.org/) - семантическое версионирование
@@ -911,3 +910,5 @@ Closes: PORTFOLIO-001"
 
 📱 **Telegram:** [@DevITWay](https://t.me/DevITWay)  
 🌐 **Сайт:** [devopsway.ru](https://devopsway.ru)
+
+[ссылка]: https://conventionalcommits.org
