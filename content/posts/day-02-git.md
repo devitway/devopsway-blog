@@ -1416,19 +1416,6 @@ TRUNK-BASED DEVELOPMENT:
 Closes: PORTFOLIO-002"
 ```
 
----
-
-title: "День 2 Git Mastery завершен успешно!"
-date: 2025-01-08
-draft: false
-tags: ["git", "dora-metrics", "trunk-based", "feature-flags", "git-mastery"]
-categories: ["Git Mastery Series", "DevOps Practice"]
-series: "Git Mastery"
-author: "Pavel"
-description: "Результаты второго дня Git Mastery Series: от merge hell к DORA Elite метрикам"
-featured_image: "/images/git-mastery-day2-results.png"
----
-
 # 🎉 ДЕНЬ 2 ЗАВЕРШЕН УСПЕШНО
 
 ## 📊 Созданные артефакты
