@@ -2,7 +2,11 @@
 {{ partial "math.html" . }}
 
 {{- /* Подключение кастомных стилей для математики */ -}}
-<link rel="stylesheet" href="{{ "css/extended/math.css" | absURL }}">
+{{ $mathCSS := resources.Get "css/extended/math.css" }}
+{{ if $mathCSS }}
+  {{ $mathCSS = $mathCSS | resources.Minify }}
+  <link rel="stylesheet" href="{{ $mathCSS.RelPermalink }}">
+{{ end }}
 
 {{- /* Дополнительные мета-теги для лучшего SEO */ -}}
 <meta name="robots" content="index, follow">
