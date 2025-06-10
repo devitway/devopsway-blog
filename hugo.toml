@@ -399,3 +399,13 @@ title = "DevOps Way - Практические гайды"
 # languageName = "English"
 # weight = 2
 # title = "DevOps Way - Practical Guides"
+
+[markup]
+[markup.goldmark]
+[markup.goldmark.renderer]
+unsafe = true  # Включает поддержку HTML в Markdown
+
+[markup.highlight]
+style = "github-dark"
+lineNos = true
+codeFences = true
