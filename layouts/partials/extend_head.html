@@ -1,6 +1,9 @@
 {{- /* Поддержка математических формул MathJax */ -}}
 {{ partial "math.html" . }}
 
+{{- /* Подключение кастомных стилей для математики */ -}}
+<link rel="stylesheet" href="{{ "css/extended/math.css" | absURL }}">
+
 {{- /* Дополнительные мета-теги для лучшего SEO */ -}}
 <meta name="robots" content="index, follow">
 <meta name="googlebot" content="index, follow">
