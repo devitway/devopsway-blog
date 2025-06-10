@@ -90,9 +90,9 @@ series: "DevOps Architecture"
 
 ### 📊 Математическая модель
 
-
-
+<div class="math-block">
 $$N = \left\lceil \log_2 \left( C^{w_C} \times R^{w_R} \times I^{w_I} \right) \right\rceil + k$$
+</div>
 
 где:
 - $C$ — Критичность (1–10)
