@@ -18,7 +18,7 @@ seo:
   canonical: ""
   noindex: false
 toc: true
-math: false
+math: true
 highlight: true
 author: "DevOps School"
 featured: true
