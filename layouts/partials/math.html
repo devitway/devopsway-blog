@@ -1,0 +1,36 @@
+{{ if .Params.math }}
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true,
+      packages: {'[+]': ['ams', 'newcommand', 'configMacros']},
+      macros: {
+        lceil: '\\left\\lceil',
+        rceil: '\\right\\rceil',
+        geq: '\\geq',
+        leq: '\\leq',
+        times: '\\times',
+        log: '\\log'
+      }
+    },
+    svg: {
+      fontCache: 'global'
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    startup: {
+      pageReady: () => {
+        return MathJax.startup.defaultPageReady().then(() => {
+          console.log('✅ MathJax загружен успешно');
+        });
+      }
+    }
+  };
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+{{ end }}
