@@ -2181,6 +2181,7 @@ create_cert_service_account "jenkins" "ci.devops.local"
 ```
 
 **Short-lived tokens:**
+
 ```python
 # freeipa-token-service.py
 #!/usr/bin/env python3
@@ -2221,7 +2222,12 @@ class FreeIPATokenService:
     def generate_token(self, username, scope="read", ttl_minutes=15):
         """Генерация short-lived JWT токена"""
         payload = {
+```
 
-📱 Telegram: [@DevITWay](https://t.me/DevITWay)
+## 📞 КОНТАКТНАЯ ИНФОРМАЦИЯ
 
-🌐 Сайт: [devopsway.ru](devopsway.ru)
+📱 **Telegram:** [@DevITWay](https://t.me/DevITWay)
+
+🌐 **Сайт:** [devopsway.ru](https://devopsway.ru/)
+
+---
