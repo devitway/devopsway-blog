@@ -90,6 +90,8 @@ series: "DevOps Architecture"
 
 ### 📊 Математическая модель
 
+
+
 $$N = \left\lceil \log_2 \left( C^{w_C} \times R^{w_R} \times I^{w_I} \right) \right\rceil + k$$
 
 где:
