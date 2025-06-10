@@ -92,10 +92,9 @@ series: "DevOps Architecture"
 
 <div style="margin: 60px 0; padding: 30px 0; text-align: center;">
 $$N = \left\lceil \log_2 \left( C^{w_C} \times R^{w_R} \times I^{w_I} \right) \right\rceil + k$$
-
 </div>
 
-<div style="margin-top: 40px;">
+
 где:
 - $C$ — Критичность (1–10)
 - $R$ — Уровень риска (1–10)
@@ -103,7 +102,7 @@ $$N = \left\lceil \log_2 \left( C^{w_C} \times R^{w_R} \times I^{w_I} \right) \r
 - $w_C, w_R, w_I$ — веса влияния соответствующих факторов (числа $\geq 0$)
 - $k$ — базовое минимальное количество контуров безопасности (например, 2)
 - $\lceil \cdot \rceil$ — функция округления вверх
-</div>
+
 ## Пример установки параметров
 
 - $w_C = 1.2$ — вес критичности (чуть выше)
