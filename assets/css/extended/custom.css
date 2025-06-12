@@ -1,423 +1,174 @@
 /* =============================================================================
-   ИСПРАВЛЕНИЕ КОПИРОВАНИЯ НОМЕРОВ СТРОК
+   ОТЛАДКА: ОПРЕДЕЛЯЕМ КАКИЕ СЕЛЕКТОРЫ РЕАЛЬНО РАБОТАЮТ
    ============================================================================= */
 
-/* Полностью исключаем номера строк из выделения и копирования */
+/* Проверяем все возможные селекторы цветными рамками */
+html[data-theme="dark"] .highlight { 
+  border: 5px solid red !important; 
+  background: #161b22 !important;
+}
+
+body[data-theme="dark"] .highlight { 
+  border: 5px solid blue !important; 
+  background: #161b22 !important;
+}
+
+[data-theme="dark"] .highlight { 
+  border: 5px solid green !important; 
+  background: #161b22 !important;
+}
+
+.dark .highlight { 
+  border: 5px solid yellow !important; 
+  background: #161b22 !important;
+}
+
+html.dark .highlight { 
+  border: 5px solid purple !important; 
+  background: #161b22 !important;
+}
+
+body.dark .highlight { 
+  border: 5px solid orange !important; 
+  background: #161b22 !important;
+}
+
+/* Дополнительные варианты */
+html[theme="dark"] .highlight { 
+  border: 5px solid pink !important; 
+  background: #161b22 !important;
+}
+
+body[theme="dark"] .highlight { 
+  border: 5px solid cyan !important; 
+  background: #161b22 !important;
+}
+
+[theme="dark"] .highlight { 
+  border: 5px solid lime !important; 
+  background: #161b22 !important;
+}
+
+/* Проверяем селекторы по классам */
+.theme-dark .highlight { 
+  border: 5px solid brown !important; 
+  background: #161b22 !important;
+}
+
+.dark-theme .highlight { 
+  border: 5px solid gray !important; 
+  background: #161b22 !important;
+}
+
+.dark-mode .highlight { 
+  border: 5px solid navy !important; 
+  background: #161b22 !important;
+}
+
+/* =============================================================================
+   ПРИНУДИТЕЛЬНОЕ ИСПРАВЛЕНИЕ ДЛЯ ВСЕХ HIGHLIGHT БЛОКОВ
+   ============================================================================= */
+
+/* Ядерный вариант - перебиваем ВСЕ */
+.highlight,
+div.highlight,
+figure.highlight,
+pre.highlight {
+  background: #161b22 !important;
+  border: 1px solid #30363d !important;
+  color: #e6edf3 !important;
+}
+
+.highlight pre,
+div.highlight pre,
+figure.highlight pre,
+pre.highlight code {
+  background: #161b22 !important;
+  color: #e6edf3 !important;
+}
+
+.highlight code,
+.highlight pre code,
+div.highlight code,
+figure.highlight code {
+  background: transparent !important;
+  color: #e6edf3 !important;
+}
+
+/* =============================================================================
+   ИСПРАВЛЕНИЕ НОМЕРОВ СТРОК - ЯДЕРНЫЙ ВАРИАНТ
+   ============================================================================= */
+
+/* Убираем номера строк из DOM при копировании */
 .highlight .lnt,
-.highlight .lnl {
-  user-select: none !important;
-  -webkit-user-select: none !important;
-  -moz-user-select: none !important;
-  -ms-user-select: none !important;
-  pointer-events: none !important;
-}
-
-/* Альтернативный способ - через псевдоэлементы */
-.highlight .lnt::before,
-.highlight .lnt::after {
-  user-select: none !important;
-  -webkit-user-select: none !important;
-  -moz-user-select: none !important;
-  -ms-user-select: none !important;
-}
-
-/* =============================================================================
-   АГРЕССИВНОЕ ИСПРАВЛЕНИЕ ТЕМНОЙ ТЕМЫ + БЕЗ НОМЕРОВ СТРОК
-   ============================================================================= */
-
-/* Темная тема - все возможные селекторы */
-html[data-theme="dark"] .highlight,
-body[data-theme="dark"] .highlight,
-[data-theme="dark"] .highlight,
-.dark .highlight,
-html.dark .highlight,
-body.dark .highlight {
-  background: #161b22 !important;
-  border: 1px solid #30363d !important;
-  color: #e6edf3 !important;
-  border-radius: 8px !important;
-  margin: 1.5rem 0 !important;
-  overflow: hidden !important;
-  position: relative !important;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
-}
-
-html[data-theme="dark"] .highlight pre,
-body[data-theme="dark"] .highlight pre,
-[data-theme="dark"] .highlight pre,
-.dark .highlight pre,
-html.dark .highlight pre,
-body.dark .highlight pre {
-  background: #161b22 !important;
-  color: #e6edf3 !important;
-  border: none !important;
-  border-radius: 0 !important;
-  padding: 1rem 1.25rem !important;
-  overflow-x: auto !important;
-  margin: 0 !important;
-  line-height: 1.6 !important;
-  font-size: 0.875rem !important;
-  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Cascadia Code', 'Courier New', monospace !important;
-  font-weight: 400 !important;
-}
-
-html[data-theme="dark"] .highlight pre code,
-body[data-theme="dark"] .highlight pre code,
-[data-theme="dark"] .highlight pre code,
-.dark .highlight pre code,
-html.dark .highlight pre code,
-body.dark .highlight pre code {
-  background: transparent !important;
-  color: #e6edf3 !important;
-  border: none !important;
-  padding: 0 !important;
-  font-size: inherit !important;
-  font-family: inherit !important;
-  white-space: pre !important;
-  font-weight: inherit !important;
-}
-
-/* Номера строк - темная тема (НЕ КОПИРУЮТСЯ) */
-html[data-theme="dark"] .highlight .lnt,
-body[data-theme="dark"] .highlight .lnt,
-[data-theme="dark"] .highlight .lnt,
-.dark .highlight .lnt,
-html.dark .highlight .lnt,
-body.dark .highlight .lnt {
-  background: #21262d !important;
-  color: #7d8590 !important;
-  border-right: 1px solid #30363d !important;
-  padding: 0 0.75rem !important;
-  margin-right: 1rem !important;
-  user-select: none !important;
-  -webkit-user-select: none !important;
-  -moz-user-select: none !important;
-  -ms-user-select: none !important;
-  pointer-events: none !important;
-  font-size: 0.8rem !important;
-  font-weight: 400 !important;
-  display: inline-block !important;
-  min-width: 2.5rem !important;
-  text-align: right !important;
-}
-
-/* Светлая тема - все возможные селекторы */
-html:not([data-theme="dark"]) .highlight,
-body:not([data-theme="dark"]) .highlight,
-:root .highlight,
-html:not(.dark) .highlight,
-body:not(.dark) .highlight {
-  background: #ffffff !important;
-  border: 1px solid #e2e8f0 !important;
-  color: #0f172a !important;
-  border-radius: 8px !important;
-  margin: 1.5rem 0 !important;
-  overflow: hidden !important;
-  position: relative !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
-}
-
-html:not([data-theme="dark"]) .highlight pre,
-body:not([data-theme="dark"]) .highlight pre,
-:root .highlight pre,
-html:not(.dark) .highlight pre,
-body:not(.dark) .highlight pre {
-  background: #ffffff !important;
-  color: #0f172a !important;
-  border: none !important;
-  border-radius: 0 !important;
-  padding: 1rem 1.25rem !important;
-  overflow-x: auto !important;
-  margin: 0 !important;
-  line-height: 1.6 !important;
-  font-size: 0.875rem !important;
-  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Cascadia Code', 'Courier New', monospace !important;
-  font-weight: 400 !important;
-}
-
-html:not([data-theme="dark"]) .highlight pre code,
-body:not([data-theme="dark"]) .highlight pre code,
-:root .highlight pre code,
-html:not(.dark) .highlight pre code,
-body:not(.dark) .highlight pre code {
-  background: transparent !important;
-  color: #0f172a !important;
-  border: none !important;
-  padding: 0 !important;
-  font-size: inherit !important;
-  font-family: inherit !important;
-  white-space: pre !important;
-  font-weight: inherit !important;
-}
-
-/* Номера строк - светлая тема (НЕ КОПИРУЮТСЯ) */
-html:not([data-theme="dark"]) .highlight .lnt,
-body:not([data-theme="dark"]) .highlight .lnt,
-:root .highlight .lnt,
-html:not(.dark) .highlight .lnt,
-body:not(.dark) .highlight .lnt {
-  background: #f8fafc !important;
-  color: #6b7280 !important;
-  border-right: 1px solid #e2e8f0 !important;
-  padding: 0 0.75rem !important;
-  margin-right: 1rem !important;
-  user-select: none !important;
-  -webkit-user-select: none !important;
-  -moz-user-select: none !important;
-  -ms-user-select: none !important;
-  pointer-events: none !important;
-  font-size: 0.8rem !important;
-  font-weight: 400 !important;
-  display: inline-block !important;
-  min-width: 2.5rem !important;
-  text-align: right !important;
-}
-
-/* =============================================================================
-   SYNTAX HIGHLIGHTING - ТЕМНАЯ ТЕМА
-   ============================================================================= */
-
-/* Комментарии - темная */
-html[data-theme="dark"] .highlight .c,
-html[data-theme="dark"] .highlight .c1,
-html[data-theme="dark"] .highlight .cm,
-body[data-theme="dark"] .highlight .c,
-body[data-theme="dark"] .highlight .c1,
-body[data-theme="dark"] .highlight .cm,
-[data-theme="dark"] .highlight .c,
-[data-theme="dark"] .highlight .c1,
-[data-theme="dark"] .highlight .cm,
-.dark .highlight .c,
-.dark .highlight .c1,
-.dark .highlight .cm {
-  color: #7d8590 !important;
-  font-style: italic !important;
-}
-
-/* Строки - темная */
-html[data-theme="dark"] .highlight .s,
-html[data-theme="dark"] .highlight .s1,
-html[data-theme="dark"] .highlight .s2,
-body[data-theme="dark"] .highlight .s,
-body[data-theme="dark"] .highlight .s1,
-body[data-theme="dark"] .highlight .s2,
-[data-theme="dark"] .highlight .s,
-[data-theme="dark"] .highlight .s1,
-[data-theme="dark"] .highlight .s2,
-.dark .highlight .s,
-.dark .highlight .s1,
-.dark .highlight .s2 {
-  color: #a5d6ff !important;
-}
-
-/* Ключевые слова - темная */
-html[data-theme="dark"] .highlight .k,
-html[data-theme="dark"] .highlight .kd,
-html[data-theme="dark"] .highlight .kn,
-body[data-theme="dark"] .highlight .k,
-body[data-theme="dark"] .highlight .kd,
-body[data-theme="dark"] .highlight .kn,
-[data-theme="dark"] .highlight .k,
-[data-theme="dark"] .highlight .kd,
-[data-theme="dark"] .highlight .kn,
-.dark .highlight .k,
-.dark .highlight .kd,
-.dark .highlight .kn {
-  color: #ff7b72 !important;
-  font-weight: 600 !important;
-}
-
-/* Функции - темная */
-html[data-theme="dark"] .highlight .nf,
-html[data-theme="dark"] .highlight .nb,
-body[data-theme="dark"] .highlight .nf,
-body[data-theme="dark"] .highlight .nb,
-[data-theme="dark"] .highlight .nf,
-[data-theme="dark"] .highlight .nb,
-.dark .highlight .nf,
-.dark .highlight .nb {
-  color: #d2a8ff !important;
-  font-weight: 600 !important;
-}
-
-/* Переменные - темная */
-html[data-theme="dark"] .highlight .n,
-html[data-theme="dark"] .highlight .nv,
-body[data-theme="dark"] .highlight .n,
-body[data-theme="dark"] .highlight .nv,
-[data-theme="dark"] .highlight .n,
-[data-theme="dark"] .highlight .nv,
-.dark .highlight .n,
-.dark .highlight .nv {
-  color: #ffa657 !important;
-}
-
-/* Числа - темная */
-html[data-theme="dark"] .highlight .m,
-html[data-theme="dark"] .highlight .mi,
-body[data-theme="dark"] .highlight .m,
-body[data-theme="dark"] .highlight .mi,
-[data-theme="dark"] .highlight .m,
-[data-theme="dark"] .highlight .mi,
-.dark .highlight .m,
-.dark .highlight .mi {
-  color: #79c0ff !important;
-}
-
-/* Операторы - темная */
-html[data-theme="dark"] .highlight .o,
-body[data-theme="dark"] .highlight .o,
-[data-theme="dark"] .highlight .o,
-.dark .highlight .o {
-  color: #ff7b72 !important;
-}
-
-/* =============================================================================
-   SYNTAX HIGHLIGHTING - СВЕТЛАЯ ТЕМА
-   ============================================================================= */
-
-/* Комментарии - светлая */
-html:not([data-theme="dark"]) .highlight .c,
-html:not([data-theme="dark"]) .highlight .c1,
-html:not([data-theme="dark"]) .highlight .cm,
-body:not([data-theme="dark"]) .highlight .c,
-body:not([data-theme="dark"]) .highlight .c1,
-body:not([data-theme="dark"]) .highlight .cm,
-html:not(.dark) .highlight .c,
-html:not(.dark) .highlight .c1,
-html:not(.dark) .highlight .cm {
-  color: #6b7280 !important;
-  font-style: italic !important;
-}
-
-/* Строки - светлая */
-html:not([data-theme="dark"]) .highlight .s,
-html:not([data-theme="dark"]) .highlight .s1,
-html:not([data-theme="dark"]) .highlight .s2,
-body:not([data-theme="dark"]) .highlight .s,
-body:not([data-theme="dark"]) .highlight .s1,
-body:not([data-theme="dark"]) .highlight .s2,
-html:not(.dark) .highlight .s,
-html:not(.dark) .highlight .s1,
-html:not(.dark) .highlight .s2 {
-  color: #059669 !important;
-}
-
-/* Ключевые слова - светлая */
-html:not([data-theme="dark"]) .highlight .k,
-html:not([data-theme="dark"]) .highlight .kd,
-html:not([data-theme="dark"]) .highlight .kn,
-body:not([data-theme="dark"]) .highlight .k,
-body:not([data-theme="dark"]) .highlight .kd,
-body:not([data-theme="dark"]) .highlight .kn,
-html:not(.dark) .highlight .k,
-html:not(.dark) .highlight .kd,
-html:not(.dark) .highlight .kn {
-  color: #dc2626 !important;
-  font-weight: 600 !important;
-}
-
-/* Функции - светлая */
-html:not([data-theme="dark"]) .highlight .nf,
-html:not([data-theme="dark"]) .highlight .nb,
-body:not([data-theme="dark"]) .highlight .nf,
-body:not([data-theme="dark"]) .highlight .nb,
-html:not(.dark) .highlight .nf,
-html:not(.dark) .highlight .nb {
-  color: #2563eb !important;
-  font-weight: 600 !important;
-}
-
-/* Переменные - светлая */
-html:not([data-theme="dark"]) .highlight .n,
-html:not([data-theme="dark"]) .highlight .nv,
-body:not([data-theme="dark"]) .highlight .n,
-body:not([data-theme="dark"]) .highlight .nv,
-html:not(.dark) .highlight .n,
-html:not(.dark) .highlight .nv {
-  color: #ea580c !important;
-}
-
-/* Числа - светлая */
-html:not([data-theme="dark"]) .highlight .m,
-html:not([data-theme="dark"]) .highlight .mi,
-body:not([data-theme="dark"]) .highlight .m,
-body:not([data-theme="dark"]) .highlight .mi,
-html:not(.dark) .highlight .m,
-html:not(.dark) .highlight .mi {
-  color: #7c3aed !important;
-}
-
-/* Операторы - светлая */
-html:not([data-theme="dark"]) .highlight .o,
-body:not([data-theme="dark"]) .highlight .o,
-html:not(.dark) .highlight .o {
-  color: #1f2937 !important;
-}
-
-/* =============================================================================
-   КНОПКА КОПИРОВАНИЯ
-   ============================================================================= */
-
-.copy-code {
+.highlight .lnl,
+.lnt,
+.lnl,
+span.lnt,
+span.lnl,
+td.lnt,
+td.lnl {
   position: absolute !important;
-  top: 0.75rem !important;
-  right: 0.75rem !important;
-  border-radius: 6px !important;
-  padding: 0.375rem 0.625rem !important;
-  font-size: 0.75rem !important;
-  font-weight: 500 !important;
-  cursor: pointer !important;
-  z-index: 10 !important;
-  transition: all 0.2s ease !important;
-  font-family: system-ui, -apple-system, sans-serif !important;
-  opacity: 0.8 !important;
+  left: -9999px !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+  display: none !important;
 }
 
-/* Темная тема - кнопка */
-html[data-theme="dark"] .copy-code,
-body[data-theme="dark"] .copy-code,
-[data-theme="dark"] .copy-code,
-.dark .copy-code {
-  background: rgba(33, 38, 45, 0.9) !important;
-  color: #e6edf3 !important;
-  border: 1px solid #30363d !important;
+/* Альтернативный способ - через CSS counters */
+.highlight pre {
+  counter-reset: line-number;
 }
 
-/* Светлая тема - кнопка */
-html:not([data-theme="dark"]) .copy-code,
-body:not([data-theme="dark"]) .copy-code,
-html:not(.dark) .copy-code {
-  background: rgba(255, 255, 255, 0.9) !important;
-  color: #374151 !important;
-  border: 1px solid #d1d5db !important;
+.highlight pre code {
+  position: relative;
+}
+
+.highlight pre code::before {
+  counter-increment: line-number;
+  content: counter(line-number);
+  position: absolute;
+  left: -3rem;
+  width: 2rem;
+  text-align: right;
+  color: #7d8590;
+  background: #21262d;
+  border-right: 1px solid #30363d;
+  padding: 0 0.5rem;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
 }
 
 /* =============================================================================
-   АДАПТИВНОСТЬ
+   ИНСТРУКЦИИ ПО ОТЛАДКЕ
    ============================================================================= */
 
-@media (max-width: 768px) {
-  .highlight {
-    margin: 1rem 0 !important;
-    border-radius: 6px !important;
-  }
-  
-  .highlight pre {
-    font-size: 0.8rem !important;
-    padding: 0.875rem 1rem !important;
-  }
-  
-  .copy-code {
-    top: 0.5rem !important;
-    right: 0.5rem !important;
-    padding: 0.25rem 0.5rem !important;
-    font-size: 0.7rem !important;
-  }
-  
-  .highlight .lnt {
-    min-width: 2rem !important;
-    padding: 0 0.5rem !important;
-    margin-right: 0.75rem !important;
-  }
-}
+/*
+ИНСТРУКЦИИ:
+1. Примените этот CSS
+2. Переключитесь на темную тему
+3. Посмотрите какого цвета рамка вокруг блоков кода
+4. Сообщите цвет рамки - это покажет какой селектор работает
+
+ЦВЕТА РАМОК:
+- Красная: html[data-theme="dark"]
+- Синяя: body[data-theme="dark"] 
+- Зеленая: [data-theme="dark"]
+- Желтая: .dark
+- Фиолетовая: html.dark
+- Оранжевая: body.dark
+- Розовая: html[theme="dark"]
+- Голубая: body[theme="dark"]
+- Лаймовая: [theme="dark"]
+- Коричневая: .theme-dark
+- Серая: .dark-theme
+- Темно-синяя: .dark-mode
+
+Если НЕТ цветной рамки - значит тема использует другие селекторы!
+*/
