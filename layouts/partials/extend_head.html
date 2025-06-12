@@ -1,49 +1,30 @@
-{{/* Улучшенная темная тема - DevOps Way Blog */}}
-
-{{/* Meta теги для темы */}}
-<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)">
-
-{{/* Предзагрузка шрифтов для лучшей производительности */}}
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-{{/* Подключаем наши улучшенные скрипты */}}
-{{ $themeToggle := resources.Get "js/theme-toggle.js" | resources.Minify }}
-{{ $codeCopy := resources.Get "js/code-copy.js" | resources.Minify }}
-
+<!-- Исправление номеров строк JavaScript -->
 <script>
-// Устанавливаем тему до загрузки страницы для предотвращения мигания
+// Встроенный скрипт для немедленного исправления
 (function() {
-  const savedTheme = localStorage.getItem('pref-theme') || 'auto';
-  const getSystemTheme = () => window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  const effectiveTheme = savedTheme === 'auto' ? getSystemTheme() : savedTheme;
-  
-  document.documentElement.setAttribute('data-theme', effectiveTheme);
-  document.body.classList.add(effectiveTheme);
+    function hideLineNumbers() {
+        const lineNumbers = document.querySelectorAll('.lnt, .lnl, span.lnt, span.lnl, td.lnt, td.lnl');
+        lineNumbers.forEach(el => {
+            el.style.display = 'none';
+            el.style.visibility = 'hidden';
+            el.style.userSelect = 'none';
+            el.style.pointerEvents = 'none';
+            el.setAttribute('aria-hidden', 'true');
+        });
+    }
+    
+    // Запускаем немедленно
+    hideLineNumbers();
+    
+    // Запускаем после загрузки DOM
+    document.addEventListener('DOMContentLoaded', hideLineNumbers);
+    
+    // Наблюдаем за изменениями
+    const observer = new MutationObserver(hideLineNumbers);
+    observer.observe(document.body, { childList: true, subtree: true });
 })();
 </script>
 
-<script defer src="{{ $themeToggle.RelPermalink }}"></script>
-<script defer src="{{ $codeCopy.RelPermalink }}"></script>
-
-{{/* Structured Data для лучшего SEO */}}
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Blog",
-  "name": "{{ .Site.Title }}",
-  "description": "{{ .Site.Params.description }}",
-  "url": "{{ .Site.BaseURL }}",
-  "author": {
-    "@type": "Person",
-    "name": "{{ .Site.Params.author }}"
-  },
-  "inLanguage": "ru-RU"
-}
-</script>
-
-{{/* Дополнительные мета-теги для PWA */}}
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="mobile-web-app-capable" content="yes">
+<!-- Внешний JavaScript файл -->
+{{ $fixLineNumbers := resources.Get "js/fix-line-numbers.js" | resources.Minify }}
+<script defer src="{{ $fixLineNumbers.RelPermalink }}"></script>
