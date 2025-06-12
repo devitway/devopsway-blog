@@ -1,394 +1,362 @@
 /* =============================================================================
-   КРИТИЧЕСКОЕ ИСПРАВЛЕНИЕ: Правильные фоны для обеих тем
+   АГРЕССИВНОЕ ИСПРАВЛЕНИЕ - ПЕРЕБИВАЕТ ВСЕ ВОЗМОЖНЫЕ СЕЛЕКТОРЫ
    ============================================================================= */
 
-   :root {
-    /* === СВЕТЛАЯ ТЕМА === */
-    --bg-primary: #ffffff;
-    --bg-secondary: #f8fafc;
-    --bg-tertiary: #f1f5f9;
-    --text-primary: #0f172a;
-    --text-secondary: #475569;
-    --text-muted: #64748b;
-    --border-color: #e2e8f0;
-    --accent-color: #3b82f6;
-    --accent-hover: #2563eb;
-  }
-  
-  [data-theme="dark"] {
-    /* === ТЕМНАЯ ТЕМА === */
-    --bg-primary: #0f172a;
-    --bg-secondary: #1e293b;
-    --bg-tertiary: #334155;
-    --text-primary: #f1f5f9;
-    --text-secondary: #cbd5e1;
-    --text-muted: #94a3b8;
-    --border-color: #475569;
-    --accent-color: #60a5fa;
-    --accent-hover: #3b82f6;
-  }
-  
-  /* =============================================================================
-     БЛОКИ КОДА - СВЕТЛАЯ ТЕМА
-     ============================================================================= */
-  
-  :root .highlight,
-  body:not([data-theme="dark"]) .highlight {
-    background: #ffffff !important;
-    border: 1px solid #e2e8f0 !important;
-    border-radius: 8px !important;
-    margin: 1.5rem 0 !important;
-    overflow: hidden !important;
-    position: relative !important;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06) !important;
-  }
-  
-  :root .highlight pre,
-  body:not([data-theme="dark"]) .highlight pre {
-    background: #ffffff !important;
-    color: #0f172a !important;
-    border: none !important;
-    border-radius: 0 !important;
-    padding: 1rem 1.25rem !important;
-    overflow-x: auto !important;
-    margin: 0 !important;
-    line-height: 1.6 !important;
-    font-size: 0.875rem !important;
-    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Cascadia Code', 'Courier New', monospace !important;
-    font-weight: 400 !important;
-  }
-  
-  :root .highlight pre code,
-  body:not([data-theme="dark"]) .highlight pre code {
-    background: transparent !important;
-    color: #0f172a !important;
-    border: none !important;
-    padding: 0 !important;
-    font-size: inherit !important;
-    font-family: inherit !important;
-    white-space: pre !important;
-    font-weight: inherit !important;
-  }
-  
-  /* Номера строк - светлая тема */
-  :root .highlight .lnt,
-  body:not([data-theme="dark"]) .highlight .lnt {
-    color: #6b7280 !important;
-    background: #f8fafc !important;
-    padding: 0 0.75rem !important;
-    margin-right: 1rem !important;
-    user-select: none !important;
-    font-size: 0.8rem !important;
-    font-weight: 400 !important;
-    border-right: 1px solid #e2e8f0 !important;
-    display: inline-block !important;
-    min-width: 2.5rem !important;
-    text-align: right !important;
-  }
-  
-  /* =============================================================================
-     БЛОКИ КОДА - ТЕМНАЯ ТЕМА (ИСПРАВЛЕНО!)
-     ============================================================================= */
-  
-  [data-theme="dark"] .highlight {
-    background: #161b22 !important;
-    border: 1px solid #30363d !important;
-    border-radius: 8px !important;
-    margin: 1.5rem 0 !important;
-    overflow: hidden !important;
-    position: relative !important;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06) !important;
-  }
-  
-  [data-theme="dark"] .highlight pre {
-    background: #161b22 !important;
-    color: #e6edf3 !important;
-    border: none !important;
-    border-radius: 0 !important;
-    padding: 1rem 1.25rem !important;
-    overflow-x: auto !important;
-    margin: 0 !important;
-    line-height: 1.6 !important;
-    font-size: 0.875rem !important;
-    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Cascadia Code', 'Courier New', monospace !important;
-    font-weight: 400 !important;
-  }
-  
-  [data-theme="dark"] .highlight pre code {
-    background: transparent !important;
-    color: #e6edf3 !important;
-    border: none !important;
-    padding: 0 !important;
-    font-size: inherit !important;
-    font-family: inherit !important;
-    white-space: pre !important;
-    font-weight: inherit !important;
-  }
-  
-  /* Номера строк - темная тема */
-  [data-theme="dark"] .highlight .lnt {
-    color: #7d8590 !important;
-    background: #21262d !important;
-    padding: 0 0.75rem !important;
-    margin-right: 1rem !important;
-    user-select: none !important;
-    font-size: 0.8rem !important;
-    font-weight: 400 !important;
-    border-right: 1px solid #30363d !important;
-    display: inline-block !important;
-    min-width: 2.5rem !important;
-    text-align: right !important;
-  }
-  
-  /* =============================================================================
-     SYNTAX HIGHLIGHTING - СВЕТЛАЯ ТЕМА
-     ============================================================================= */
-  
-  /* Комментарии - светлая */
-  :root .highlight .c,
-  :root .highlight .c1,
-  :root .highlight .cm,
-  :root .highlight .cp,
-  body:not([data-theme="dark"]) .highlight .c,
-  body:not([data-theme="dark"]) .highlight .c1,
-  body:not([data-theme="dark"]) .highlight .cm,
-  body:not([data-theme="dark"]) .highlight .cp {
-    color: #6b7280 !important;
-    font-style: italic !important;
-  }
-  
-  /* Строки - светлая */
-  :root .highlight .s,
-  :root .highlight .s1,
-  :root .highlight .s2,
-  :root .highlight .se,
-  :root .highlight .sa,
-  body:not([data-theme="dark"]) .highlight .s,
-  body:not([data-theme="dark"]) .highlight .s1,
-  body:not([data-theme="dark"]) .highlight .s2,
-  body:not([data-theme="dark"]) .highlight .se,
-  body:not([data-theme="dark"]) .highlight .sa {
-    color: #059669 !important;
-    font-weight: 500 !important;
-  }
-  
-  /* Ключевые слова - светлая */
-  :root .highlight .k,
-  :root .highlight .kd,
-  :root .highlight .kn,
-  :root .highlight .kt,
-  :root .highlight .kc,
-  body:not([data-theme="dark"]) .highlight .k,
-  body:not([data-theme="dark"]) .highlight .kd,
-  body:not([data-theme="dark"]) .highlight .kn,
-  body:not([data-theme="dark"]) .highlight .kt,
-  body:not([data-theme="dark"]) .highlight .kc {
-    color: #dc2626 !important;
-    font-weight: 600 !important;
-  }
-  
-  /* Функции - светлая */
-  :root .highlight .nf,
-  :root .highlight .fm,
-  :root .highlight .nb,
-  body:not([data-theme="dark"]) .highlight .nf,
-  body:not([data-theme="dark"]) .highlight .fm,
-  body:not([data-theme="dark"]) .highlight .nb {
-    color: #2563eb !important;
-    font-weight: 600 !important;
-  }
-  
-  /* Переменные - светлая */
-  :root .highlight .n,
-  :root .highlight .nv,
-  :root .highlight .nc,
-  body:not([data-theme="dark"]) .highlight .n,
-  body:not([data-theme="dark"]) .highlight .nv,
-  body:not([data-theme="dark"]) .highlight .nc {
-    color: #ea580c !important;
-  }
-  
-  /* Числа - светлая */
-  :root .highlight .m,
-  :root .highlight .mi,
-  :root .highlight .mf,
-  :root .highlight .mo,
-  body:not([data-theme="dark"]) .highlight .m,
-  body:not([data-theme="dark"]) .highlight .mi,
-  body:not([data-theme="dark"]) .highlight .mf,
-  body:not([data-theme="dark"]) .highlight .mo {
-    color: #7c3aed !important;
-    font-weight: 500 !important;
-  }
-  
-  /* Операторы - светлая */
-  :root .highlight .o,
-  :root .highlight .ow,
-  body:not([data-theme="dark"]) .highlight .o,
-  body:not([data-theme="dark"]) .highlight .ow {
-    color: #1f2937 !important;
-    font-weight: 500 !important;
-  }
-  
-  /* Символы - светлая */
-  :root .highlight .p,
-  body:not([data-theme="dark"]) .highlight .p {
-    color: #374151 !important;
-  }
-  
-  /* =============================================================================
-     SYNTAX HIGHLIGHTING - ТЕМНАЯ ТЕМА (GitHub Dark)
-     ============================================================================= */
-  
-  /* Комментарии - темная */
-  [data-theme="dark"] .highlight .c,
-  [data-theme="dark"] .highlight .c1,
-  [data-theme="dark"] .highlight .cm,
-  [data-theme="dark"] .highlight .cp {
-    color: #7d8590 !important;
-    font-style: italic !important;
-  }
-  
-  /* Строки - темная */
-  [data-theme="dark"] .highlight .s,
-  [data-theme="dark"] .highlight .s1,
-  [data-theme="dark"] .highlight .s2,
-  [data-theme="dark"] .highlight .se,
-  [data-theme="dark"] .highlight .sa {
-    color: #a5d6ff !important;
-  }
-  
-  /* Ключевые слова - темная */
-  [data-theme="dark"] .highlight .k,
-  [data-theme="dark"] .highlight .kd,
-  [data-theme="dark"] .highlight .kn,
-  [data-theme="dark"] .highlight .kt,
-  [data-theme="dark"] .highlight .kc {
-    color: #ff7b72 !important;
-    font-weight: 600 !important;
-  }
-  
-  /* Функции - темная */
-  [data-theme="dark"] .highlight .nf,
-  [data-theme="dark"] .highlight .fm,
-  [data-theme="dark"] .highlight .nb {
-    color: #d2a8ff !important;
-    font-weight: 600 !important;
-  }
-  
-  /* Переменные - темная */
-  [data-theme="dark"] .highlight .n,
-  [data-theme="dark"] .highlight .nv,
-  [data-theme="dark"] .highlight .nc {
-    color: #ffa657 !important;
-  }
-  
-  /* Числа - темная */
-  [data-theme="dark"] .highlight .m,
-  [data-theme="dark"] .highlight .mi,
-  [data-theme="dark"] .highlight .mf,
-  [data-theme="dark"] .highlight .mo {
-    color: #79c0ff !important;
-  }
-  
-  /* Операторы - темная */
-  [data-theme="dark"] .highlight .o,
-  [data-theme="dark"] .highlight .ow {
-    color: #ff7b72 !important;
-  }
-  
-  /* Символы - темная */
-  [data-theme="dark"] .highlight .p {
-    color: #e6edf3 !important;
-  }
-  
-  /* =============================================================================
-     КНОПКА КОПИРОВАНИЯ
-     ============================================================================= */
-  
-  .copy-code {
-    position: absolute !important;
-    top: 0.75rem !important;
-    right: 0.75rem !important;
-    border-radius: 6px !important;
-    padding: 0.375rem 0.625rem !important;
-    font-size: 0.75rem !important;
-    font-weight: 500 !important;
-    cursor: pointer !important;
-    z-index: 10 !important;
-    transition: all 0.2s ease !important;
-    font-family: system-ui, -apple-system, sans-serif !important;
-    opacity: 0.8 !important;
-  }
-  
-  .copy-code:hover {
-    opacity: 1 !important;
-    transform: translateY(-1px) !important;
-  }
-  
-  /* Кнопка копирования - светлая тема */
-  :root .copy-code,
-  body:not([data-theme="dark"]) .copy-code {
-    background: rgba(255, 255, 255, 0.9) !important;
-    color: #374151 !important;
-    border: 1px solid #d1d5db !important;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
-  }
-  
-  :root .copy-code:hover,
-  body:not([data-theme="dark"]) .copy-code:hover {
-    background: #ffffff !important;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15) !important;
-  }
-  
-  /* Кнопка копирования - темная тема */
-  [data-theme="dark"] .copy-code {
-    background: rgba(33, 38, 45, 0.9) !important;
-    color: #e6edf3 !important;
-    border: 1px solid #30363d !important;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
-  }
-  
-  [data-theme="dark"] .copy-code:hover {
-    background: #21262d !important;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3) !important;
-  }
-  
-  /* =============================================================================
-     ПЛАВНЫЕ ПЕРЕХОДЫ
-     ============================================================================= */
-  
-  .highlight {
-    transition: box-shadow 0.2s ease !important;
-  }
-  
-  .highlight:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12) !important;
-  }
-  
-  [data-theme="dark"] .highlight:hover {
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2) !important;
-  }
-  
-  /* =============================================================================
-     АДАПТИВНОСТЬ
-     ============================================================================= */
-  
-  @media (max-width: 768px) {
-    .highlight {
-      margin: 1rem 0 !important;
-      border-radius: 6px !important;
-    }
-    
-    .highlight pre {
-      font-size: 0.8rem !important;
-      padding: 0.875rem 1rem !important;
-    }
-    
-    .copy-code {
-      top: 0.5rem !important;
-      right: 0.5rem !important;
-      padding: 0.25rem 0.5rem !important;
-      font-size: 0.7rem !important;
-    }
-  }
+/* Сброс всех возможных селекторов для темной темы */
+html[data-theme="dark"] .highlight,
+body[data-theme="dark"] .highlight,
+[data-theme="dark"] .highlight,
+.dark .highlight,
+html.dark .highlight,
+body.dark .highlight {
+  background: #161b22 !important;
+  border: 1px solid #30363d !important;
+  color: #e6edf3 !important;
+}
+
+html[data-theme="dark"] .highlight pre,
+body[data-theme="dark"] .highlight pre,
+[data-theme="dark"] .highlight pre,
+.dark .highlight pre,
+html.dark .highlight pre,
+body.dark .highlight pre {
+  background: #161b22 !important;
+  color: #e6edf3 !important;
+  border: none !important;
+}
+
+html[data-theme="dark"] .highlight pre code,
+body[data-theme="dark"] .highlight pre code,
+[data-theme="dark"] .highlight pre code,
+.dark .highlight pre code,
+html.dark .highlight pre code,
+body.dark .highlight pre code {
+  background: transparent !important;
+  color: #e6edf3 !important;
+}
+
+html[data-theme="dark"] .highlight .lnt,
+body[data-theme="dark"] .highlight .lnt,
+[data-theme="dark"] .highlight .lnt,
+.dark .highlight .lnt,
+html.dark .highlight .lnt,
+body.dark .highlight .lnt {
+  background: #21262d !important;
+  color: #7d8590 !important;
+  border-right: 1px solid #30363d !important;
+}
+
+/* Сброс всех возможных селекторов для светлой темы */
+html:not([data-theme="dark"]) .highlight,
+body:not([data-theme="dark"]) .highlight,
+:root .highlight,
+html:not(.dark) .highlight,
+body:not(.dark) .highlight {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+html:not([data-theme="dark"]) .highlight pre,
+body:not([data-theme="dark"]) .highlight pre,
+:root .highlight pre,
+html:not(.dark) .highlight pre,
+body:not(.dark) .highlight pre {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border: none !important;
+}
+
+html:not([data-theme="dark"]) .highlight pre code,
+body:not([data-theme="dark"]) .highlight pre code,
+:root .highlight pre code,
+html:not(.dark) .highlight pre code,
+body:not(.dark) .highlight pre code {
+  background: transparent !important;
+  color: #0f172a !important;
+}
+
+html:not([data-theme="dark"]) .highlight .lnt,
+body:not([data-theme="dark"]) .highlight .lnt,
+:root .highlight .lnt,
+html:not(.dark) .highlight .lnt,
+body:not(.dark) .highlight .lnt {
+  background: #f8fafc !important;
+  color: #6b7280 !important;
+  border-right: 1px solid #e2e8f0 !important;
+}
+
+/* =============================================================================
+   БАЗОВЫЕ СТИЛИ (применяются ко всем)
+   ============================================================================= */
+
+.highlight {
+  border-radius: 8px !important;
+  margin: 1.5rem 0 !important;
+  overflow: hidden !important;
+  position: relative !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.highlight pre {
+  border-radius: 0 !important;
+  padding: 1rem 1.25rem !important;
+  overflow-x: auto !important;
+  margin: 0 !important;
+  line-height: 1.6 !important;
+  font-size: 0.875rem !important;
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Cascadia Code', 'Courier New', monospace !important;
+  font-weight: 400 !important;
+}
+
+.highlight pre code {
+  border: none !important;
+  padding: 0 !important;
+  font-size: inherit !important;
+  font-family: inherit !important;
+  white-space: pre !important;
+  font-weight: inherit !important;
+}
+
+.highlight .lnt {
+  padding: 0 0.75rem !important;
+  margin-right: 1rem !important;
+  user-select: none !important;
+  font-size: 0.8rem !important;
+  font-weight: 400 !important;
+  display: inline-block !important;
+  min-width: 2.5rem !important;
+  text-align: right !important;
+}
+
+/* =============================================================================
+   SYNTAX HIGHLIGHTING - ТЕМНАЯ ТЕМА
+   ============================================================================= */
+
+/* Комментарии - темная */
+html[data-theme="dark"] .highlight .c,
+html[data-theme="dark"] .highlight .c1,
+html[data-theme="dark"] .highlight .cm,
+body[data-theme="dark"] .highlight .c,
+body[data-theme="dark"] .highlight .c1,
+body[data-theme="dark"] .highlight .cm,
+[data-theme="dark"] .highlight .c,
+[data-theme="dark"] .highlight .c1,
+[data-theme="dark"] .highlight .cm,
+.dark .highlight .c,
+.dark .highlight .c1,
+.dark .highlight .cm {
+  color: #7d8590 !important;
+  font-style: italic !important;
+}
+
+/* Строки - темная */
+html[data-theme="dark"] .highlight .s,
+html[data-theme="dark"] .highlight .s1,
+html[data-theme="dark"] .highlight .s2,
+body[data-theme="dark"] .highlight .s,
+body[data-theme="dark"] .highlight .s1,
+body[data-theme="dark"] .highlight .s2,
+[data-theme="dark"] .highlight .s,
+[data-theme="dark"] .highlight .s1,
+[data-theme="dark"] .highlight .s2,
+.dark .highlight .s,
+.dark .highlight .s1,
+.dark .highlight .s2 {
+  color: #a5d6ff !important;
+}
+
+/* Ключевые слова - темная */
+html[data-theme="dark"] .highlight .k,
+html[data-theme="dark"] .highlight .kd,
+html[data-theme="dark"] .highlight .kn,
+body[data-theme="dark"] .highlight .k,
+body[data-theme="dark"] .highlight .kd,
+body[data-theme="dark"] .highlight .kn,
+[data-theme="dark"] .highlight .k,
+[data-theme="dark"] .highlight .kd,
+[data-theme="dark"] .highlight .kn,
+.dark .highlight .k,
+.dark .highlight .kd,
+.dark .highlight .kn {
+  color: #ff7b72 !important;
+  font-weight: 600 !important;
+}
+
+/* Функции - темная */
+html[data-theme="dark"] .highlight .nf,
+html[data-theme="dark"] .highlight .nb,
+body[data-theme="dark"] .highlight .nf,
+body[data-theme="dark"] .highlight .nb,
+[data-theme="dark"] .highlight .nf,
+[data-theme="dark"] .highlight .nb,
+.dark .highlight .nf,
+.dark .highlight .nb {
+  color: #d2a8ff !important;
+  font-weight: 600 !important;
+}
+
+/* Переменные - темная */
+html[data-theme="dark"] .highlight .n,
+html[data-theme="dark"] .highlight .nv,
+body[data-theme="dark"] .highlight .n,
+body[data-theme="dark"] .highlight .nv,
+[data-theme="dark"] .highlight .n,
+[data-theme="dark"] .highlight .nv,
+.dark .highlight .n,
+.dark .highlight .nv {
+  color: #ffa657 !important;
+}
+
+/* Числа - темная */
+html[data-theme="dark"] .highlight .m,
+html[data-theme="dark"] .highlight .mi,
+body[data-theme="dark"] .highlight .m,
+body[data-theme="dark"] .highlight .mi,
+[data-theme="dark"] .highlight .m,
+[data-theme="dark"] .highlight .mi,
+.dark .highlight .m,
+.dark .highlight .mi {
+  color: #79c0ff !important;
+}
+
+/* Операторы - темная */
+html[data-theme="dark"] .highlight .o,
+body[data-theme="dark"] .highlight .o,
+[data-theme="dark"] .highlight .o,
+.dark .highlight .o {
+  color: #ff7b72 !important;
+}
+
+/* =============================================================================
+   SYNTAX HIGHLIGHTING - СВЕТЛАЯ ТЕМА
+   ============================================================================= */
+
+/* Комментарии - светлая */
+html:not([data-theme="dark"]) .highlight .c,
+html:not([data-theme="dark"]) .highlight .c1,
+html:not([data-theme="dark"]) .highlight .cm,
+body:not([data-theme="dark"]) .highlight .c,
+body:not([data-theme="dark"]) .highlight .c1,
+body:not([data-theme="dark"]) .highlight .cm,
+html:not(.dark) .highlight .c,
+html:not(.dark) .highlight .c1,
+html:not(.dark) .highlight .cm {
+  color: #6b7280 !important;
+  font-style: italic !important;
+}
+
+/* Строки - светлая */
+html:not([data-theme="dark"]) .highlight .s,
+html:not([data-theme="dark"]) .highlight .s1,
+html:not([data-theme="dark"]) .highlight .s2,
+body:not([data-theme="dark"]) .highlight .s,
+body:not([data-theme="dark"]) .highlight .s1,
+body:not([data-theme="dark"]) .highlight .s2,
+html:not(.dark) .highlight .s,
+html:not(.dark) .highlight .s1,
+html:not(.dark) .highlight .s2 {
+  color: #059669 !important;
+}
+
+/* Ключевые слова - светлая */
+html:not([data-theme="dark"]) .highlight .k,
+html:not([data-theme="dark"]) .highlight .kd,
+html:not([data-theme="dark"]) .highlight .kn,
+body:not([data-theme="dark"]) .highlight .k,
+body:not([data-theme="dark"]) .highlight .kd,
+body:not([data-theme="dark"]) .highlight .kn,
+html:not(.dark) .highlight .k,
+html:not(.dark) .highlight .kd,
+html:not(.dark) .highlight .kn {
+  color: #dc2626 !important;
+  font-weight: 600 !important;
+}
+
+/* Функции - светлая */
+html:not([data-theme="dark"]) .highlight .nf,
+html:not([data-theme="dark"]) .highlight .nb,
+body:not([data-theme="dark"]) .highlight .nf,
+body:not([data-theme="dark"]) .highlight .nb,
+html:not(.dark) .highlight .nf,
+html:not(.dark) .highlight .nb {
+  color: #2563eb !important;
+  font-weight: 600 !important;
+}
+
+/* Переменные - светлая */
+html:not([data-theme="dark"]) .highlight .n,
+html:not([data-theme="dark"]) .highlight .nv,
+body:not([data-theme="dark"]) .highlight .n,
+body:not([data-theme="dark"]) .highlight .nv,
+html:not(.dark) .highlight .n,
+html:not(.dark) .highlight .nv {
+  color: #ea580c !important;
+}
+
+/* Числа - светлая */
+html:not([data-theme="dark"]) .highlight .m,
+html:not([data-theme="dark"]) .highlight .mi,
+body:not([data-theme="dark"]) .highlight .m,
+body:not([data-theme="dark"]) .highlight .mi,
+html:not(.dark) .highlight .m,
+html:not(.dark) .highlight .mi {
+  color: #7c3aed !important;
+}
+
+/* Операторы - светлая */
+html:not([data-theme="dark"]) .highlight .o,
+body:not([data-theme="dark"]) .highlight .o,
+html:not(.dark) .highlight .o {
+  color: #1f2937 !important;
+}
+
+/* =============================================================================
+   КНОПКА КОПИРОВАНИЯ
+   ============================================================================= */
+
+.copy-code {
+  position: absolute !important;
+  top: 0.75rem !important;
+  right: 0.75rem !important;
+  border-radius: 6px !important;
+  padding: 0.375rem 0.625rem !important;
+  font-size: 0.75rem !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  z-index: 10 !important;
+  transition: all 0.2s ease !important;
+  font-family: system-ui, -apple-system, sans-serif !important;
+  opacity: 0.8 !important;
+}
+
+/* Темная тема - кнопка */
+html[data-theme="dark"] .copy-code,
+body[data-theme="dark"] .copy-code,
+[data-theme="dark"] .copy-code,
+.dark .copy-code {
+  background: rgba(33, 38, 45, 0.9) !important;
+  color: #e6edf3 !important;
+  border: 1px solid #30363d !important;
+}
+
+/* Светлая тема - кнопка */
+html:not([data-theme="dark"]) .copy-code,
+body:not([data-theme="dark"]) .copy-code,
+html:not(.dark) .copy-code {
+  background: rgba(255, 255, 255, 0.9) !important;
+  color: #374151 !important;
+  border: 1px solid #d1d5db !important;
+}
+
+/* =============================================================================
+   ОТЛАДКА - ПОКАЗЫВАЕТ КАКИЕ СЕЛЕКТОРЫ АКТИВНЫ
+   ============================================================================= */
+
+/* Раскомментируйте для отладки */
+/*
+html[data-theme="dark"] .highlight { border: 3px solid red !important; }
+body[data-theme="dark"] .highlight { border: 3px solid blue !important; }
+[data-theme="dark"] .highlight { border: 3px solid green !important; }
+.dark .highlight { border: 3px solid yellow !important; }
+*/
