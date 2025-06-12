@@ -1,6 +1,6 @@
 /**
- * Улучшенная система копирования кода - DevOps Way Blog
- * Современные уведомления, лучший UX
+ * Исправленная система копирования кода без номеров строк
+ * DevOps Way Blog - улучшенная версия
  */
 
 class CodeCopyManager {
@@ -10,7 +10,47 @@ class CodeCopyManager {
 
   init() {
     this.addCopyButtons();
-    console.log('📋 Code Copy Manager initialized');
+    this.hideLineNumbers();
+    console.log('📋 Code Copy Manager initialized (improved version)');
+  }
+
+  // Улучшенное скрытие номеров строк
+  hideLineNumbers() {
+    const lineNumberSelectors = [
+      '.lnt', '.lnl', 'span.lnt', 'span.lnl', 'td.lnt', 'td.lnl',
+      '.highlight .lnt', '.highlight .lnl', '.highlight table .lnt', 
+      '.highlight table .lnl', '.chroma .lnt', '.chroma .lnl',
+      '[class*="line-number"]', '[data-line-number]'
+    ];
+
+    lineNumberSelectors.forEach(selector => {
+      const elements = document.querySelectorAll(selector);
+      elements.forEach(el => {
+        el.style.cssText = `
+          display: none !important;
+          visibility: hidden !important;
+          position: absolute !important;
+          left: -9999px !important;
+          top: -9999px !important;
+          width: 0 !important;
+          height: 0 !important;
+          opacity: 0 !important;
+          user-select: none !important;
+          -webkit-user-select: none !important;
+          -moz-user-select: none !important;
+          -ms-user-select: none !important;
+          pointer-events: none !important;
+        `;
+        
+        el.setAttribute('aria-hidden', 'true');
+        el.setAttribute('tabindex', '-1');
+        el.setAttribute('data-no-copy', 'true');
+        
+        ['selectstart', 'mousedown', 'copy', 'drag'].forEach(event => {
+          el.addEventListener(event, e => e.preventDefault());
+        });
+      });
+    });
   }
 
   addCopyButtons() {
@@ -20,89 +60,86 @@ class CodeCopyManager {
       const pre = codeBlock.parentNode;
       const container = pre.parentNode;
       
-      // Проверяем, есть ли уже кнопка
       if (container.querySelector('.copy-code')) return;
       
-      // Создаем кнопку копирования
       const copyButton = document.createElement('button');
       copyButton.className = 'copy-code';
       copyButton.innerHTML = '📋 Копировать';
       copyButton.setAttribute('aria-label', 'Копировать код в буфер обмена');
       copyButton.setAttribute('data-code-index', index);
       
-      // Добавляем обработчик клика
       copyButton.addEventListener('click', () => this.copyCode(codeBlock, copyButton));
       
-      // Добавляем кнопку к контейнеру
       container.style.position = 'relative';
       container.appendChild(copyButton);
-      
-      // Отмечаем блок как загруженный (убираем анимацию shimmer)
       container.classList.add('loaded');
     });
   }
 
+  getCleanCodeText(codeBlock) {
+    const clone = codeBlock.cloneNode(true);
+    
+    const lineNumbers = clone.querySelectorAll(
+      '.lnt, .lnl, [class*="line-number"], [data-line-number], [data-no-copy="true"]'
+    );
+    lineNumbers.forEach(el => el.remove());
+    
+    let text = clone.textContent || clone.innerText || '';
+    
+    text = text
+      .replace(/^\s*\d+\s+/gm, '')
+      .replace(/^\s+|\s+$/g, '')
+      .replace(/\r\n/g, '\n')
+      .replace(/[ \t]+$/gm, '');
+    
+    return text;
+  }
+
   async copyCode(codeBlock, button) {
     try {
-      // Получаем текст кода
-      const codeText = codeBlock.textContent || codeBlock.innerText;
+      const cleanText = this.getCleanCodeText(codeBlock);
+      await navigator.clipboard.writeText(cleanText);
       
-      // Копируем в буфер обмена
-      await navigator.clipboard.writeText(codeText);
-      
-      // Обновляем кнопку
       this.updateButtonState(button, 'success');
-      
-      // Показываем уведомление
       this.showNotification('Код скопирован в буфер обмена!', 'success');
       
-      // Аналитика (если Google Analytics доступен)
       if (typeof gtag !== 'undefined') {
         gtag('event', 'code_copy', {
           event_category: 'engagement',
-          event_label: 'code_block'
+          event_label: 'code_block',
+          value: cleanText.length
         });
       }
       
     } catch (error) {
       console.error('Ошибка копирования:', error);
-      
-      // Fallback для старых браузеров
       this.fallbackCopy(codeBlock, button);
     }
   }
 
   fallbackCopy(codeBlock, button) {
     try {
-      // Создаем временный textarea
+      const cleanText = this.getCleanCodeText(codeBlock);
+      
       const textArea = document.createElement('textarea');
-      textArea.value = codeBlock.textContent || codeBlock.innerText;
-      textArea.style.position = 'fixed';
-      textArea.style.left = '-999999px';
-      textArea.style.top = '-999999px';
+      textArea.value = cleanText;
+      textArea.style.cssText = `
+        position: fixed; left: -999999px; top: -999999px;
+        opacity: 0; pointer-events: none;
+      `;
       document.body.appendChild(textArea);
       
-      // Выделяем и копируем
       textArea.focus();
       textArea.select();
       document.execCommand('copy');
-      
-      // Удаляем временный элемент
       document.body.removeChild(textArea);
       
-      // Обновляем кнопку
       this.updateButtonState(button, 'success');
-      
-      // Показываем уведомление
       this.showNotification('Код скопирован в буфер обмена!', 'success');
       
     } catch (error) {
       console.error('Fallback копирование не удалось:', error);
-      
-      // Обновляем кнопку с ошибкой
       this.updateButtonState(button, 'error');
-      
-      // Показываем уведомление об ошибке
       this.showNotification('Не удалось скопировать код', 'error');
     }
   }
@@ -136,38 +173,72 @@ class CodeCopyManager {
   }
 
   showNotification(message, type = 'info') {
-    // Удаляем существующие уведомления
     const existingNotifications = document.querySelectorAll('.copy-notification');
     existingNotifications.forEach(notification => notification.remove());
     
-    // Создаем новое уведомление
     const notification = document.createElement('div');
     notification.className = `copy-notification ${type}`;
-    notification.textContent = message;
     
-    // Добавляем иконку в зависимости от типа
-    const icons = {
-      success: '✅',
-      error: '❌',
-      info: 'ℹ️'
-    };
-    
+    const icons = { success: '✅', error: '❌', info: 'ℹ️' };
     notification.innerHTML = `${icons[type]} ${message}`;
+    
+    notification.style.cssText = `
+      position: fixed; top: 20px; right: 20px;
+      background: ${type === 'error' ? '#ef4444' : '#10b981'};
+      color: white; padding: 12px 16px; border-radius: 8px;
+      font-size: 14px; font-weight: 500; z-index: 10000;
+      transform: translateX(100%); transition: transform 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    `;
     
     document.body.appendChild(notification);
     
-    // Показываем уведомление
-    setTimeout(() => notification.classList.add('show'), 100);
-    
-    // Скрываем через 3 секунды
+    setTimeout(() => notification.style.transform = 'translateX(0)', 100);
     setTimeout(() => {
-      notification.classList.remove('show');
+      notification.style.transform = 'translateX(100%)';
       setTimeout(() => notification.remove(), 300);
     }, 3000);
   }
+
+  observeCodeBlocks() {
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'childList') {
+          const addedNodes = Array.from(mutation.addedNodes);
+          addedNodes.forEach((node) => {
+            if (node.nodeType === Node.ELEMENT_NODE) {
+              const codeBlocks = node.querySelectorAll('pre > code');
+              if (codeBlocks.length > 0) {
+                this.hideLineNumbers();
+                this.addCopyButtons();
+              }
+            }
+          });
+        }
+      });
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
 }
 
-// Инициализируем менеджер копирования при загрузке DOM
-document.addEventListener('DOMContentLoaded', () => {
-  new CodeCopyManager();
-});
+let codeManager;
+
+function initCodeCopyManager() {
+  if (!codeManager) {
+    codeManager = new CodeCopyManager();
+    codeManager.observeCodeBlocks();
+  }
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initCodeCopyManager);
+} else {
+  initCodeCopyManager();
+}
+
+setTimeout(initCodeCopyManager, 500);
+setTimeout(initCodeCopyManager, 1000);
+setTimeout(initCodeCopyManager, 2000);
+
+window.CodeCopyManager = CodeCopyManager;
