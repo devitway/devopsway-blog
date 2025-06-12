@@ -8,6 +8,18 @@ resources/
 .cache/
 resources/_gen/
 
+# Hugo статистика
+hugo_stats.json
+
+# ===== РЕЗЕРВНЫЕ КОПИИ =====
+# Бэкапы конфигурации
+*.backup.*
+hugo.toml.backup.*
+theme_backups/
+
+# Скрипты утилиты (локальные)
+scripts/
+
 # ===== OBSIDIAN =====
 # Персональные настройки Obsidian
 .obsidian/workspace.json
@@ -93,6 +105,10 @@ test-*
 # Локальные ресурсы
 assets/jsconfig.json
 
+# ===== ДУБЛИРУЮЩИЕСЯ CSS ФАЙЛЫ =====
+# Если у вас есть основной custom.css, дублирующие можно игнорировать
+#assets/css/extended/dark-theme-enhanced.css
+
 # ===== КОММЕНТАРИИ =====
 # Раскомментируйте если нужно игнорировать:
 #
@@ -106,18 +122,3 @@ assets/jsconfig.json
 # Определенные папки контента:
 # content/private/
 # content/drafts/
-# Hugo backup files
-hugo-backup.sh
-hugo.toml.backup.*
-update-hugo.sh
-
-# Hugo generated files
-hugo_stats.json
-
-# Theme backups
-theme_backups/
-
-# Theme upgrade documentation
-THEME_UPGRADE.md
-
-
