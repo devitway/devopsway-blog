@@ -1,5 +1,5 @@
 /* =============================================================================
-   ФИНАЛЬНАЯ ПОЛИРОВКА - PERFECT CSS ДЛЯ ОБЕИХ ТЕМ
+   КРИТИЧЕСКОЕ ИСПРАВЛЕНИЕ: Правильные фоны для обеих тем
    ============================================================================= */
 
    :root {
@@ -13,13 +13,6 @@
     --border-color: #e2e8f0;
     --accent-color: #3b82f6;
     --accent-hover: #2563eb;
-    
-    /* === БЛОКИ КОДА - СВЕТЛАЯ ТЕМА === */
-    --code-bg-light: #ffffff;
-    --code-border-light: #e2e8f0;
-    --code-text-light: #0f172a;
-    --code-header-bg-light: #f8fafc;
-    --code-line-numbers-light: #6b7280;
   }
   
   [data-theme="dark"] {
@@ -33,13 +26,6 @@
     --border-color: #475569;
     --accent-color: #60a5fa;
     --accent-hover: #3b82f6;
-    
-    /* === БЛОКИ КОДА - ТЕМНАЯ ТЕМА === */
-    --code-bg-dark: #161b22;
-    --code-border-dark: #30363d;
-    --code-text-dark: #e6edf3;
-    --code-header-bg-dark: #21262d;
-    --code-line-numbers-dark: #7d8590;
   }
   
   /* =============================================================================
@@ -48,8 +34,8 @@
   
   :root .highlight,
   body:not([data-theme="dark"]) .highlight {
-    background: var(--code-bg-light) !important;
-    border: 1px solid var(--code-border-light) !important;
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
     border-radius: 8px !important;
     margin: 1.5rem 0 !important;
     overflow: hidden !important;
@@ -57,15 +43,10 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06) !important;
   }
   
-  :root .highlight:hover,
-  body:not([data-theme="dark"]) .highlight:hover {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.06) !important;
-  }
-  
   :root .highlight pre,
   body:not([data-theme="dark"]) .highlight pre {
-    background: var(--code-bg-light) !important;
-    color: var(--code-text-light) !important;
+    background: #ffffff !important;
+    color: #0f172a !important;
     border: none !important;
     border-radius: 0 !important;
     padding: 1rem 1.25rem !important;
@@ -80,7 +61,7 @@
   :root .highlight pre code,
   body:not([data-theme="dark"]) .highlight pre code {
     background: transparent !important;
-    color: var(--code-text-light) !important;
+    color: #0f172a !important;
     border: none !important;
     padding: 0 !important;
     font-size: inherit !important;
@@ -92,26 +73,26 @@
   /* Номера строк - светлая тема */
   :root .highlight .lnt,
   body:not([data-theme="dark"]) .highlight .lnt {
-    color: var(--code-line-numbers-light) !important;
-    background: var(--code-header-bg-light) !important;
+    color: #6b7280 !important;
+    background: #f8fafc !important;
     padding: 0 0.75rem !important;
     margin-right: 1rem !important;
     user-select: none !important;
     font-size: 0.8rem !important;
     font-weight: 400 !important;
-    border-right: 1px solid var(--code-border-light) !important;
+    border-right: 1px solid #e2e8f0 !important;
     display: inline-block !important;
     min-width: 2.5rem !important;
     text-align: right !important;
   }
   
   /* =============================================================================
-     БЛОКИ КОДА - ТЕМНАЯ ТЕМА
+     БЛОКИ КОДА - ТЕМНАЯ ТЕМА (ИСПРАВЛЕНО!)
      ============================================================================= */
   
   [data-theme="dark"] .highlight {
-    background: var(--code-bg-dark) !important;
-    border: 1px solid var(--code-border-dark) !important;
+    background: #161b22 !important;
+    border: 1px solid #30363d !important;
     border-radius: 8px !important;
     margin: 1.5rem 0 !important;
     overflow: hidden !important;
@@ -119,13 +100,9 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06) !important;
   }
   
-  [data-theme="dark"] .highlight:hover {
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15), 0 4px 6px rgba(0, 0, 0, 0.1) !important;
-  }
-  
   [data-theme="dark"] .highlight pre {
-    background: var(--code-bg-dark) !important;
-    color: var(--code-text-dark) !important;
+    background: #161b22 !important;
+    color: #e6edf3 !important;
     border: none !important;
     border-radius: 0 !important;
     padding: 1rem 1.25rem !important;
@@ -139,7 +116,7 @@
   
   [data-theme="dark"] .highlight pre code {
     background: transparent !important;
-    color: var(--code-text-dark) !important;
+    color: #e6edf3 !important;
     border: none !important;
     padding: 0 !important;
     font-size: inherit !important;
@@ -150,14 +127,14 @@
   
   /* Номера строк - темная тема */
   [data-theme="dark"] .highlight .lnt {
-    color: var(--code-line-numbers-dark) !important;
-    background: var(--code-header-bg-dark) !important;
+    color: #7d8590 !important;
+    background: #21262d !important;
     padding: 0 0.75rem !important;
     margin-right: 1rem !important;
     user-select: none !important;
     font-size: 0.8rem !important;
     font-weight: 400 !important;
-    border-right: 1px solid var(--code-border-dark) !important;
+    border-right: 1px solid #30363d !important;
     display: inline-block !important;
     min-width: 2.5rem !important;
     text-align: right !important;
@@ -326,41 +303,7 @@
   }
   
   /* =============================================================================
-     СПЕЦИАЛЬНЫЕ СТИЛИ ДЛЯ ЭМОДЗИ И СТАТУСОВ
-     ============================================================================= */
-  
-  /* Выделение строк с красными эмодзи */
-  .highlight .s:contains("🔴"),
-  .highlight .s1:contains("🔴"),
-  .highlight .s2:contains("🔴") {
-    background: linear-gradient(90deg, transparent, rgba(239, 68, 68, 0.1), transparent) !important;
-    border-left: 3px solid #ef4444 !important;
-    padding-left: 0.5rem !important;
-    margin-left: -0.5rem !important;
-  }
-  
-  /* Выделение строк с зелеными эмодзи */
-  .highlight .s:contains("✅"),
-  .highlight .s1:contains("✅"),
-  .highlight .s2:contains("✅") {
-    background: linear-gradient(90deg, transparent, rgba(34, 197, 94, 0.1), transparent) !important;
-    border-left: 3px solid #22c55e !important;
-    padding-left: 0.5rem !important;
-    margin-left: -0.5rem !important;
-  }
-  
-  /* Выделение строк с предупреждениями */
-  .highlight .s:contains("⚠️"),
-  .highlight .s1:contains("⚠️"),
-  .highlight .s2:contains("⚠️") {
-    background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.1), transparent) !important;
-    border-left: 3px solid #fbbf24 !important;
-    padding-left: 0.5rem !important;
-    margin-left: -0.5rem !important;
-  }
-  
-  /* =============================================================================
-     УЛУЧШЕННАЯ КНОПКА КОПИРОВАНИЯ
+     КНОПКА КОПИРОВАНИЯ
      ============================================================================= */
   
   .copy-code {
@@ -376,7 +319,6 @@
     transition: all 0.2s ease !important;
     font-family: system-ui, -apple-system, sans-serif !important;
     opacity: 0.8 !important;
-    backdrop-filter: blur(4px) !important;
   }
   
   .copy-code:hover {
@@ -413,37 +355,23 @@
   }
   
   /* =============================================================================
-     ПЛАВНЫЕ ПЕРЕХОДЫ И АНИМАЦИИ
+     ПЛАВНЫЕ ПЕРЕХОДЫ
      ============================================================================= */
   
   .highlight {
-    transition: box-shadow 0.2s ease, transform 0.1s ease !important;
+    transition: box-shadow 0.2s ease !important;
   }
   
   .highlight:hover {
-    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12) !important;
   }
   
-  /* Глобальные переходы */
-  * {
-    transition: background-color 0.2s ease, 
-                color 0.2s ease, 
-                border-color 0.2s ease,
-                box-shadow 0.2s ease !important;
-  }
-  
-  @media (prefers-reduced-motion: reduce) {
-    * {
-      transition: none !important;
-    }
-    
-    .highlight:hover {
-      transform: none !important;
-    }
+  [data-theme="dark"] .highlight:hover {
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2) !important;
   }
   
   /* =============================================================================
-     АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ
+     АДАПТИВНОСТЬ
      ============================================================================= */
   
   @media (max-width: 768px) {
@@ -461,28 +389,6 @@
       top: 0.5rem !important;
       right: 0.5rem !important;
       padding: 0.25rem 0.5rem !important;
-      font-size: 0.7rem !important;
-    }
-    
-    .highlight .lnt {
-      min-width: 2rem !important;
-      padding: 0 0.5rem !important;
-      margin-right: 0.75rem !important;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .highlight pre {
-      font-size: 0.75rem !important;
-      padding: 0.75rem !important;
-    }
-    
-    .copy-code {
-      opacity: 0.6 !important;
-    }
-    
-    .highlight .lnt {
-      min-width: 1.5rem !important;
       font-size: 0.7rem !important;
     }
   }
