@@ -15,20 +15,26 @@
     --accent-hover: #2563eb;
     
     /* === БЛОКИ КОДА - СВЕТЛАЯ ТЕМА (ИСПРАВЛЕНО) === */
-    --code-bg: #f8fafc;
-    --code-border: #e2e8f0;
-    --code-text: #1e293b;          /* Сделано темнее для читаемости! */
-    --code-header-bg: #f1f5f9;
-    --code-line-numbers: #64748b;   /* Сделано темнее для контраста! */
+    --code-bg: #ffffff;
+    --code-border: #d1d5db;
+    --code-text: #111827;          /* Очень темный для максимальной читаемости! */
+    --code-header-bg: #f9fafb;
+    --code-line-numbers: #4b5563;   /* Темнее для лучшего контраста! */
     
     /* === SYNTAX HIGHLIGHTING - СВЕТЛАЯ ТЕМА === */
     --code-comment: #6b7280;        /* Комментарии */
-    --code-string: #059669;         /* Строки - зеленый */
+    --code-string: #16a34a;         /* Строки - темно-зеленый */
     --code-keyword: #dc2626;        /* Ключевые слова - красный */
     --code-number: #7c3aed;         /* Числа - фиолетовый */
-    --code-function: #0369a1;       /* Функции - синий */
+    --code-function: #2563eb;       /* Функции - темно-синий */
     --code-variable: #ea580c;       /* Переменные - оранжевый */
     --code-operator: #dc2626;       /* Операторы - красный */
+    
+    /* === СПЕЦИАЛЬНЫЕ ЦВЕТА ДЛЯ BASH/SHELL === */
+    --code-error: #dc2626;          /* Ошибки - красный */
+    --code-warning: #f59e0b;        /* Предупреждения - желтый */
+    --code-success: #16a34a;        /* Успешные команды - зеленый */
+    --code-highlight: #fbbf24;      /* Выделение - желтый */
     
     /* === КОПИРОВАНИЕ КОДА === */
     --copy-btn-bg: #ffffff;
@@ -200,6 +206,61 @@
   /* Символы и пунктуация */
   .highlight .p {
     color: var(--code-text) !important;
+  }
+  
+  /* =============================================================================
+     СПЕЦИАЛЬНЫЕ СТИЛИ ДЛЯ BASH/SHELL В СВЕТЛОЙ ТЕМЕ
+     ============================================================================= */
+  
+  /* Команды echo с цветными эмодзи */
+  .highlight .nb:contains("echo"),
+  .highlight .nf:contains("echo") {
+    color: var(--code-function) !important;
+  }
+  
+  /* Строки с эмодзи предупреждений */
+  .highlight .s:contains("🔴"),
+  .highlight .s1:contains("🔴"),
+  .highlight .s2:contains("🔴") {
+    color: var(--code-error) !important;
+    background-color: rgba(220, 38, 38, 0.1) !important;
+    padding: 2px 4px !important;
+    border-radius: 3px !important;
+  }
+  
+  /* Строки с успешными сообщениями */
+  .highlight .s:contains("✅"),
+  .highlight .s1:contains("✅"),
+  .highlight .s2:contains("✅") {
+    color: var(--code-success) !important;
+    background-color: rgba(22, 163, 74, 0.1) !important;
+    padding: 2px 4px !important;
+    border-radius: 3px !important;
+  }
+  
+  /* Строки с предупреждениями */
+  .highlight .s:contains("⚠️"),
+  .highlight .s1:contains("⚠️"),
+  .highlight .s2:contains("⚠️") {
+    color: var(--code-warning) !important;
+    background-color: rgba(245, 158, 11, 0.1) !important;
+    padding: 2px 4px !important;
+    border-radius: 3px !important;
+  }
+  
+  /* Переменные окружения */
+  .highlight .nv,
+  .highlight .sb {
+    color: var(--code-variable) !important;
+    font-weight: 500 !important;
+  }
+  
+  /* Специальные символы в bash */
+  .highlight .o:contains("$"),
+  .highlight .o:contains("&&"),
+  .highlight .o:contains("||") {
+    color: var(--code-operator) !important;
+    font-weight: 600 !important;
   }
   
   /* =============================================================================
