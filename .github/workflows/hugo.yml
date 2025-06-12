@@ -18,20 +18,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout with submodules
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - name: Initialize Git submodules
-        run: |
-          git submodule update --init --recursive
-          echo "=== CHECKING SUBMODULES ==="
-          git submodule status
-          echo "=== THEMES DIRECTORY ==="
-          ls -la themes/
-          echo "=== PAPERMOD THEME ==="
-          ls -la themes/PaperMod/ || echo "PaperMod theme not found"
+          submodules: recursive
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
@@ -39,39 +31,10 @@ jobs:
           hugo-version: 'latest'
           extended: true
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-
-      - name: Debug - Show Hugo version and environment
-        run: |
-          hugo version
-          echo "=== HUGO ENV ==="
-          hugo env
-          echo "=== CONFIG CHECK ==="
-          hugo config
-
-      - name: Debug - Content structure
-        run: |
-          echo "=== ROOT DIRECTORY ==="
-          ls -la
-          echo "=== CONTENT DIRECTORY ==="
-          ls -la content/
-          echo "=== POSTS DIRECTORY ==="
-          ls -la content/posts/ || echo "No posts directory"
-
       - name: Build site
-        run: |
-          echo "=== BUILDING HUGO SITE ==="
-          hugo --minify --gc --cleanDestinationDir
-
-      - name: Debug - Check build output
-        run: |
-          echo "=== PUBLIC DIRECTORY ==="
-          ls -la public/
-          echo "=== INDEX FILE ==="
-          ls -la public/index.html || echo "No index.html found"
+        run: hugo --minify --gc --cleanDestinationDir
+        env:
+          HUGO_ENVIRONMENT: production
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
