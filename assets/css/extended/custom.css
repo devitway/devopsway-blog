@@ -327,3 +327,22 @@
       padding: 0.25rem 0.375rem !important;
     }
   }
+/* =============================================================================
+   ИСПРАВЛЕНИЕ ЦВЕТОВ ДЛЯ КОМАНД (echo, git, cat, etc)
+   ============================================================================= */
+
+/* Все команды - единый синий цвет в светлой теме */
+.highlight .nb,      /* встроенные команды (echo, cat, git) */
+.highlight .nf,      /* функции */
+.highlight .fm {     /* методы */
+  color: #2563eb !important;    /* синий цвет для ВСЕХ команд */
+  font-weight: 600 !important;
+}
+
+/* Все команды - единый голубой цвет в темной теме */
+body.dark .highlight .nb,
+body.dark .highlight .nf,
+body.dark .highlight .fm {
+  color: #79c0ff !important;    /* голубой для команд в темной теме */
+  font-weight: 600 !important;
+}
