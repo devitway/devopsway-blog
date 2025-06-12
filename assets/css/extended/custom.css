@@ -346,3 +346,328 @@ body.dark .highlight .fm {
   color: #79c0ff !important;    /* голубой для команд в темной теме */
   font-weight: 600 !important;
 }
+/* =============================================================================
+   HUGO PAPER - СВЕТЛАЯ ТЕМА ДЛЯ БЛОКОВ КОДА
+   Добавьте этот код в конец вашего assets/css/extended/custom.css
+   ============================================================================= */
+
+/* =============================================================================
+   HUGO PAPER LIGHT THEME - ОСНОВНЫЕ СТИЛИ
+   ============================================================================= */
+
+/* Светлая тема для блоков кода - в стиле Hugo Paper */
+.highlight.hugo-paper-light {
+  background: #fafafa !important;
+  border: 1px solid #e1e5e9 !important;
+  border-radius: 6px !important;
+  margin: 1.5rem 0 !important;
+  overflow: hidden !important;
+  position: relative !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace !important;
+}
+
+.highlight.hugo-paper-light pre {
+  background: #fafafa !important;
+  color: #24292f !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 1rem 1.25rem !important;
+  overflow-x: auto !important;
+  margin: 0 !important;
+  line-height: 1.5 !important;
+  font-size: 0.875rem !important;
+  font-weight: 400 !important;
+}
+
+.highlight.hugo-paper-light pre code {
+  background: transparent !important;
+  color: #24292f !important;
+  border: none !important;
+  padding: 0 !important;
+  font-size: inherit !important;
+  font-family: inherit !important;
+  white-space: pre !important;
+  font-weight: inherit !important;
+}
+
+/* =============================================================================
+   HUGO PAPER LIGHT - SYNTAX HIGHLIGHTING
+   ============================================================================= */
+
+/* Комментарии - приглушенный серый */
+.highlight.hugo-paper-light .c,
+.highlight.hugo-paper-light .c1,
+.highlight.hugo-paper-light .cm,
+.highlight.hugo-paper-light .cp {
+  color: #6a737d !important;
+  font-style: italic !important;
+}
+
+/* Строки - зеленый */
+.highlight.hugo-paper-light .s,
+.highlight.hugo-paper-light .s1,
+.highlight.hugo-paper-light .s2,
+.highlight.hugo-paper-light .se,
+.highlight.hugo-paper-light .sa {
+  color: #032f62 !important;
+}
+
+/* Ключевые слова - фиолетовый */
+.highlight.hugo-paper-light .k,
+.highlight.hugo-paper-light .kd,
+.highlight.hugo-paper-light .kn,
+.highlight.hugo-paper-light .kt,
+.highlight.hugo-paper-light .kc {
+  color: #d73a49 !important;
+  font-weight: 600 !important;
+}
+
+/* Функции - синий */
+.highlight.hugo-paper-light .nf,
+.highlight.hugo-paper-light .fm,
+.highlight.hugo-paper-light .nb {
+  color: #6f42c1 !important;
+  font-weight: 500 !important;
+}
+
+/* Переменные - темно-синий */
+.highlight.hugo-paper-light .n,
+.highlight.hugo-paper-light .nv,
+.highlight.hugo-paper-light .nc {
+  color: #24292f !important;
+}
+
+/* Числа - темно-синий */
+.highlight.hugo-paper-light .m,
+.highlight.hugo-paper-light .mi,
+.highlight.hugo-paper-light .mf,
+.highlight.hugo-paper-light .mo {
+  color: #005cc5 !important;
+}
+
+/* Операторы - красный */
+.highlight.hugo-paper-light .o,
+.highlight.hugo-paper-light .ow {
+  color: #d73a49 !important;
+}
+
+/* Символы - базовый цвет */
+.highlight.hugo-paper-light .p {
+  color: #24292f !important;
+}
+
+/* Теги HTML - темно-зеленый */
+.highlight.hugo-paper-light .nt {
+  color: #22863a !important;
+  font-weight: 600 !important;
+}
+
+/* Атрибуты HTML - синий */
+.highlight.hugo-paper-light .na {
+  color: #6f42c1 !important;
+}
+
+/* =============================================================================
+   АВТОМАТИЧЕСКОЕ ПРИМЕНЕНИЕ ДЛЯ СВЕТЛОЙ ТЕМЫ
+   ============================================================================= */
+
+/* Применяем Hugo Paper стили автоматически в светлой теме */
+body:not(.dark) .highlight {
+  background: #fafafa !important;
+  border: 1px solid #e1e5e9 !important;
+  border-radius: 6px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+}
+
+body:not(.dark) .highlight pre {
+  background: #fafafa !important;
+  color: #24292f !important;
+}
+
+body:not(.dark) .highlight pre code {
+  background: transparent !important;
+  color: #24292f !important;
+}
+
+/* Hugo Paper syntax highlighting для светлой темы */
+body:not(.dark) .highlight .c,
+body:not(.dark) .highlight .c1,
+body:not(.dark) .highlight .cm,
+body:not(.dark) .highlight .cp {
+  color: #6a737d !important;
+  font-style: italic !important;
+}
+
+body:not(.dark) .highlight .s,
+body:not(.dark) .highlight .s1,
+body:not(.dark) .highlight .s2,
+body:not(.dark) .highlight .se,
+body:not(.dark) .highlight .sa {
+  color: #032f62 !important;
+}
+
+body:not(.dark) .highlight .k,
+body:not(.dark) .highlight .kd,
+body:not(.dark) .highlight .kn,
+body:not(.dark) .highlight .kt,
+body:not(.dark) .highlight .kc {
+  color: #d73a49 !important;
+  font-weight: 600 !important;
+}
+
+body:not(.dark) .highlight .nf,
+body:not(.dark) .highlight .fm,
+body:not(.dark) .highlight .nb {
+  color: #6f42c1 !important;
+  font-weight: 500 !important;
+}
+
+body:not(.dark) .highlight .n,
+body:not(.dark) .highlight .nv,
+body:not(.dark) .highlight .nc {
+  color: #24292f !important;
+}
+
+body:not(.dark) .highlight .m,
+body:not(.dark) .highlight .mi,
+body:not(.dark) .highlight .mf,
+body:not(.dark) .highlight .mo {
+  color: #005cc5 !important;
+}
+
+body:not(.dark) .highlight .o,
+body:not(.dark) .highlight .ow {
+  color: #d73a49 !important;
+}
+
+body:not(.dark) .highlight .p {
+  color: #24292f !important;
+}
+
+body:not(.dark) .highlight .nt {
+  color: #22863a !important;
+  font-weight: 600 !important;
+}
+
+body:not(.dark) .highlight .na {
+  color: #6f42c1 !important;
+}
+
+/* =============================================================================
+   КНОПКА КОПИРОВАНИЯ - HUGO PAPER СТИЛЬ
+   ============================================================================= */
+
+body:not(.dark) .copy-code {
+  background: rgba(255, 255, 255, 0.95) !important;
+  color: #586069 !important;
+  border: 1px solid #e1e5e9 !important;
+  font-size: 0.75rem !important;
+  font-weight: 500 !important;
+  border-radius: 4px !important;
+}
+
+body:not(.dark) .copy-code:hover {
+  background: #ffffff !important;
+  color: #24292f !important;
+  border-color: #d0d7de !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* =============================================================================
+   ДОПОЛНИТЕЛЬНЫЕ УЛУЧШЕНИЯ
+   ============================================================================= */
+
+/* Улучшенная прокрутка для длинных строк кода */
+body:not(.dark) .highlight pre {
+  scrollbar-width: thin !important;
+  scrollbar-color: #d0d7de #fafafa !important;
+}
+
+body:not(.dark) .highlight pre::-webkit-scrollbar {
+  height: 8px !important;
+}
+
+body:not(.dark) .highlight pre::-webkit-scrollbar-track {
+  background: #fafafa !important;
+}
+
+body:not(.dark) .highlight pre::-webkit-scrollbar-thumb {
+  background: #d0d7de !important;
+  border-radius: 4px !important;
+}
+
+body:not(.dark) .highlight pre::-webkit-scrollbar-thumb:hover {
+  background: #bcc3ce !important;
+}
+
+/* Подсветка выделенного текста в коде */
+body:not(.dark) .highlight pre::selection,
+body:not(.dark) .highlight pre code::selection {
+  background: #c8e1ff !important;
+  color: inherit !important;
+}
+
+/* =============================================================================
+   АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ
+   ============================================================================= */
+
+@media (max-width: 768px) {
+  body:not(.dark) .highlight {
+    margin: 1rem -0.5rem !important;
+    border-radius: 0 !important;
+    border-left: none !important;
+    border-right: none !important;
+    box-shadow: none !important;
+  }
+  
+  body:not(.dark) .highlight pre {
+    font-size: 0.8rem !important;
+    padding: 0.875rem 1rem !important;
+    line-height: 1.4 !important;
+  }
+  
+  body:not(.dark) .copy-code {
+    top: 0.5rem !important;
+    right: 0.75rem !important;
+    padding: 0.25rem 0.5rem !important;
+    font-size: 0.7rem !important;
+  }
+}
+
+/* =============================================================================
+   СПЕЦИАЛЬНЫЕ СТИЛИ ДЛЯ РАЗНЫХ ЯЗЫКОВ
+   ============================================================================= */
+
+/* Bash/Shell команды */
+body:not(.dark) .highlight .language-bash .nb,
+body:not(.dark) .highlight .language-sh .nb {
+  color: #22863a !important;
+  font-weight: 600 !important;
+}
+
+/* JSON ключи */
+body:not(.dark) .highlight .language-json .nt {
+  color: #032f62 !important;
+  font-weight: 500 !important;
+}
+
+/* CSS селекторы */
+body:not(.dark) .highlight .language-css .nt {
+  color: #22863a !important;
+  font-weight: 600 !important;
+}
+
+/* CSS свойства */
+body:not(.dark) .highlight .language-css .k {
+  color: #005cc5 !important;
+  font-weight: 500 !important;
+}
+
+/* YAML ключи */
+body:not(.dark) .highlight .language-yaml .nt,
+body:not(.dark) .highlight .language-yml .nt {
+  color: #22863a !important;
+  font-weight: 600 !important;
+}
