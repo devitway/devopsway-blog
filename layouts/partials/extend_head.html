@@ -1,49 +1,49 @@
-{{- /* Поддержка математических формул MathJax */ -}}
-{{ partial "math.html" . }}
+{{/* Улучшенная темная тема - DevOps Way Blog */}}
 
-{{- /* Подключение кастомных стилей для математики */ -}}
-{{ $mathCSS := resources.Get "css/extended/math.css" }}
-{{ if $mathCSS }}
-  {{ $mathCSS = $mathCSS | resources.Minify }}
-  <link rel="stylesheet" href="{{ $mathCSS.RelPermalink }}">
-{{ end }}
+{{/* Meta теги для темы */}}
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)">
 
-{{- /* Дополнительные мета-теги для лучшего SEO */ -}}
-<meta name="robots" content="index, follow">
-<meta name="googlebot" content="index, follow">
+{{/* Предзагрузка шрифтов для лучшей производительности */}}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-{{- /* Поддержка серий статей */ -}}
-{{ if .Params.series }}
-<meta name="series" content="{{ delimit .Params.series ", " }}">
-{{ end }}
+{{/* Подключаем наши улучшенные скрипты */}}
+{{ $themeToggle := resources.Get "js/theme-toggle.js" | resources.Minify }}
+{{ $codeCopy := resources.Get "js/code-copy.js" | resources.Minify }}
 
-{{- /* Структурированные данные для поисковых систем */ -}}
+<script>
+// Устанавливаем тему до загрузки страницы для предотвращения мигания
+(function() {
+  const savedTheme = localStorage.getItem('pref-theme') || 'auto';
+  const getSystemTheme = () => window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  const effectiveTheme = savedTheme === 'auto' ? getSystemTheme() : savedTheme;
+  
+  document.documentElement.setAttribute('data-theme', effectiveTheme);
+  document.body.classList.add(effectiveTheme);
+})();
+</script>
+
+<script defer src="{{ $themeToggle.RelPermalink }}"></script>
+<script defer src="{{ $codeCopy.RelPermalink }}"></script>
+
+{{/* Structured Data для лучшего SEO */}}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "{{ .Title }}",
-  "description": "{{ .Description | default .Summary }}",
+  "@type": "Blog",
+  "name": "{{ .Site.Title }}",
+  "description": "{{ .Site.Params.description }}",
+  "url": "{{ .Site.BaseURL }}",
   "author": {
     "@type": "Person",
-    "name": "{{ .Site.Params.author | default "DevOps Way" }}"
+    "name": "{{ .Site.Params.author }}"
   },
-  "publisher": {
-    "@type": "Organization",
-    "name": "{{ .Site.Title }}",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "{{ "images/logo.png" | absURL }}"
-    }
-  },
-  "datePublished": "{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}",
-  "dateModified": "{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}",
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "{{ .Permalink }}"
-  }
-  {{ if .Params.image }}
-  ,"image": "{{ .Params.image | absURL }}"
-  {{ end }}
+  "inLanguage": "ru-RU"
 }
 </script>
+
+{{/* Дополнительные мета-теги для PWA */}}
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="mobile-web-app-capable" content="yes">

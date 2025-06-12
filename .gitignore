@@ -106,3 +106,18 @@ assets/jsconfig.json
 # Определенные папки контента:
 # content/private/
 # content/drafts/
+# Hugo backup files
+hugo-backup.sh
+hugo.toml.backup.*
+update-hugo.sh
+
+# Hugo generated files
+hugo_stats.json
+
+# Theme backups
+theme_backups/
+
+# Theme upgrade documentation
+THEME_UPGRADE.md
+
+

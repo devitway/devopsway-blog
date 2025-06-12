@@ -1,5 +1,5 @@
 # =============================================================================
-# БАЗОВЫЕ НАСТРОЙКИ HUGO
+# БАЗОВЫЕ НАСТРОЙКИ HUGO - DevOps Way Blog
 # =============================================================================
 
 baseURL = "https://devopsway.ru"
@@ -15,18 +15,20 @@ googleAnalytics = "G-B9KCE8TFRB"
 enableRobotsTXT = true
 canonifyURLs = true
 enableEmoji = true
+enableGitInfo = true
 
 # Сборка
 buildDrafts = false
 buildFuture = false
 buildExpired = false
+enableInlineShortcodes = true
 
 # =============================================================================
-# PAGINATION (новый синтаксис Hugo v0.128+)
+# PAGINATION
 # =============================================================================
 
 [pagination]
-pagerSize = 10
+pagerSize = 12
 path = "page"
 
 # =============================================================================
@@ -82,7 +84,7 @@ priority = 0.5
 filename = "sitemap.xml"
 
 # =============================================================================
-# MARKUP И SYNTAX HIGHLIGHTING + MERMAID
+# MARKUP И SYNTAX HIGHLIGHTING
 # =============================================================================
 
 [markup]
@@ -94,23 +96,25 @@ codeFences = true
 guessSyntax = true
 hl_Lines = ""
 lineNumbersInTable = false
-noClasses = true
+noClasses = false
 tabWidth = 4
 
 # Настройки Goldmark (Markdown парсер)
 [markup.goldmark]
 [markup.goldmark.renderer]
-unsafe = true  # Необходимо для MathJax и HTML в Markdown
+unsafe = true
 hardWraps = false
 
 [markup.goldmark.parser]
 autoHeadingID = true
 autoHeadingIDType = "github"
+wrapStandAloneImageWithinParagraph = false
 
 [markup.goldmark.extensions]
 definitionList = true
 footnote = true
 linkify = true
+linkifyProtocol = "https"
 strikethrough = true
 table = true
 taskList = true
@@ -161,7 +165,7 @@ ShowWordCount = true
 ShowRssButtonInSectionTermList = true
 ShowToc = true
 TocOpen = false
-ShowLastMod = false
+ShowLastMod = true
 ShowFullTextinRSS = true
 
 # Поиск
@@ -181,9 +185,6 @@ tocopen = false
 UseHugoToc = true
 disableAnchoredHeadings = false
 
-# MERMAID ПОДДЕРЖКА
-mermaid = true
-
 # =============================================================================
 # ГЛАВНАЯ СТРАНИЦА
 # =============================================================================
@@ -193,81 +194,27 @@ Title = "🚀 DevOps Way - Практические гайды"
 Content = """
 **Практические DevOps инструкции, которые реально работают в production!**
 
-🎯 **Аудитория:** DevOps инженеры всех уровней  
-📚 **Формат:** пошаговые гайды + troubleshooting  
-⚡ **Фокус:** практика над теорией, проверенные решения
+🐳 **Docker & Kubernetes** - от основ до продвинутых техник  
+⚙️ **CI/CD Pipeline** - автоматизация развертывания  
+📊 **Monitoring & Logging** - наблюдаемость систем  
+🔧 **Infrastructure as Code** - Terraform, Ansible  
+🛡️ **Security & Best Practices** - безопасность DevOps  
 
-**📂 Основные категории:**
-- 🔧 **DevOps Essentials** - основы для новичков
-- 🔒 **Security** - безопасность инфраструктуры  
-- ⚡ **Automation** - автоматизация процессов
-- 📊 **Monitoring** - мониторинг и алертинг
-- 🚀 **CI/CD** - пайплайны и деплоймент
-
-💡 **Почему DevOps Way:**
-- Все инструкции тестируются в реальных условиях
-- Никакой воды - только практические решения
-- Troubleshooting типичных проблем
-- Copy-paste команды для быстрого старта
-
-👉 [Подписывайтесь на Telegram](https://t.me/devitway) для уведомлений о новых постах!
+*Каждый гайд проверен на практике и содержит рабочие примеры!*
 """
 
-# =============================================================================
-# СОЦИАЛЬНЫЕ СЕТИ
-# =============================================================================
-
+# Социальные ссылки
 [[params.socialIcons]]
 name = "telegram"
 url = "https://t.me/devitway"
 
 [[params.socialIcons]]
 name = "github"
-url = "https://github.com/devitway"
+url = "https://github.com/devopsway"
 
 [[params.socialIcons]]
 name = "rss"
 url = "/feed.xml"
-
-# =============================================================================
-# КОММЕНТАРИИ GISCUS (настроить позже)
-# =============================================================================
-
-[params.giscus]
-repo = "devitway/devopsway-blog"
-repoId = "YOUR_REPO_ID"  # Получить с giscus.app после настройки Discussions
-category = "Comments"
-categoryId = "YOUR_CATEGORY_ID"  # Получить с giscus.app
-mapping = "pathname"
-strict = "0"
-reactionsEnabled = "1"
-emitMetadata = "0"
-inputPosition = "bottom"
-theme = "preferred_color_scheme"
-lang = "ru"
-crossorigin = "anonymous"
-
-# =============================================================================
-# ASSETS И МЕДИА
-# =============================================================================
-
-[params.assets]
-favicon = "/favicon.ico"
-favicon16x16 = "/favicon-16x16.png"
-favicon32x32 = "/favicon-32x32.png"
-apple_touch_icon = "/apple-touch-icon.png"
-safari_pinned_tab = "/safari-pinned-tab.svg"
-disableHLJS = false
-disableFingerprinting = false
-
-# =============================================================================
-# РЕДАКТИРОВАНИЕ ПОСТОВ
-# =============================================================================
-
-[params.editPost]
-URL = "https://github.com/devitway/devopsway-blog/tree/main/content"
-Text = "📝 Предложить изменения"
-appendFilePath = true
 
 # =============================================================================
 # НАВИГАЦИОННОЕ МЕНЮ
@@ -290,116 +237,50 @@ weight = 20
 identifier = "search"
 name = "🔍 Поиск"
 url = "/search/"
-weight = 25
+weight = 30
 
 [[menu.main]]
 identifier = "about"
 name = "👨‍💻 О проекте"
 url = "/about/"
-weight = 30
+weight = 40
 
 [[menu.main]]
 identifier = "telegram"
 name = "💬 Telegram"
 url = "https://t.me/devitway"
-weight = 40
+weight = 50
 
 # =============================================================================
-# RELATED CONTENT
+# ДОПОЛНИТЕЛЬНЫЕ НАСТРОЙКИ
 # =============================================================================
 
-[related]
-includeNewer = true
-threshold = 80
-toLower = false
-
-[[related.indices]]
-name = "keywords"
-weight = 100
-
-[[related.indices]]
-name = "tags"
-weight = 80
-
-[[related.indices]]
-name = "categories"
-weight = 60
-
-[[related.indices]]
-name = "date"
-weight = 10
-
-# =============================================================================
-# PRIVACY НАСТРОЙКИ (GDPR) - исправлено для Hugo v0.141+
-# =============================================================================
+[services]
+[services.googleAnalytics]
+ID = "G-B9KCE8TFRB"
 
 [privacy]
-[privacy.disqus]
-disable = true
-
 [privacy.googleAnalytics]
-anonymizeIP = true
 disable = false
 respectDoNotTrack = true
-useSessionStorage = false
-
-[privacy.instagram]
-disable = true
-simple = true
-
-[privacy.x]
-disable = false
-enableDNT = true
-simple = true
-
-[privacy.vimeo]
-disable = true
-enableDNT = true
-simple = true
-
-[privacy.youtube]
-disable = false
-privacyEnhanced = true
+anonymizeIP = true
 
 # =============================================================================
-# БЕЗОПАСНОСТЬ (исправлено для совместимости)
+# СБОРКА И ДЕПЛОЙ
 # =============================================================================
 
-[security]
-[security.exec]
-allow = ['^(dart-)?sass(-embedded)?$', '^go$', '^npx$', '^postcss$', '^git$']
-osEnv = ['(?i)^((HTTPS?|NO)_PROXY|PATH(EXT)?|APPDATA|TE?MP|TERM|GO\w+|(XDG_CONFIG_)?HOME|USERPROFILE|SSH_AUTH_SOCK|DISPLAY|LANG|SYSTEMDRIVE)$']
+[build]
+writeStats = true
 
-[security.funcs]
-getenv = ['^HUGO_', '^CI$']
+[caches]
+[caches.getjson]
+maxAge = "10m"
 
-[security.http]
-methods = ['(?i)GET|POST']
-urls = ['.*']
+[caches.getcsv]
+maxAge = "10m"
 
-# =============================================================================
-# FRONTMATTER ФОРМАТЫ
-# =============================================================================
+[caches.images]
+maxAge = "1h"
 
-[frontmatter]
-date = ["date", "publishDate", "lastmod"]
-lastmod = ["lastmod", "date", "publishDate"]
-publishDate = ["publishDate", "date"]
-expiryDate = ["expiryDate"]
-
-# =============================================================================
-# ДОПОЛНИТЕЛЬНЫЕ ЯЗЫКИ (для будущего развития)
-# =============================================================================
-
-[languages]
-[languages.ru]
-languageName = "Русский"
-weight = 1
-title = "DevOps Way - Практические гайды"
-
-# Будущее развитие - английская версия
-# [languages.en]
-# languageName = "English"
-# weight = 2
-# title = "DevOps Way - Practical Guides"
-
+[caches.assets]
+maxAge = "1h"
