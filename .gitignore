@@ -155,3 +155,6 @@ hugo_stats.json
 # OS файлы
 .DS_Store
 Thumbs.db
+public/
+resources/
+.hugo_build.lock
