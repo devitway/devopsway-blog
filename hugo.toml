@@ -91,7 +91,7 @@ filename = "sitemap.xml"
 # Настройки подсветки синтаксиса
 [markup.highlight]
 style = "github-dark"
-lineNos = true
+lineNos = false
 codeFences = true
 guessSyntax = true
 hl_Lines = ""
