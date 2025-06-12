@@ -1,8 +1,31 @@
 /* =============================================================================
-   АГРЕССИВНОЕ ИСПРАВЛЕНИЕ - ПЕРЕБИВАЕТ ВСЕ ВОЗМОЖНЫЕ СЕЛЕКТОРЫ
+   ИСПРАВЛЕНИЕ КОПИРОВАНИЯ НОМЕРОВ СТРОК
    ============================================================================= */
 
-/* Сброс всех возможных селекторов для темной темы */
+/* Полностью исключаем номера строк из выделения и копирования */
+.highlight .lnt,
+.highlight .lnl {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  pointer-events: none !important;
+}
+
+/* Альтернативный способ - через псевдоэлементы */
+.highlight .lnt::before,
+.highlight .lnt::after {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+}
+
+/* =============================================================================
+   АГРЕССИВНОЕ ИСПРАВЛЕНИЕ ТЕМНОЙ ТЕМЫ + БЕЗ НОМЕРОВ СТРОК
+   ============================================================================= */
+
+/* Темная тема - все возможные селекторы */
 html[data-theme="dark"] .highlight,
 body[data-theme="dark"] .highlight,
 [data-theme="dark"] .highlight,
@@ -12,6 +35,11 @@ body.dark .highlight {
   background: #161b22 !important;
   border: 1px solid #30363d !important;
   color: #e6edf3 !important;
+  border-radius: 8px !important;
+  margin: 1.5rem 0 !important;
+  overflow: hidden !important;
+  position: relative !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
 }
 
 html[data-theme="dark"] .highlight pre,
@@ -23,82 +51,6 @@ body.dark .highlight pre {
   background: #161b22 !important;
   color: #e6edf3 !important;
   border: none !important;
-}
-
-html[data-theme="dark"] .highlight pre code,
-body[data-theme="dark"] .highlight pre code,
-[data-theme="dark"] .highlight pre code,
-.dark .highlight pre code,
-html.dark .highlight pre code,
-body.dark .highlight pre code {
-  background: transparent !important;
-  color: #e6edf3 !important;
-}
-
-html[data-theme="dark"] .highlight .lnt,
-body[data-theme="dark"] .highlight .lnt,
-[data-theme="dark"] .highlight .lnt,
-.dark .highlight .lnt,
-html.dark .highlight .lnt,
-body.dark .highlight .lnt {
-  background: #21262d !important;
-  color: #7d8590 !important;
-  border-right: 1px solid #30363d !important;
-}
-
-/* Сброс всех возможных селекторов для светлой темы */
-html:not([data-theme="dark"]) .highlight,
-body:not([data-theme="dark"]) .highlight,
-:root .highlight,
-html:not(.dark) .highlight,
-body:not(.dark) .highlight {
-  background: #ffffff !important;
-  border: 1px solid #e2e8f0 !important;
-  color: #0f172a !important;
-}
-
-html:not([data-theme="dark"]) .highlight pre,
-body:not([data-theme="dark"]) .highlight pre,
-:root .highlight pre,
-html:not(.dark) .highlight pre,
-body:not(.dark) .highlight pre {
-  background: #ffffff !important;
-  color: #0f172a !important;
-  border: none !important;
-}
-
-html:not([data-theme="dark"]) .highlight pre code,
-body:not([data-theme="dark"]) .highlight pre code,
-:root .highlight pre code,
-html:not(.dark) .highlight pre code,
-body:not(.dark) .highlight pre code {
-  background: transparent !important;
-  color: #0f172a !important;
-}
-
-html:not([data-theme="dark"]) .highlight .lnt,
-body:not([data-theme="dark"]) .highlight .lnt,
-:root .highlight .lnt,
-html:not(.dark) .highlight .lnt,
-body:not(.dark) .highlight .lnt {
-  background: #f8fafc !important;
-  color: #6b7280 !important;
-  border-right: 1px solid #e2e8f0 !important;
-}
-
-/* =============================================================================
-   БАЗОВЫЕ СТИЛИ (применяются ко всем)
-   ============================================================================= */
-
-.highlight {
-  border-radius: 8px !important;
-  margin: 1.5rem 0 !important;
-  overflow: hidden !important;
-  position: relative !important;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
-}
-
-.highlight pre {
   border-radius: 0 !important;
   padding: 1rem 1.25rem !important;
   overflow-x: auto !important;
@@ -109,7 +61,14 @@ body:not(.dark) .highlight .lnt {
   font-weight: 400 !important;
 }
 
-.highlight pre code {
+html[data-theme="dark"] .highlight pre code,
+body[data-theme="dark"] .highlight pre code,
+[data-theme="dark"] .highlight pre code,
+.dark .highlight pre code,
+html.dark .highlight pre code,
+body.dark .highlight pre code {
+  background: transparent !important;
+  color: #e6edf3 !important;
   border: none !important;
   padding: 0 !important;
   font-size: inherit !important;
@@ -118,10 +77,95 @@ body:not(.dark) .highlight .lnt {
   font-weight: inherit !important;
 }
 
-.highlight .lnt {
+/* Номера строк - темная тема (НЕ КОПИРУЮТСЯ) */
+html[data-theme="dark"] .highlight .lnt,
+body[data-theme="dark"] .highlight .lnt,
+[data-theme="dark"] .highlight .lnt,
+.dark .highlight .lnt,
+html.dark .highlight .lnt,
+body.dark .highlight .lnt {
+  background: #21262d !important;
+  color: #7d8590 !important;
+  border-right: 1px solid #30363d !important;
   padding: 0 0.75rem !important;
   margin-right: 1rem !important;
   user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  pointer-events: none !important;
+  font-size: 0.8rem !important;
+  font-weight: 400 !important;
+  display: inline-block !important;
+  min-width: 2.5rem !important;
+  text-align: right !important;
+}
+
+/* Светлая тема - все возможные селекторы */
+html:not([data-theme="dark"]) .highlight,
+body:not([data-theme="dark"]) .highlight,
+:root .highlight,
+html:not(.dark) .highlight,
+body:not(.dark) .highlight {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  color: #0f172a !important;
+  border-radius: 8px !important;
+  margin: 1.5rem 0 !important;
+  overflow: hidden !important;
+  position: relative !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+html:not([data-theme="dark"]) .highlight pre,
+body:not([data-theme="dark"]) .highlight pre,
+:root .highlight pre,
+html:not(.dark) .highlight pre,
+body:not(.dark) .highlight pre {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 1rem 1.25rem !important;
+  overflow-x: auto !important;
+  margin: 0 !important;
+  line-height: 1.6 !important;
+  font-size: 0.875rem !important;
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Cascadia Code', 'Courier New', monospace !important;
+  font-weight: 400 !important;
+}
+
+html:not([data-theme="dark"]) .highlight pre code,
+body:not([data-theme="dark"]) .highlight pre code,
+:root .highlight pre code,
+html:not(.dark) .highlight pre code,
+body:not(.dark) .highlight pre code {
+  background: transparent !important;
+  color: #0f172a !important;
+  border: none !important;
+  padding: 0 !important;
+  font-size: inherit !important;
+  font-family: inherit !important;
+  white-space: pre !important;
+  font-weight: inherit !important;
+}
+
+/* Номера строк - светлая тема (НЕ КОПИРУЮТСЯ) */
+html:not([data-theme="dark"]) .highlight .lnt,
+body:not([data-theme="dark"]) .highlight .lnt,
+:root .highlight .lnt,
+html:not(.dark) .highlight .lnt,
+body:not(.dark) .highlight .lnt {
+  background: #f8fafc !important;
+  color: #6b7280 !important;
+  border-right: 1px solid #e2e8f0 !important;
+  padding: 0 0.75rem !important;
+  margin-right: 1rem !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  pointer-events: none !important;
   font-size: 0.8rem !important;
   font-weight: 400 !important;
   display: inline-block !important;
@@ -350,13 +394,30 @@ html:not(.dark) .copy-code {
 }
 
 /* =============================================================================
-   ОТЛАДКА - ПОКАЗЫВАЕТ КАКИЕ СЕЛЕКТОРЫ АКТИВНЫ
+   АДАПТИВНОСТЬ
    ============================================================================= */
 
-/* Раскомментируйте для отладки */
-/*
-html[data-theme="dark"] .highlight { border: 3px solid red !important; }
-body[data-theme="dark"] .highlight { border: 3px solid blue !important; }
-[data-theme="dark"] .highlight { border: 3px solid green !important; }
-.dark .highlight { border: 3px solid yellow !important; }
-*/
+@media (max-width: 768px) {
+  .highlight {
+    margin: 1rem 0 !important;
+    border-radius: 6px !important;
+  }
+  
+  .highlight pre {
+    font-size: 0.8rem !important;
+    padding: 0.875rem 1rem !important;
+  }
+  
+  .copy-code {
+    top: 0.5rem !important;
+    right: 0.5rem !important;
+    padding: 0.25rem 0.5rem !important;
+    font-size: 0.7rem !important;
+  }
+  
+  .highlight .lnt {
+    min-width: 2rem !important;
+    padding: 0 0.5rem !important;
+    margin-right: 0.75rem !important;
+  }
+}
