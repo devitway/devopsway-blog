@@ -976,14 +976,14 @@ git safe-force  # --force-with-lease origin HEAD
 
 ## ✅ Правила команды
 
-### ✅ МОЖНО (разрешено)
+### ✅ МОЖНО
 
 - `git rebase main` для синхронизации
 - `git rebase -i` для очистки коммитов
 - `git merge feature-branch` только fast-forward
 - `git push --force-with-lease` для обновления feature веток
 
-### ❌ НЕЛЬЗЯ (запрещено)
+### ❌ НЕЛЬЗЯ
 
 - `git merge main` в feature ветках
 - `git push --force` без --with-lease
