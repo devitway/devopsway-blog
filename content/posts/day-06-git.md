@@ -662,12 +662,23 @@ set -euo pipefail
 # Защита от merge commits в main ветке
 echo "🛡️ Проверка соблюдения rebase стратегии..."
 
-# Получаем информацию о push
-while read local_ref local_sha remote_ref remote_sha; do
+# Git передает данные через stdin в pre-push hook
+while IFS=' ' read -r local_ref local_sha remote_ref remote_sha; do
+    # Пропускаем удаление веток
+    if [[ "$local_sha" == "0000000000000000000000000000000000000000" ]]; then
+        continue
+    fi
+    
     # Проверяем только push в main/master
     if [[ "$remote_ref" == "refs/heads/main" ]] || [[ "$remote_ref" == "refs/heads/master" ]]; then
-        # Проверяем наличие merge commits
-        merge_commits=$(git rev-list --merges "$remote_sha".."$local_sha" 2>/dev/null | wc -l)
+        # Если remote_sha равен 0000..., это новая ветка
+        if [[ "$remote_sha" == "0000000000000000000000000000000000000000" ]]; then
+            # Проверяем все коммиты в ветке
+            merge_commits=$(git rev-list --merges "$local_sha" 2>/dev/null | wc -l)
+        else
+            # Проверяем только новые коммиты
+            merge_commits=$(git rev-list --merges "$remote_sha".."$local_sha" 2>/dev/null | wc -l)
+        fi
         
         if [ "$merge_commits" -gt 0 ]; then
             cat << 'ERROR'
