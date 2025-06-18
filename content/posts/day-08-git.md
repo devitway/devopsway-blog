@@ -1113,7 +1113,6 @@ git lfs pull --include="path/to/specific/file"
 **Проблема: Файлы не загружаются**
 
 ```bash
-# Решение
 git lfs pull
 ```
 
