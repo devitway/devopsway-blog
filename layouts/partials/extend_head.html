@@ -82,51 +82,85 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 }
 </style>
-{{/* Диаграммы: условная загрузка CSS */}}
-{{- $needsDiagrams := false -}}
-{{- if or .Params.diagrams 
-          (findRE `{{<\s*diagram\s` .RawContent)
-          (findRE `{{<\s*mermaid-enhanced\s` .RawContent)
-          (findRE `{{<\s*risk-table\s` .RawContent) -}}
-  {{- $needsDiagrams = true -}}
-{{- end -}}
+<!-- Добавить в конец файла layouts/partials/extend_head.html -->
 
-{{- if $needsDiagrams -}}
-{{- $diagramCSS := resources.Get "css/extended/diagrams.css" -}}
-{{- if $diagramCSS -}}
-{{- $diagramCSS = $diagramCSS | minify | fingerprint -}}
-<!-- Диаграммы: CSS с оптимизацией -->
-<link rel="preload" href="{{ $diagramCSS.RelPermalink }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="{{ $diagramCSS.RelPermalink }}"></noscript>
-{{- end -}}
+<!-- =================================================================== -->
+<!-- ИСПРАВЛЕНИЕ НОМЕРОВ СТРОК (всегда подключаем) -->
+<!-- =================================================================== -->
+{{ $fixLineNumbers := resources.Get "js/fix-line-numbers.js" | resources.Minify }}
+<script defer src="{{ $fixLineNumbers.RelPermalink }}"></script>
 
-{{/* Проверяем нужен ли Mermaid */}}
-{{- if or .Params.mermaid 
-          (findRE `{{<\s*mermaid-enhanced\s` .RawContent) -}}
-<!-- Mermaid: предзагрузка -->
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js" as="script">
-{{- end -}}
+<!-- =================================================================== -->
+<!-- СИСТЕМА ДИАГРАММ (условное подключение) -->
+<!-- =================================================================== -->
+{{ if or (.Params.diagrams) (in .Content "diagram ") (.Site.Params.enableDiagrams) }}
 
-<!-- Критический inline CSS для диаграмм -->
-<style>
-.diagram-wrapper {
-  min-height: 200px;
-  background: #f0f0f0;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+<!-- Подключение D3.js для диаграмм -->
+<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js" as="script" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js" 
+        integrity="sha512-M7nHCiNUOwFt6Us3r8alutZLm9qMt4s9951uo8jqO4KzQTdG+jA5F9BCoCb/04VCefWd5IEoRX7X+5qmEQfmXA==" 
+        crossorigin="anonymous" 
+        referrerpolicy="no-referrer"></script>
+
+<!-- Подключение CSS диаграмм -->
+{{ $diagramCSS := resources.Get "css/extended/diagrams.css" | resources.Minify }}
+<link rel="stylesheet" href="{{ $diagramCSS.RelPermalink }}">
+
+<!-- Подключение JavaScript диаграмм -->
+{{ $diagramJS := resources.Get "js/diagram-system.js" | resources.Minify }}
+<script defer src="{{ $diagramJS.RelPermalink }}"></script>
+
+<!-- Отладочная информация (только в development) -->
+{{ if eq .Site.Params.env "development" }}
+<script>
+console.log('🎯 Диаграммы включены для страницы:', '{{ .Title }}');
+console.log('📊 Параметр diagrams:', {{ .Params.diagrams | default false }});
+console.log('🔍 Найден шорткод diagram в контенте:', {{ if in .Content "diagram " }}true{{ else }}false{{ end }});
+console.log('🌐 Глобальное включение:', {{ .Site.Params.enableDiagrams | default false }});
+</script>
+{{ end }}
+
+{{ end }}
+
+<!-- =================================================================== -->
+<!-- FALLBACK ДЛЯ СТАРЫХ БРАУЗЕРОВ -->
+<!-- =================================================================== -->
+<script>
+// Проверка поддержки современного JavaScript
+if (!window.Map || !window.Set || !Array.from) {
+    console.warn('⚠️ Диаграммы требуют современный браузер с поддержкой ES6');
+    
+    // Показываем предупреждение пользователю
+    document.addEventListener('DOMContentLoaded', function() {
+        const diagrams = document.querySelectorAll('[data-diagram-type]');
+        diagrams.forEach(function(diagram) {
+            diagram.innerHTML = '<div style="padding: 2rem; text-align: center; background: #f7fafc; border: 1px solid #e2e8f0; border-radius: 8px; color: #4a5568;">' +
+                '<p style="margin: 0 0 1rem 0;">⚠️ Для просмотра диаграмм необходим современный браузер.</p>' +
+                '<p style="margin: 0; font-size: 0.875rem;">Рекомендуется использовать последние версии Chrome, Firefox, Safari или Edge.</p>' +
+                '</div>';
+        });
+    });
 }
-.diagram-wrapper::before {
-  content: "📊 Загрузка диаграммы...";
-  color: #666;
-  font-size: 0.9rem;
-}
-.diagram-wrapper.loaded::before {
-  display: none;
-}
-[data-theme="dark"] .diagram-wrapper {
-  background: #2a2a2a;
-}
-</style>
-{{- end -}}
+</script>
+
+<!-- =================================================================== -->
+<!-- CSP И БЕЗОПАСНОСТЬ (раскомментировать при необходимости) -->
+<!-- =================================================================== -->
+<!--
+<meta http-equiv="Content-Security-Policy" 
+      content="script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; 
+               style-src 'self' 'unsafe-inline';">
+-->
+
+<!-- =================================================================== -->
+<!-- PRODUCTION ОПТИМИЗАЦИИ -->
+<!-- =================================================================== -->
+{{ if eq .Site.Params.env "production" }}
+<!-- DNS prefetch для лучшей производительности -->
+<link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+
+<!-- Resource hints для критических ресурсов -->
+{{ if or (.Params.diagrams) (in .Content "diagram ") (.Site.Params.enableDiagrams) }}
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+{{ end }}
+{{ end }}
