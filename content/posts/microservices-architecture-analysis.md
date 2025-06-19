@@ -38,7 +38,6 @@ editPost:
     appendFilePath: true
 ---
 
-
 🔍 **Категория:** DevOps Essentials / Архитектура систем  
 💡 **Цель:** Научиться выявлять скрытые зависимости в архитектуре микросервисов и предотвращать каскадные сбои
 
@@ -61,7 +60,7 @@ editPost:
 
 Рассмотрим реальную архитектуру платформы электронной коммерции с выявленными проблемами:
 
-{{< diagram src="/images/microservices-dependencies-map.svg"
+{{< diagram src="https://via.placeholder.com/800x600/4fc3f7/ffffff?text=Microservices+Dependencies+Map+%7C+API+Gateway+%E2%86%92+Auth+Service+%E2%86%92+Redis+Cache+%E2%86%90+Payment+Service"
            alt="Карта зависимостей микросервисной архитектуры с критическими точками"
            caption="**Рис. 1**: Архитектура платформы электронной коммерции. Красным выделены критические зависимости, пунктиром - скрытые связи через кэш Redis."
            class="architecture-main" >}}
@@ -175,7 +174,7 @@ auth_service_sla:
 
 **Кэш Redis → Кластер Redis**
 
-{{< diagram src="/images/redis-cluster-architecture.svg"
+{{< diagram src="https://via.placeholder.com/700x500/ff6b6b/ffffff?text=Redis+Cluster+Architecture+%7C+Master-1+%E2%86%94+Master-2+%E2%86%94+Master-3+%7C+Sentinel+Monitoring+%7C+Auto+Failover"
            alt="Схема кластера Redis с Sentinel для высокой доступности"
            caption="**Рис. 2**: Переход от единой точки отказа к отказоустойчивому кластеру Redis" >}}
 
@@ -289,7 +288,7 @@ func (s *AuthService) GetUserSession(token string) (*Session, error) {
 
 ### 3. Изоляция кэшей по предметным областям
 
-{{< diagram src="/images/cache-isolation-pattern.svg"
+{{< diagram src="https://via.placeholder.com/600x450/ffa726/ffffff?text=Cache+Isolation+Pattern+%7C+Auth+Redis+%28Port+6379%29+%7C+Payment+Redis+%28Port+6380%29+%7C+User+Redis+%28Port+6381%29"
            alt="Схема изоляции кэшей по предметным областям"
            caption="**Рис. 3**: Разделение единого кэша на изолированные области для предотвращения каскадных сбоев" >}}
 
@@ -359,7 +358,7 @@ groups:
 
 ### Панель Grafana для архитектурного мониторинга
 
-{{< diagram src="/images/grafana-architecture-dashboard.png"
+{{< diagram src="https://via.placeholder.com/900x600/4caf50/ffffff?text=Grafana+Architecture+Dashboard+%7C+Service+Health+Matrix+%7C+Redis+Cache+Hit+Rate+%7C+Circuit+Breaker+States+%7C+Dependencies+Graph"
            alt="Скриншот Grafana дашборда для мониторинга архитектуры микросервисов"
            caption="**Рис. 4**: Дашборд Grafana для отслеживания здоровья архитектуры и зависимостей между сервисами" >}}
 
