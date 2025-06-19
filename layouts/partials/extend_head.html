@@ -15,3 +15,70 @@
     setTimeout(hideLineNumbers, 100);
 })();
 </script>
+<!-- Добавить В КОНЕЦ существующего файла layouts/partials/extend_head.html -->
+
+<!-- Mermaid.js для диаграмм -->
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    mermaid.initialize({
+        startOnLoad: true,
+        theme: document.body.classList.contains('dark') ? 'dark' : 'default',
+        securityLevel: 'loose',
+        fontFamily: 'inherit',
+        flowchart: {
+            useMaxWidth: true,
+            htmlLabels: true
+        }
+    });
+    
+    // Поддержка переключения темы
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            setTimeout(() => {
+                const newTheme = document.body.classList.contains('dark') ? 'dark' : 'default';
+                mermaid.initialize({ theme: newTheme });
+                // Перерисовываем диаграммы
+                document.querySelectorAll('.mermaid').forEach(el => {
+                    if (el.getAttribute('data-processed')) {
+                        el.removeAttribute('data-processed');
+                        const graph = el.innerHTML;
+                        el.innerHTML = el.textContent || el.innerText;
+                    }
+                });
+                mermaid.init();
+            }, 100);
+        });
+    }
+});
+</script>
+
+<!-- Стили для Mermaid -->
+<style>
+.mermaid {
+    text-align: center;
+    margin: 2rem 0;
+    background: transparent;
+}
+
+.mermaid svg {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.post-content .mermaid {
+    overflow-x: auto;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--code-bg);
+}
+
+@media (max-width: 768px) {
+    .mermaid {
+        font-size: 14px;
+    }
+}
+</style>
