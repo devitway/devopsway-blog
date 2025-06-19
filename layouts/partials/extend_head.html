@@ -95,10 +95,8 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- =================================================================== -->
 {{ if or (.Params.diagrams) (in .Content "diagram ") (.Site.Params.enableDiagrams) }}
 
-<!-- Подключение D3.js для диаграмм -->
-<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js" as="script" crossorigin="anonymous">
+<!-- Подключение D3.js без integrity для избежания ошибок -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js" 
-        integrity="sha512-M7nHCiNUOwFt6Us3r8alutZLm9qMt4s9951uo8jqO4KzQTdG+jA5F9BCoCb/04VCefWd5IEoRX7X+5qmEQfmXA==" 
         crossorigin="anonymous" 
         referrerpolicy="no-referrer"></script>
 
@@ -144,23 +142,8 @@ if (!window.Map || !window.Set || !Array.from) {
 </script>
 
 <!-- =================================================================== -->
-<!-- CSP И БЕЗОПАСНОСТЬ (раскомментировать при необходимости) -->
-<!-- =================================================================== -->
-<!--
-<meta http-equiv="Content-Security-Policy" 
-      content="script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; 
-               style-src 'self' 'unsafe-inline';">
--->
-
-<!-- =================================================================== -->
-<!-- PRODUCTION ОПТИМИЗАЦИИ -->
+<!-- DNS PREFETCH (без preload для избежания warnings) -->
 <!-- =================================================================== -->
 {{ if eq .Site.Params.env "production" }}
-<!-- DNS prefetch для лучшей производительности -->
 <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
-
-<!-- Resource hints для критических ресурсов -->
-{{ if or (.Params.diagrams) (in .Content "diagram ") (.Site.Params.enableDiagrams) }}
-<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-{{ end }}
 {{ end }}
