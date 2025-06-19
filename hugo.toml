@@ -188,25 +188,21 @@ disableAnchoredHeadings = false
 # Включить диаграммы глобально (опционально)
 enableDiagrams = false  # true для включения на всех страницах
 
-# Настройки диаграмм
-[params.diagrams]
-# CDN для D3.js (можно изменить на другую версию)
-d3Version = "7.8.5"
+  # Настройки диаграмм
+  [params.diagrams]
+    # CDN для D3.js
+    d3Version = "7.8.5"
     
-# Глобальные настройки по умолчанию
-defaultHeight = "500"
-defaultWidth = "100%"
+    # Глобальные настройки по умолчанию
+    defaultHeight = "500"
+    defaultWidth = "100%"
     
-# Включить отладку (только для development)
-debug = false
+    # Включить отладку (только для development)
+    debug = false
     
-# Безопасность - проверка целостности для D3.js
-d3Integrity = "sha512-M7nHCiNUOwFt6Us3r8alutZLm9qMt4s9951uo8jqO4KzQTdG+jA5F9BCoCb/04VCefWd5IEoRX7X+5qmEQfmXA=="
-    
-# Настройки производительности
-lazyLoad = true        # Загружать диаграммы при появлении в viewport
-preloadD3 = true       # Предзагружать D3.js для лучшей производительности
-minifyAssets = true    # Минифицировать CSS и JS диаграмм
+    # Настройки производительности
+    lazyLoad = true        # Загружать диаграммы при появлении в viewport
+    minifyAssets = true    # Минифицировать CSS и JS диаграмм
 
 # =============================================================================
 # ГЛАВНАЯ СТРАНИЦА
