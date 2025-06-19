@@ -234,41 +234,38 @@ volumes:
 
 ### 2. Паттерн «Автоматический выключатель»
 
+```markdown
 {{< mermaid-enhanced caption="Последовательность работы Circuit Breaker при сбоях Redis" >}}
-sequenceDiagram
-    participant Client as 👤 Клиент
-    participant Auth as 🔐 Auth Service
-    participant CB as ⚡ Circuit Breaker
-    participant Redis as 📦 Redis Cache
-    participant DB as 🗄️ Database
-
-    Client->>+Auth: Запрос авторизации
-    Auth->>+CB: Проверка состояния
+graph TD
+    Client[👤 КлиентЗапрос авторизации] --> Auth[🔐 Auth Service]
+    Auth --> CB{⚡ Circuit BreakerПроверка состояния}
     
-    alt Circuit Breaker CLOSED (норма)
-        CB->>+Redis: Запрос к кэшу
-        Redis-->>-CB: ✅ Данные сессии
-        CB-->>Auth: ✅ Успех
-    else Circuit Breaker OPEN (сбой)
-        CB-->>Auth: ❌ Отказ (быстрый)
-        Note over Auth: Активация fallback
-        Auth->>+DB: Резервный запрос
-        DB-->>-Auth: ✅ Данные из БД
-    else Circuit Breaker HALF-OPEN (проверка)
-        CB->>+Redis: Тестовый запрос
-        alt Redis восстановился
-            Redis-->>-CB: ✅ Успех
-            Note over CB: Переход в CLOSED
-        else Redis еще недоступен
-            Redis-->>-CB: ❌ Ошибка
-            Note over CB: Возврат в OPEN
-        end
-    end
+    CB -->|CLOSED - норма| Redis[📦 Redis CacheЗапрос к кэшу]
+    Redis -->|✅ Данные сессии| Success[✅ Успешный ответ]
     
-    Auth-->>-Client: Результат авторизации
+    CB -->|OPEN - сбой| FastFail[❌ Быстрый отказ~20ms]
+    FastFail --> Fallback[🔄 Активация fallback]
+    Fallback --> DB[🗄️ DatabaseРезервный запрос]
+    DB -->|✅ Данные из БД| DBSuccess[✅ Fallback ответ~300ms]
     
-    Note over Client,DB: CLOSED: <100ms, OPEN: ~20ms, DB fallback: ~300ms
+    CB -->|HALF-OPEN - проверка| Test[🧪 Тестовый запрос]
+    Test -->|✅ Redis восстановился| Restore[🔄 Переход в CLOSED]
+    Test -->|❌ Redis недоступен| BackToOpen[🔄 Возврат в OPEN]
+    
+    Success --> Client
+    DBSuccess --> Client
+    
+    classDef success fill:#4caf50,stroke:#2e7d32,stroke-width:2px,color:#fff
+    classDef error fill:#ff4757,stroke:#c23616,stroke-width:2px,color:#fff
+    classDef warning fill:#ffa726,stroke:#f57c00,stroke-width:2px,color:#fff
+    classDef info fill:#4fc3f7,stroke:#0288d1,stroke-width:2px,color:#fff
+    
+    class Success,DBSuccess,Restore success
+    class FastFail,BackToOpen error
+    class Fallback,Test warning
+    class Client,Auth,CB,Redis,DB info
 {{< /mermaid-enhanced >}}
+```
 
 ```go
 // auth-service/internal/circuitbreaker.go
