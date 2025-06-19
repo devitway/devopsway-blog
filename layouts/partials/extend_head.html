@@ -82,5 +82,51 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 }
 </style>
-<!-- В вашем layouts/partials/head.html добавьте в конец: -->
-{{ partial "diagram-head.html" . }}
+{{/* Диаграммы: условная загрузка CSS */}}
+{{- $needsDiagrams := false -}}
+{{- if or .Params.diagrams 
+          (findRE `{{<\s*diagram\s` .RawContent)
+          (findRE `{{<\s*mermaid-enhanced\s` .RawContent)
+          (findRE `{{<\s*risk-table\s` .RawContent) -}}
+  {{- $needsDiagrams = true -}}
+{{- end -}}
+
+{{- if $needsDiagrams -}}
+{{- $diagramCSS := resources.Get "css/extended/diagrams.css" -}}
+{{- if $diagramCSS -}}
+{{- $diagramCSS = $diagramCSS | minify | fingerprint -}}
+<!-- Диаграммы: CSS с оптимизацией -->
+<link rel="preload" href="{{ $diagramCSS.RelPermalink }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="{{ $diagramCSS.RelPermalink }}"></noscript>
+{{- end -}}
+
+{{/* Проверяем нужен ли Mermaid */}}
+{{- if or .Params.mermaid 
+          (findRE `{{<\s*mermaid-enhanced\s` .RawContent) -}}
+<!-- Mermaid: предзагрузка -->
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js" as="script">
+{{- end -}}
+
+<!-- Критический inline CSS для диаграмм -->
+<style>
+.diagram-wrapper {
+  min-height: 200px;
+  background: #f0f0f0;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.diagram-wrapper::before {
+  content: "📊 Загрузка диаграммы...";
+  color: #666;
+  font-size: 0.9rem;
+}
+.diagram-wrapper.loaded::before {
+  display: none;
+}
+[data-theme="dark"] .diagram-wrapper {
+  background: #2a2a2a;
+}
+</style>
+{{- end -}}
