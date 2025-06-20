@@ -7,7 +7,7 @@ weight: 9
 categories: ["DevOps Основы"]
 tags: ["git", "worktree", "productivity", "context-switching", "workflow", "параллельная-разработка", "автоматизация", "fullstack", "IDE", "optimization"]
 author: "DevOps Way"
-description: "Решение проблемы context switching через git worktree. Fullstack проект с 8-12 switches/day теряет 1.5-2ч ежедневно. Worktree workflow + автоматизация = context switching time → 0."
+description: "Решение проблемы переключения контекста через git worktree. Fullstack проект с 8-12 переключениями в день теряет 1.5-2ч ежедневно. Рабочий процесс Worktree + автоматизация = время переключения контекста → 0."
 canonical: ""
 series: "Git Mastery Series"
 showToc: true
@@ -26,7 +26,7 @@ ShowRssButtonInSectionTermList: true
 UseHugoToc: true
 cover:
     image: ""
-    alt: "Git Worktree для устранения context switching"
+    alt: "Git Worktree для устранения проблемы переключения контекста"
     caption: "От постоянных переключений контекста к параллельной разработке без потерь"
     relative: false
     hidden: false
