@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Анализ архитектуры микросервисов: интерактивная диаграмма зависимостей</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1a1d29 0%, #232746 100%);
+            color: #e2e8f0;
+            overflow: hidden;
+            font-size: 14px;
+        }
+
+        .container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .toolbar {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 12px;
+            background: rgba(15, 23, 42, 0.95);
+            padding: 16px;
+            border-radius: 12px;
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .toolbar button {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            box-shadow: 0 4px 16px rgba(59, 130, 246, 0.25);
+        }
+
+        .toolbar button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+        }
+
+        .toolbar button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+        }
+
+        .legend {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(15, 23, 42, 0.95);
+            padding: 20px;
+            border-radius: 12px;
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            min-width: 220px;
+        }
+
+        .legend h3 {
+            margin: 0 0 16px 0;
+            color: #60a5fa;
+            font-size: 16px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+            margin-right: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            flex-shrink: 0;
+        }
+
+        .zoom-info {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: rgba(15, 23, 42, 0.95);
+            padding: 12px 16px;
+            border-radius: 8px;
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            font-size: 13px;
+            font-weight: 600;
+            color: #94a3b8;
+        }
+
+        .node {
+            cursor: pointer;
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+            transition: all 0.3s ease;
+        }
+
+        .node:hover {
+            filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.5));
+        }
+
+        .node rect {
+            stroke-width: 2;
+            rx: 10;
+            ry: 10;
+        }
+
+        .node text {
+            font-size: 12px;
+            font-weight: 600;
+            text-anchor: middle;
+            dominant-baseline: central;
+            fill: white;
+            pointer-events: none;
+        }
+
+        .link {
+            stroke: #64748b;
+            stroke-width: 2;
+            stroke-dasharray: 5,5;
+            opacity: 0.6;
+            transition: all 0.3s ease;
+        }
+
+        .link:hover {
+            stroke: #60a5fa;
+            stroke-width: 3;
+            opacity: 1;
+        }
+
+        .node.selected rect {
+            stroke: #fbbf24;
+            stroke-width: 3;
+            filter: drop-shadow(0 0 15px rgba(251, 191, 36, 0.6));
+        }
+
+        .node.critical rect {
+            stroke: #ef4444;
+            stroke-width: 3;
+        }
+
+        .tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.98);
+            color: #e2e8f0;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 12px;
+            pointer-events: none;
+            z-index: 2000;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            backdrop-filter: blur(16px);
+            max-width: 250px;
+            line-height: 1.5;
+        }
+
+        .critical-path {
+            stroke: #f87171;
+            stroke-width: 4;
+            opacity: 1;
+            animation: pulse 2s infinite;
+        }
+
+        .hidden-dependency {
+            stroke: #a855f7;
+            stroke-width: 3;
+            stroke-dasharray: 8,4;
+            opacity: 0.8;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .risk-indicator {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 16px;
+            height: 16px;
+            background: #ef4444;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="toolbar">
+            <button id="resetBtn">🔄 Сброс</button>
+            <button id="zoomInBtn">🔍 Увеличить</button>
+            <button id="zoomOutBtn">🔎 Уменьшить</button>
+            <button id="criticalPathBtn">⚡ Критический путь</button>
+            <button id="hiddenDepsBtn">🔗 Скрытые связи</button>
+        </div>
+
+        <div class="legend">
+            <h3>🏗️ Компоненты системы</h3>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #3b82f6;"></div>
+                <span>API Gateway</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #ef4444;"></div>
+                <span>Auth Service (Critical)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #10b981;"></div>
+                <span>User Service</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #ef4444;"></div>
+                <span>Payment Service (Critical)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #f59e0b;"></div>
+                <span>Database</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #a855f7;"></div>
+                <span>Redis Cache (SPOF!)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #06b6d4;"></div>
+                <span>Notifications</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #8b5cf6;"></div>
+                <span>Message Queue</span>
+            </div>
+        </div>
+
+        <div class="zoom-info">
+            <span id="zoomLevel">Zoom: 100%</span>
+        </div>
+
+        <svg id="diagram"></svg>
+    </div>
+
+    <script>
+        // Данные для диаграммы микросервисной архитектуры
+        const nodes = [
+            { id: 'api-gateway', name: 'API Gateway', type: 'gateway', x: 400, y: 80, critical: false, description: 'Точка входа для всех запросов' },
+            { id: 'auth-service', name: 'Auth Service', type: 'critical-service', x: 200, y: 200, critical: true, description: 'Критический сервис аутентификации' },
+            { id: 'user-service', name: 'User Service', type: 'service', x: 400, y: 200, critical: false, description: 'Управление профилями пользователей' },
+            { id: 'payment-service', name: 'Payment Service', type: 'critical-service', x: 600, y: 200, critical: true, description: 'Критический платежный сервис' },
+            { id: 'database', name: 'Database', type: 'database', x: 400, y: 350, critical: false, description: 'Основная база данных' },
+            { id: 'redis-cache', name: 'Redis Cache', type: 'cache', x: 200, y: 350, critical: false, description: '⚠️ Единая точка отказа!' },
+            { id: 'notifications', name: 'Notifications', type: 'external', x: 600, y: 350, critical: false, description: 'Сервис уведомлений' },
+            { id: 'message-queue', name: 'Message Queue', type: 'queue', x: 400, y: 500, critical: false, description: 'Асинхронная обработка' }
+        ];
+
+        const links = [
+            { source: 'api-gateway', target: 'auth-service', type: 'critical' },
+            { source: 'api-gateway', target: 'user-service', type: 'normal' },
+            { source: 'api-gateway', target: 'payment-service', type: 'critical' },
+            { source: 'auth-service', target: 'database', type: 'normal' },
+            { source: 'user-service', target: 'database', type: 'normal' },
+            { source: 'payment-service', target: 'database', type: 'critical' },
+            { source: 'payment-service', target: 'notifications', type: 'normal' },
+            { source: 'message-queue', target: 'notifications', type: 'normal' },
+            // Скрытые зависимости через Redis
+            { source: 'auth-service', target: 'redis-cache', type: 'hidden' },
+            { source: 'payment-service', target: 'redis-cache', type: 'hidden' },
+            { source: 'user-service', target: 'redis-cache', type: 'hidden' }
+        ];
+
+        // Цвета для разных типов узлов
+        const nodeColors = {
+            gateway: '#3b82f6',
+            'critical-service': '#ef4444',
+            service: '#10b981',
+            database: '#f59e0b',
+            cache: '#a855f7',
+            external: '#06b6d4',
+            queue: '#8b5cf6'
+        };
+
+        // Настройка SVG
+        const svg = d3.select('#diagram');
+        const container = d3.select('.container');
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+
+        svg.attr('width', width).attr('height', height);
+
+        const g = svg.append('g');
+
+        // Zoom behavior
+        const zoom = d3.zoom()
+            .scaleExtent([0.3, 4])
+            .on('zoom', (event) => {
+                g.attr('transform', event.transform);
+                updateZoomInfo(event.transform.k);
+            });
+
+        svg.call(zoom);
+
+        // Tooltip
+        const tooltip = d3.select('body').append('div')
+            .attr('class', 'tooltip')
+            .style('opacity', 0);
+
+        // Создание связей
+        const linkElements = g.selectAll('.link')
+            .data(links)
+            .enter()
+            .append('line')
+            .attr('class', d => `link ${d.type === 'hidden' ? 'hidden-dependency' : ''}`)
+            .attr('x1', d => nodes.find(n => n.id === d.source).x)
+            .attr('y1', d => nodes.find(n => n.id === d.source).y)
+            .attr('x2', d => nodes.find(n => n.id === d.target).x)
+            .attr('y2', d => nodes.find(n => n.id === d.target).y)
+            .style('stroke', d => {
+                if (d.type === 'critical') return '#ef4444';
+                if (d.type === 'hidden') return '#a855f7';
+                return '#64748b';
+            })
+            .style('opacity', d => d.type === 'hidden' ? 0.4 : 0.6);
+
+        // Создание узлов
+        const nodeElements = g.selectAll('.node')
+            .data(nodes)
+            .enter()
+            .append('g')
+            .attr('class', d => `node ${d.critical ? 'critical' : ''}`)
+            .attr('transform', d => `translate(${d.x}, ${d.y})`)
+            .on('click', function(event, d) {
+                event.stopPropagation();
+                
+                // Убираем selection со всех узлов
+                nodeElements.classed('selected', false);
+                
+                // Добавляем selection к текущему узлу
+                d3.select(this).classed('selected', true);
+                
+                // Показываем связанные узлы
+                highlightConnectedNodes(d.id);
+            })
+            .on('mouseover', function(event, d) {
+                tooltip.transition()
+                    .duration(200)
+                    .style('opacity', 1);
+                
+                tooltip.html(`
+                    <strong>${d.name}</strong><br/>
+                    ${d.description}<br/>
+                    <small>Тип: ${d.type}</small>
+                `)
+                    .style('left', (event.pageX + 10) + 'px')
+                    .style('top', (event.pageY - 28) + 'px');
+            })
+            .on('mouseout', function(d) {
+                tooltip.transition()
+                    .duration(500)
+                    .style('opacity', 0);
+            });
+
+        // Добавляем прямоугольники для узлов
+        nodeElements.append('rect')
+            .attr('width', 120)
+            .attr('height', 50)
+            .attr('x', -60)
+            .attr('y', -25)
+            .attr('fill', d => nodeColors[d.type])
+            .attr('stroke', d => d.critical ? '#dc2626' : '#374151')
+            .attr('stroke-width', d => d.critical ? 3 : 2);
+
+        // Добавляем текст для узлов
+        nodeElements.append('text')
+            .text(d => d.name)
+            .attr('dy', '.35em')
+            .style('font-size', '11px');
+
+        // Добавляем индикаторы риска для критических компонентов
+        nodeElements.filter(d => d.critical || d.id === 'redis-cache')
+            .append('circle')
+            .attr('class', 'risk-indicator')
+            .attr('cx', 50)
+            .attr('cy', -20)
+            .attr('r', 8)
+            .attr('fill', '#ef4444')
+            .attr('stroke', '#ffffff')
+            .attr('stroke-width', 2);
+
+        nodeElements.filter(d => d.critical || d.id === 'redis-cache')
+            .append('text')
+            .attr('x', 50)
+            .attr('y', -16)
+            .attr('text-anchor', 'middle')
+            .style('font-size', '10px')
+            .style('font-weight', 'bold')
+            .style('fill', 'white')
+            .text('!');
+
+        // Обработчики кнопок
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            svg.transition().duration(750).call(
+                zoom.transform,
+                d3.zoomIdentity
+            );
+            nodeElements.classed('selected', false);
+            linkElements.classed('critical-path', false);
+            linkElements.style('opacity', d => d.type === 'hidden' ? 0.4 : 0.6);
+            updateZoomInfo(1);
+        });
+
+        document.getElementById('zoomInBtn').addEventListener('click', () => {
+            svg.transition().duration(300).call(
+                zoom.scaleBy,
+                1.5
+            );
+        });
+
+        document.getElementById('zoomOutBtn').addEventListener('click', () => {
+            svg.transition().duration(300).call(
+                zoom.scaleBy,
+                1 / 1.5
+            );
+        });
+
+        document.getElementById('criticalPathBtn').addEventListener('click', () => {
+            showCriticalPath();
+        });
+
+        document.getElementById('hiddenDepsBtn').addEventListener('click', () => {
+            toggleHiddenDependencies();
+        });
+
+        // Функция подсветки связанных узлов
+        function highlightConnectedNodes(nodeId) {
+            // Сбрасываем все подсветки
+            linkElements.classed('critical-path', false);
+            
+            // Находим связи для выбранного узла
+            const connectedLinks = links.filter(link => 
+                link.source === nodeId || link.target === nodeId
+            );
+            
+            // Подсвечиваем связанные узлы
+            connectedLinks.forEach(link => {
+                linkElements
+                    .filter(d => d === link)
+                    .classed('critical-path', true);
+            });
+        }
+
+        // Функция показа критического пути
+        function showCriticalPath() {
+            // Определяем критический путь
+            const criticalPath = [
+                { source: 'api-gateway', target: 'auth-service' },
+                { source: 'api-gateway', target: 'payment-service' },
+                { source: 'payment-service', target: 'database' }
+            ];
+            
+            // Сбрасываем все подсветки
+            linkElements.classed('critical-path', false);
+            
+            // Подсвечиваем критический путь
+            criticalPath.forEach(pathLink => {
+                linkElements
+                    .filter(d => d.source === pathLink.source && d.target === pathLink.target)
+                    .classed('critical-path', true);
+            });
+        }
+
+        // Функция переключения видимости скрытых зависимостей
+        let hiddenDepsVisible = true;
+        function toggleHiddenDependencies() {
+            hiddenDepsVisible = !hiddenDepsVisible;
+            linkElements.filter('.hidden-dependency')
+                .style('opacity', hiddenDepsVisible ? 0.8 : 0);
+            
+            document.getElementById('hiddenDepsBtn').textContent = 
+                hiddenDepsVisible ? '🔗 Скрыть связи' : '🔗 Показать связи';
+        }
+
+        // Функция обновления информации о zoom
+        function updateZoomInfo(scale) {
+            const zoomPercent = Math.round(scale * 100);
+            document.getElementById('zoomLevel').textContent = `Zoom: ${zoomPercent}%`;
+        }
+
+        // Клик по пустому месту убирает selection
+        svg.on('click', function(event) {
+            if (event.target === event.currentTarget) {
+                nodeElements.classed('selected', false);
+                linkElements.classed('critical-path', false);
+                linkElements.style('opacity', d => d.type === 'hidden' ? 0.4 : 0.6);
+            }
+        });
+
+        // Инициализация
+        updateZoomInfo(1);
+        
+        // Анимация появления
+        nodeElements.style('opacity', 0)
+            .transition()
+            .duration(1000)
+            .delay((d, i) => i * 100)
+            .style('opacity', 1);
+
+        linkElements.style('opacity', 0)
+            .transition()
+            .duration(800)
+            .delay(500)
+            .style('opacity', d => d.type === 'hidden' ? 0.4 : 0.6);
+
+        // Адаптивность для мобильных устройств
+        window.addEventListener('resize', () => {
+            const newWidth = window.innerWidth;
+            const newHeight = window.innerHeight;
+            svg.attr('width', newWidth).attr('height', newHeight);
+        });
+
+        // Дополнительные возможности для анализа
+        function showArchitectureAnalysis() {
+            const analysis = {
+                criticalComponents: nodes.filter(n => n.critical).length,
+                totalComponents: nodes.length,
+                hiddenDependencies: links.filter(l => l.type === 'hidden').length,
+                riskLevel: 'HIGH'
+            };
+            
+            console.log('🔍 Анализ архитектуры:', analysis);
+            
+            // Показываем анализ в UI
+            const analysisDiv = d3.select('body').append('div')
+                .style('position', 'absolute')
+                .style('top', '120px')
+                .style('left', '20px')
+                .style('background', 'rgba(15, 23, 42, 0.95)')
+                .style('padding', '16px')
+                .style('border-radius', '12px')
+                .style('backdrop-filter', 'blur(16px)')
+                .style('border', '1px solid rgba(59, 130, 246, 0.3)')
+                .style('color', '#e2e8f0')
+                .style('font-size', '13px')
+                .style('max-width', '300px')
+                .style('z-index', '1001');
+                
+            analysisDiv.html(`
+                <h4 style="margin: 0 0 12px 0; color: #f59e0b;">📊 Анализ архитектуры</h4>
+                <p><strong>Критические компоненты:</strong> ${analysis.criticalComponents}/${analysis.totalComponents}</p>
+                <p><strong>Скрытые зависимости:</strong> ${analysis.hiddenDependencies}</p>
+                <p><strong>Уровень риска:</strong> <span style="color: #ef4444;">${analysis.riskLevel}</span></p>
+                <p style="font-size: 12px; color: #94a3b8;">⚠️ Redis Cache - единая точка отказа</p>
+                <button onclick="this.parentElement.remove()" style="margin-top: 8px; padding: 4px 8px; background: #374151; border: none; border-radius: 4px; color: white; cursor: pointer;">Закрыть</button>
+            `);
+            
+            setTimeout(() => {
+                if (analysisDiv.node()) {
+                    analysisDiv.transition().duration(500).style('opacity', 0).remove();
+                }
+            }, 10000);
+        }
+
+        // Добавляем кнопку анализа
+        const analysisBtn = d3.select('.toolbar').append('button')
+            .attr('id', 'analysisBtn')
+            .style('background', 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)')
+            .html('📊 Анализ')
+            .on('click', showArchitectureAnalysis);
+    </script>
+</body>
+</html>d-item">
+                <div class="legend-color" style="background: #a6e3a1;"></div>
+                <span>Auth Service</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #a6e3a1;"></div>
+                <span>User Service</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #a6e3a1;"></div>
+                <span>Catalog Service</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #a6e3a1;"></div>
+                <span>Order Service</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #a6e3a1;"></div>
+                <span>Payment Service</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #fab387;"></div>
+                <span>User DB</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #fab387;"></div>
+                <span>Order DB</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #89dceb;"></div>
+                <span>Redis Cache</span>
+            </div>
+        </div>
+
+        <div class="zoom-info">
+            <span id="zoomLevel">Zoom: 100%</span>
+        </div>
+
+        <svg id="diagram"></svg>
+    </div>
+
+    <script>
+        // Данные для диаграммы
+        const nodes = [
+            { id: 'api-gateway', name: 'API Gateway', type: 'gateway', x: 400, y: 100 },
+            { id: 'auth-service', name: 'Auth Service', type: 'service', x: 150, y: 250 },
+            { id: 'user-service', name: 'User Service', type: 'service', x: 300, y: 250 },
+            { id: 'catalog-service', name: 'Catalog Service', type: 'service', x: 450, y: 250 },
+            { id: 'order-service', name: 'Order Service', type: 'service', x: 600, y: 250 },
+            { id: 'payment-service', name: 'Payment Service', type: 'service', x: 750, y: 250 },
+            { id: 'user-db', name: 'User DB', type: 'database', x: 200, y: 400 },
+            { id: 'order-db', name: 'Order DB', type: 'database', x: 500, y: 400 },
+            { id: 'redis-cache', name: 'Redis Cache', type: 'cache', x: 350, y: 400 }
+        ];
+
+        const links = [
+            { source: 'api-gateway', target: 'auth-service' },
+            { source: 'api-gateway', target: 'user-service' },
+            { source: 'api-gateway', target: 'catalog-service' },
+            { source: 'api-gateway', target: 'order-service' },
+            { source: 'order-service', target: 'payment-service' },
+            { source: 'user-service', target: 'user-db' },
+            { source: 'order-service', target: 'order-db' },
+            { source: 'user-service', target: 'redis-cache' },
+            { source: 'catalog-service', target: 'redis-cache' }
+        ];
+
+        // Цвета для разных типов узлов
+        const nodeColors = {
+            gateway: '#74c7ec',
+            service: '#a6e3a1',
+            database: '#fab387',
+            cache: '#89dceb'
+        };
+
+        // Настройка SVG
+        const svg = d3.select('#diagram');
+        const container = d3.select('.container');
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+
+        svg.attr('width', width).attr('height', height);
+
+        const g = svg.append('g');
+
+        // Zoom behavior
+        const zoom = d3.zoom()
+            .scaleExtent([0.1, 3])
+            .on('zoom', (event) => {
+                g.attr('transform', event.transform);
+                updateZoomInfo(event.transform.k);
+            });
+
+        svg.call(zoom);
+
+        // Tooltip
+        const tooltip = d3.select('body').append('div')
+            .attr('class', 'tooltip')
+            .style('opacity', 0);
+
+        // Функция подсветки связанных узлов
+        function highlightConnectedNodes(nodeId) {
+            // Сбрасываем все подсветки
+            linkElements.classed('critical-path', false);
+            
+            // Находим связи для выбранного узла
+            const connectedLinks = links.filter(link => 
+                link.source === nodeId || link.target === nodeId
+            );
+            
+            // Подсвечиваем связанные узлы
+            connectedLinks.forEach(link => {
+                linkElements
+                    .filter(d => d === link)
+                    .classed('critical-path', true);
+            });
+        }
+
+        // Функция показа критического пути
+        function showCriticalPath() {
+            // Определяем критический путь: API Gateway -> Order Service -> Payment Service
+            const criticalPath = [
+                { source: 'api-gateway', target: 'order-service' },
+                { source: 'order-service', target: 'payment-service' },
+                { source: 'order-service', target: 'order-db' }
+            ];
+            
+            // Сбрасываем все подсветки
+            linkElements.classed('critical-path', false);
+            
+            // Подсвечиваем критический путь
+            criticalPath.forEach(pathLink => {
+                linkElements
+                    .filter(d => d.source === pathLink.source && d.target === pathLink.target)
+                    .classed('critical-path', true);
+            });
+        }
+
+        // Функция обновления информации о zoom
+        function updateZoomInfo(scale) {
+            const zoomPercent = Math.round(scale * 100);
+            document.getElementById('zoomLevel').textContent = `Zoom: ${zoomPercent}%`;
+        }
+
+        // Клик по пустому месту убирает selection
+        svg.on('click', function(event) {
+            if (event.target === event.currentTarget) {
+                nodeElements.classed('selected', false);
+                linkElements.classed('critical-path', false);
+            }
+        });
+
+        // Инициализация
+        updateZoomInfo(1);
+    </script>
+</body>
+</html>оздание связей
+        const linkElements = g.selectAll('.link')
+            .data(links)
+            .enter()
+            .append('line')
+            .attr('class', 'link')
+            .attr('x1', d => nodes.find(n => n.id === d.source).x)
+            .attr('y1', d => nodes.find(n => n.id === d.source).y)
+            .attr('x2', d => nodes.find(n => n.id === d.target).x)
+            .attr('y2', d => nodes.find(n => n.id === d.target).y);
+
+        // Создание узлов
+        const nodeElements = g.selectAll('.node')
+            .data(nodes)
+            .enter()
+            .append('g')
+            .attr('class', 'node')
+            .attr('transform', d => `translate(${d.x}, ${d.y})`)
+            .on('click', function(event, d) {
+                event.stopPropagation();
+                
+                // Убираем selection со всех узлов
+                nodeElements.classed('selected', false);
+                
+                // Добавляем selection к текущему узлу
+                d3.select(this).classed('selected', true);
+                
+                // Показываем связанные узлы
+                highlightConnectedNodes(d.id);
+            })
+            .on('mouseover', function(event, d) {
+                tooltip.transition()
+                    .duration(200)
+                    .style('opacity', 1);
+                
+                tooltip.html(`
+                    <strong>${d.name}</strong><br/>
+                    Тип: ${d.type}<br/>
+                    ID: ${d.id}
+                `)
+                    .style('left', (event.pageX + 10) + 'px')
+                    .style('top', (event.pageY - 28) + 'px');
+            })
+            .on('mouseout', function(d) {
+                tooltip.transition()
+                    .duration(500)
+                    .style('opacity', 0);
+            });
+
+        // Добавляем прямоугольники для узлов
+        nodeElements.append('rect')
+            .attr('width', 100)
+            .attr('height', 40)
+            .attr('x', -50)
+            .attr('y', -20)
+            .attr('fill', d => nodeColors[d.type])
+            .attr('stroke', '#45475a');
+
+        // Добавляем текст для узлов
+        nodeElements.append('text')
+            .text(d => d.name)
+            .attr('dy', '.35em');
+
+        // Обработчики кнопок
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            svg.transition().duration(750).call(
+                zoom.transform,
+                d3.zoomIdentity
+            );
+            nodeElements.classed('selected', false);
+            linkElements.classed('critical-path', false);
+            updateZoomInfo(1);
+        });
+
+        document.getElementById('zoomInBtn').addEventListener('click', () => {
+            svg.transition().duration(300).call(
+                zoom.scaleBy,
+                1.5
+            );
+        });
+
+        document.getElementById('zoomOutBtn').addEventListener('click', () => {
+            svg.transition().duration(300).call(
+                zoom.scaleBy,
+                1 / 1.5
+            );
+        });
+
+        document.getElementById('criticalPathBtn').addEventListener('click', () => {
+            showCriticalPath();
+        });
+
+        // С
