@@ -74,65 +74,35 @@ editPost:
            caption="**Рис. 1**: Архитектура платформы электронной коммерции. Красным выделены критические зависимости, пунктиром - скрытые связи через кэш Redis."
            class="architecture-main" >}}
 
-{{< mermaid-enhanced caption="Интерактивная диаграмма зависимостей с детализацией критических путей" theme="auto" >}}
-graph TD
-    subgraph "Frontend Layer"
-        AG[🌐 API Gateway<br/>Точка входа]
-    end
-
-    subgraph "Service Layer"
-        AUTH[🔐 Auth Service<br/>Критический сервис]
-        USER[👤 User Service<br/>Вторичный сервис]
-        PAY[💳 Payment Service<br/>Критический сервис]
-    end
-    
-    subgraph "Cache Layer"
-        REDIS[⚡ Redis Cache<br/>🚨 СКРЫТАЯ СВЯЗЬ!]
-    end
-    
-    subgraph "Data Layer"
-        DB[🗄️ Database<br/>Хранилище данных]
-    end
-    
-    subgraph "External"
-        NOTIF[📧 Notifications<br/>Оповещения]
-        QUEUE[📬 Message Queue<br/>Асинхронная обработка]
-        MON[📊 Monitoring<br/>Наблюдение]
-    end
-
-    %% Критические связи (красные)
-    AG -->|"запрос авторизации"| AUTH
-    AUTH -->|"проверка пользователя"| USER
-    AUTH -->|"сохранение сессии"| DB
-    PAY -->|"запись транзакций"| DB
-
-    %% Вторичные связи (оранжевые)
-    USER -->|"профильные данные"| DB
-    PAY -->|"уведомление о платеже"| NOTIF
-    QUEUE -->|"отправка сообщений"| NOTIF
-
-    %% Скрытые зависимости (пунктирные)
-    AUTH -.->|"кэширование токенов"| REDIS
-    PAY -.->|"кэш платежных данных"| REDIS
-    REDIS -.->|"влияние на аутентификацию"| AUTH
-    REDIS -.->|"влияние на платежи"| PAY
-
-    %% Безопасные связи (зеленые)
-    MON -->|"сбор метрик"| AUTH
-    MON -->|"отслеживание"| PAY
-    MON -->|"наблюдение"| DB
-
-    %% Применение стилей
-    classDef safe fill:#4caf50,stroke:#2e7d32,stroke-width:2px,color:#fff
-    classDef critical fill:#ff4757,stroke:#c23616,stroke-width:3px,color:#fff
-    classDef secondary fill:#ffa726,stroke:#f57c00,stroke-width:2px,color:#fff
-    classDef hidden fill:#9c27b0,stroke:#6a1b9a,stroke-width:2px,color:#fff
-
-    class AG,DB,NOTIF,MON safe
-    class AUTH,PAY critical
-    class USER,QUEUE secondary
-    class REDIS hidden
-{{< /mermaid-enhanced >}}
+<div class="interactive-architecture-diagram">
+    <style>
+        .interactive-architecture-diagram {
+            margin: 2rem 0;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1a1d29 0%, #232746 100%);
+        }
+        .diagram-header {
+            padding: 1rem;
+            background: rgba(59, 130, 246, 0.1);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+            text-align: center;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        .diagram-frame {
+            width: 100%;
+            height: 700px;
+            border: none;
+            display: block;
+        }
+    </style>
+    <div class="diagram-header">
+        🏗️ Интерактивная диаграмма архитектуры с анализом критических зависимостей
+    </div>
+    <iframe class="diagram-frame" src="/diagrams/microservices-architecture.html"></iframe>
+</div>
 
 ## 🚨 Обнаруженные критические риски
 
@@ -232,80 +202,88 @@ volumes:
   redis-3:
 ```
 
-### 2. Паттерн «Автоматический выключатель»
-
-```markdown
-{{< mermaid-enhanced caption="Последовательность работы Circuit Breaker при сбоях Redis" >}}
-graph TD
-    Client[👤 КлиентЗапрос авторизации] --> Auth[🔐 Auth Service]
-    Auth --> CB{⚡ Circuit BreakerПроверка состояния}
-    
-    CB -->|CLOSED - норма| Redis[📦 Redis CacheЗапрос к кэшу]
-    Redis -->|✅ Данные сессии| Success[✅ Успешный ответ]
-    
-    CB -->|OPEN - сбой| FastFail[❌ Быстрый отказ~20ms]
-    FastFail --> Fallback[🔄 Активация fallback]
-    Fallback --> DB[🗄️ DatabaseРезервный запрос]
-    DB -->|✅ Данные из БД| DBSuccess[✅ Fallback ответ~300ms]
-    
-    CB -->|HALF-OPEN - проверка| Test[🧪 Тестовый запрос]
-    Test -->|✅ Redis восстановился| Restore[🔄 Переход в CLOSED]
-    Test -->|❌ Redis недоступен| BackToOpen[🔄 Возврат в OPEN]
-    
-    Success --> Client
-    DBSuccess --> Client
-    
-    classDef success fill:#4caf50,stroke:#2e7d32,stroke-width:2px,color:#fff
-    classDef error fill:#ff4757,stroke:#c23616,stroke-width:2px,color:#fff
-    classDef warning fill:#ffa726,stroke:#f57c00,stroke-width:2px,color:#fff
-    classDef info fill:#4fc3f7,stroke:#0288d1,stroke-width:2px,color:#fff
-    
-    class Success,DBSuccess,Restore success
-    class FastFail,BackToOpen error
-    class Fallback,Test warning
-    class Client,Auth,CB,Redis,DB info
-{{< /mermaid-enhanced >}}
-```
+### 2. Реализация паттерна «Автовыключатель»
 
 ```go
-// auth-service/internal/circuitbreaker.go
-package internal
+// Пример Circuit Breaker для Go
+package main
 
 import (
-    "github.com/sony/gobreaker"
+    "context"
+    "errors"
     "time"
+    "sync"
 )
 
-func NewRedisCircuitBreaker() *gobreaker.CircuitBreaker {
-    настройки := gobreaker.Settings{
-        Name:        "redis-cache",
-        MaxRequests: 3,
-        Interval:    60 * time.Second,
-        Timeout:     30 * time.Second,
-        ReadyToTrip: func(counts gobreaker.Counts) bool {
-            коэффициентОтказов := float64(counts.TotalFailures) / float64(counts.Requests)
-            return counts.Requests >= 3 && коэффициентОтказов >= 0.6
-        },
-        OnStateChange: func(name string, from gobreaker.State, to gobreaker.State) {
-            log.Printf("Автовыключатель %s: %s -> %s", name, from, to)
-        },
+type CircuitBreaker struct {
+    mutex           sync.Mutex
+    state           State
+    failureCount    int
+    lastFailureTime time.Time
+    timeout         time.Duration
+    maxFailures     int
+}
+
+type State int
+
+const (
+    Closed State = iota
+    Open
+    HalfOpen
+)
+
+func (cb *CircuitBreaker) Call(ctx context.Context, fn func() error) error {
+    cb.mutex.Lock()
+    defer cb.mutex.Unlock()
+    
+    if cb.state == Open {
+        if time.Since(cb.lastFailureTime) > cb.timeout {
+            cb.state = HalfOpen
+        } else {
+            return errors.New("circuit breaker is open")
+        }
     }
-    return gobreaker.NewCircuitBreaker(настройки)
+    
+    err := fn()
+    if err != nil {
+        cb.onFailure()
+        return err
+    }
+    
+    cb.onSuccess()
+    return nil
+}
+
+func (cb *CircuitBreaker) onFailure() {
+    cb.failureCount++
+    cb.lastFailureTime = time.Now()
+    
+    if cb.failureCount >= cb.maxFailures {
+        cb.state = Open
+    }
+}
+
+func (cb *CircuitBreaker) onSuccess() {
+    cb.failureCount = 0
+    cb.state = Closed
 }
 
 // Использование в сервисе аутентификации
-func (s *AuthService) GetUserSession(token string) (*Session, error) {
-    // Сначала пробуем через автовыключатель
-    результат, err := s.redisBreaker.Execute(func() (interface{}, error) {
-        return s.redis.Get(token).Result()
+func (s *AuthService) ValidateToken(token string) (*User, error) {
+    var user *User
+    var err error
+    
+    circuitBreakerErr := s.redisCircuitBreaker.Call(context.Background(), func() error {
+        user, err = s.redis.GetUser(token)
+        return err
     })
     
-    if err != nil {
-        // Резервный план - обращение к базе данных
-        log.Warn("Redis недоступен, переключение на базу данных")
-        return s.getUserSessionFromDB(token)
+    if circuitBreakerErr != nil {
+        // Fallback к базе данных
+        return s.database.GetUserByToken(token)
     }
-    return parseSession(результат.(string)), nil
+    
+    return user, err
 }
 ```
 
