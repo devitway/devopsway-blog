@@ -1,5 +1,5 @@
 /**
- * SFIA Calculator JavaScript - DevOps Way
+ * SFIA Calculator JavaScript - DevOps Way (ИСПРАВЛЕННАЯ ВЕРСИЯ)
  * Файл: static/js/sfia-calculator.js
  */
 
@@ -341,36 +341,50 @@ function initSFIACalculator() {
     // Инициализация счетчиков
     window.sfiaScores = { level12: 0, level23: 0, level34: 0, level45: 0 };
     
-    // Добавляем обработчики событий для всех skill-item
-    document.querySelectorAll('.skill-item').forEach(item => {
-        item.addEventListener('click', function(event) {
-            // Предотвращаем конфликт с checkbox
-            event.preventDefault();
-            
-            const level = this.getAttribute('data-level');
-            const checkbox = this.querySelector('.skill-checkbox');
-            
-            // Переключаем состояние checkbox
-            checkbox.checked = !checkbox.checked;
+    // ИСПРАВЛЕННАЯ ВЕРСИЯ: Добавляем обработчики для checkbox напрямую
+    document.querySelectorAll('.skill-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const skillItem = this.closest('.skill-item');
+            const level = skillItem.getAttribute('data-level');
             
             // Обновляем счетчик
-            if (checkbox.checked) {
-                this.classList.add('checked');
+            if (this.checked) {
+                skillItem.classList.add('checked');
                 window.sfiaScores[level]++;
             } else {
-                this.classList.remove('checked');
+                skillItem.classList.remove('checked');
                 window.sfiaScores[level]--;
             }
             
             updateResults();
             
             // Добавляем визуальный эффект
-            this.style.transform = 'scale(1.02)';
+            skillItem.style.transform = 'scale(1.02)';
             setTimeout(() => {
-                this.style.transform = '';
+                skillItem.style.transform = '';
             }, 150);
         });
     });
+
+    // Дополнительно: обработчик для клика по всему элементу (кроме checkbox)
+    document.querySelectorAll('.skill-item').forEach(item => {
+        item.addEventListener('click', function(event) {
+            // Если клик был по checkbox, не делаем ничего дополнительно
+            if (event.target.classList.contains('skill-checkbox')) {
+                return;
+            }
+            
+            // Иначе имитируем клик по checkbox
+            const checkbox = this.querySelector('.skill-checkbox');
+            checkbox.checked = !checkbox.checked;
+            
+            // Вызываем событие change для checkbox
+            checkbox.dispatchEvent(new Event('change'));
+        });
+    });
+
+    // Инициализируем результаты
+    updateResults();
 }
 
 function updateResults() {
