@@ -147,3 +147,9 @@ if (!window.Map || !window.Set || !Array.from) {
 {{ if eq .Site.Params.env "production" }}
 <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
 {{ end }}
+
+<!-- SFIA Calculator -->
+{{ if eq .Title "🎯 SFIA Calculator: Проверьте свой уровень за 2 минуты" }}
+<link rel="stylesheet" href="/css/sfia-calculator.css">
+<script defer src="/js/sfia-calculator.js"></script>
+{{ end }}
