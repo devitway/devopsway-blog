@@ -1,0 +1,546 @@
+/* =============================================================================
+   SFIA CALCULATOR STYLES - DevOps Way
+   Файл: static/css/sfia-calculator.css
+   ============================================================================= */
+
+   #sfia-calculator-widget {
+    max-width: 900px;
+    margin: 2rem auto;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.calc-intro {
+    background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.calc-intro h2 {
+    margin: 0 0 1rem 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.calc-intro p {
+    margin: 0.5rem 0;
+    opacity: 0.9;
+    font-size: 1.1rem;
+}
+
+.level-section {
+    background: var(--entry, #f8f9fa);
+    border: 2px solid var(--border, #e9ecef);
+    border-radius: 15px;
+    margin-bottom: 2rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.level-section:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.level-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 1.5rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.skills-group {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border, #e9ecef);
+}
+
+.skills-group:last-child {
+    border-bottom: none;
+}
+
+.skills-group h4 {
+    color: var(--content, #495057);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+}
+
+.skills-group h4:before {
+    content: '🎯';
+    margin-right: 10px;
+}
+
+.skill-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 1px solid transparent;
+    background: var(--theme, #ffffff);
+}
+
+.skill-item:hover {
+    background: var(--code-bg, #f0f8ff);
+    border-color: var(--primary, #3498db);
+    transform: translateX(4px);
+}
+
+.skill-item.checked {
+    background: #d4edda;
+    border-color: #28a745;
+    border-left: 4px solid #28a745;
+    box-shadow: 0 2px 8px rgba(40, 167, 69, 0.2);
+}
+
+.skill-checkbox {
+    margin-right: 1rem;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: #28a745;
+    transform: scale(1.2);
+}
+
+.skill-text {
+    flex: 1;
+    line-height: 1.5;
+    color: var(--content, #333);
+    font-weight: 500;
+}
+
+.results-section {
+    background: linear-gradient(135deg, var(--code-bg, #f8f9fa) 0%, var(--border, #e9ecef) 100%);
+    border-radius: 15px;
+    padding: 2rem;
+    margin-top: 2rem;
+    text-align: center;
+    border: 1px solid var(--border, #e9ecef);
+}
+
+.results-section h3 {
+    color: var(--primary, #2c3e50);
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.level-result {
+    margin-bottom: 2rem;
+}
+
+.level-result h4 {
+    color: var(--content, #495057);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.progress-bar {
+    background: var(--border, #e9ecef);
+    border-radius: 25px;
+    height: 30px;
+    margin: 1rem 0;
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #28a745, #20c997);
+    border-radius: 25px;
+    transition: width 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.result-text {
+    font-size: 1.1rem;
+    margin: 1rem 0;
+    padding: 1rem;
+    border-radius: 10px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.result-ready {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    animation: pulse-success 2s infinite;
+}
+
+.result-almost {
+    background: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeaa7;
+}
+
+.result-focus {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.result-strengthen {
+    background: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #b8daff;
+}
+
+@keyframes pulse-success {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+
+.reset-btn {
+    background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.reset-btn:hover {
+    background: linear-gradient(135deg, #5a6268 0%, #495057 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
+
+.reset-btn:active {
+    transform: translateY(0);
+}
+
+.share-section {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: var(--code-bg, #f8f9fa);
+    border-radius: 10px;
+    text-align: center;
+    border: 1px solid var(--border, #e2e8f0);
+}
+
+.share-btn {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    margin: 0 5px;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.share-btn:hover {
+    background: linear-gradient(135deg, #0056b3 0%, #004085 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,123,255,0.3);
+    color: white;
+    text-decoration: none;
+}
+
+/* =============================================================================
+   ТЕМНАЯ ТЕМА
+   ============================================================================= */
+
+[data-theme="dark"] .calc-intro,
+.dark .calc-intro {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+}
+
+[data-theme="dark"] .level-section,
+.dark .level-section {
+    background: #1e293b;
+    border-color: #334155;
+    color: #f1f5f9;
+}
+
+[data-theme="dark"] .skill-item,
+.dark .skill-item {
+    background: #334155;
+    color: #f1f5f9;
+}
+
+[data-theme="dark"] .skill-item:hover,
+.dark .skill-item:hover {
+    background: #475569;
+    border-color: #60a5fa;
+}
+
+[data-theme="dark"] .skill-item.checked,
+.dark .skill-item.checked {
+    background: #064e3b;
+    border-color: #10b981;
+    border-left: 4px solid #10b981;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+[data-theme="dark"] .results-section,
+.dark .results-section {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    border-color: #475569;
+}
+
+[data-theme="dark"] .share-section,
+.dark .share-section {
+    background: #334155;
+    border-color: #475569;
+}
+
+[data-theme="dark"] .skills-group h4,
+.dark .skills-group h4 {
+    color: #f1f5f9;
+}
+
+[data-theme="dark"] .level-result h4,
+.dark .level-result h4 {
+    color: #f1f5f9;
+}
+
+[data-theme="dark"] .results-section h3,
+.dark .results-section h3 {
+    color: #60a5fa;
+}
+
+/* =============================================================================
+   МОБИЛЬНАЯ АДАПТАЦИЯ
+   ============================================================================= */
+
+@media (max-width: 768px) {
+    #sfia-calculator-widget {
+        margin: 1rem;
+    }
+    
+    .calc-intro {
+        padding: 1.5rem;
+    }
+    
+    .calc-intro h2 {
+        font-size: 1.5rem;
+    }
+    
+    .level-header {
+        font-size: 1.1rem;
+        padding: 1rem;
+    }
+    
+    .skill-item {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+    }
+    
+    .skill-item:hover {
+        transform: translateX(2px);
+    }
+    
+    .results-section {
+        padding: 1.5rem;
+    }
+    
+    .level-section {
+        margin-bottom: 1.5rem;
+    }
+    
+    .skills-group {
+        padding: 1rem;
+    }
+    
+    .progress-bar {
+        height: 25px;
+    }
+    
+    .progress-fill {
+        font-size: 0.8rem;
+    }
+    
+    .result-text {
+        font-size: 1rem;
+        padding: 0.8rem;
+    }
+    
+    .share-btn {
+        display: block;
+        margin: 0.5rem auto;
+        width: 100%;
+        max-width: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    .calc-intro h2 {
+        font-size: 1.3rem;
+    }
+    
+    .calc-intro p {
+        font-size: 1rem;
+    }
+    
+    .level-header {
+        font-size: 1rem;
+        padding: 0.8rem;
+    }
+    
+    .skill-item {
+        padding: 0.7rem;
+        font-size: 0.85rem;
+    }
+    
+    .skill-text {
+        line-height: 1.4;
+    }
+    
+    .results-section {
+        padding: 1rem;
+    }
+    
+    .skills-group h4 {
+        font-size: 1rem;
+    }
+    
+    .level-result h4 {
+        font-size: 1.1rem;
+    }
+    
+    .results-section h3 {
+        font-size: 1.3rem;
+    }
+    
+    .progress-bar {
+        height: 22px;
+    }
+    
+    .progress-fill {
+        font-size: 0.75rem;
+    }
+    
+    .reset-btn {
+        width: 100%;
+        max-width: 200px;
+        margin: 1rem auto 0;
+        display: block;
+    }
+}
+
+/* =============================================================================
+   УЛУЧШЕНИЯ ACCESSIBILITY
+   ============================================================================= */
+
+.skill-item:focus {
+    outline: 2px solid var(--primary, #3498db);
+    outline-offset: 2px;
+}
+
+.skill-checkbox:focus {
+    outline: 2px solid var(--primary, #3498db);
+    outline-offset: 2px;
+}
+
+.reset-btn:focus,
+.share-btn:focus {
+    outline: 2px solid var(--primary, #3498db);
+    outline-offset: 2px;
+}
+
+/* Уменьшение анимаций для пользователей с ограниченными возможностями */
+@media (prefers-reduced-motion: reduce) {
+    .skill-item,
+    .level-section,
+    .progress-fill,
+    .reset-btn,
+    .share-btn,
+    .result-text {
+        transition: none !important;
+        animation: none !important;
+    }
+    
+    .skill-item:hover {
+        transform: none !important;
+    }
+    
+    .reset-btn:hover,
+    .share-btn:hover {
+        transform: none !important;
+    }
+    
+    .level-section:hover {
+        transform: none !important;
+    }
+}
+
+/* =============================================================================
+   ПРИНТ СТИЛИ
+   ============================================================================= */
+
+@media print {
+    #sfia-calculator-widget {
+        background: white !important;
+        color: black !important;
+    }
+    
+    .calc-intro {
+        background: #f5f5f5 !important;
+        color: black !important;
+        box-shadow: none !important;
+    }
+    
+    .level-section {
+        background: white !important;
+        border: 1px solid #ccc !important;
+        box-shadow: none !important;
+        page-break-inside: avoid;
+    }
+    
+    .level-header {
+        background: #e5e5e5 !important;
+        color: black !important;
+    }
+    
+    .skill-item {
+        background: white !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+    
+    .skill-item.checked {
+        background: #f0f0f0 !important;
+        border-left: 2px solid #333 !important;
+    }
+    
+    .results-section {
+        background: #f9f9f9 !important;
+        border: 1px solid #ccc !important;
+    }
+    
+    .share-section {
+        display: none !important;
+    }
+    
+    .reset-btn {
+        display: none !important;
+    }
+}
