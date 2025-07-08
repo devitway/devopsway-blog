@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SFIA Calculator - Проверьте свой уровень</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+
+        .intro h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .level-section {
+            margin-bottom: 40px;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .level-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .skills-group {
+            padding: 25px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .skills-group:last-child {
+            border-bottom: none;
+        }
+
+        .skills-group h4 {
+            color: #495057;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .skills-group h4:before {
+            content: '🎯';
+            margin-right: 10px;
+        }
+
+        .skill-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .skill-item:hover {
+            background: #f8f9fa;
+        }
+
+        .skill-item.checked {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+        }
+
+        .skill-checkbox {
+            margin-right: 15px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .skill-text {
+            flex: 1;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .results {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .results h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .progress-bar {
+            background: #e9ecef;
+            border-radius: 25px;
+            height: 30px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745, #20c997);
+            border-radius: 25px;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .result-text {
+            font-size: 1.2rem;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .result-ready {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .result-almost {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .result-focus {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .result-strengthen {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #b8daff;
+        }
+
+        .reset-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 20px;
+            transition: background 0.3s ease;
+        }
+
+        .reset-btn:hover {
+            background: #5a6268;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .skill-item {
+                padding: 10px;
+            }
+            
+            .skill-text {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 SFIA Calculator</h1>
+            <p>Проверьте свой уровень за 2 минуты</p>
+        </div>
+
+        <div class="content">
+            <div class="intro">
+                <h2>❓ Готовы ли вы к следующему уровню?</h2>
+                <p><strong>SFIA</strong> — международная рамка компетенций. Уровень 3 — уверенный мидл, 4 — зрелый синьор, 5 — тимлид или архитектор.</p>
+                <p>Поставьте ✅ только там, где уверены на 100%</p>
+            </div>
+
+            <div class="level-section">
+                <div class="level-header">
+                    📊 Уровень 3 → Уровень 4 (Мидл → Синьор)
+                </div>
+                
+                <div class="skills-group">
+                    <h4>Технические навыки:</h4>
+                    <div class="skill-item" onclick="toggleSkill(this, 'level34')">
+                        <input type="checkbox" class="skill-checkbox">
+                        <div class="skill-text">Могу решить проблему без четкой инструкции</div>
+                    </div>
+                    <div class="skill-item" onclick="toggleSkill(this, 'level34')">
+                        <input type="checkbox" class="skill-checkbox">
+                        <div class="skill-text">Анализирую первопричины, а не только симптомы</div>
+                    </div>
+                    <div class="skill-item" onclick="toggleSkill(this, 'level34')">
+                        <input type="checkbox" class="skill-checkbox">
+                        <div class="skill-text">Предлагаю несколько вариантов решения с обоснованием (напр., "вот три способа оптимизировать CI/CD — с плюсами и минусами каждого")</div>
+                    </div>
+                    <div class="skill-item" onclick="toggleSkill(this, 'level34')">
+                        <input type="checkbox" class="skill-checkbox">
+                        <div class="skill-text">Оцениваю риски и последствия своих решений</div>
+                    </div>
+                </div>
+
+                <div class="skills-group">
+                    <h4>Процессы и документация:</h4>
+                    <div class="skill-item" onclick="toggleSkill(this, 'level34')">
+                        <input type="checkbox" class="skill-checkbox">
+                        <div class="skill-text">Создаю/обновляю техническую документацию</div>
+                    </div>
+                    <div class="skill-item" onclick="toggleSkill(this, 'level34')">
+                        <input type="checkbox" class="skill-checkbox">
+                        <div class="skill-text">Провожу код-ревью с конструктивной обратной связью</div>
+                    </div>
+                    <div class="skill-item" onclick="toggleSkill(this, 'level34')">
+                        <input type="checkbox" class="skill-checkbox">
+                        <div class="skill-text">Участвую в планировании спринтов/релизов</div>
+                    </div>
+                    <div class="skill-item" onclick="toggleSkill(this, 'level34')">
+                        <input type="checkbox" class="skill-checkbox">
+                        <div class="skill-text">Делюсь знаниями через презентации/статьи</div>
+                    </div>
+                </div>
+
+                <div class="skills-group">
+                    <h4>Взаимодействие:</h4>
+                    <div class="skill-item" onclick="toggleSkill(this, 'level34')">
+                        <input type="checkbox" class="skill-checkbox">
+                        <div class="skill-text">Объясняю технические решения нетехническим коллегам</div>
+                    </div>
+                    <div class="skill-item" onclick="toggleSkill(this, 'level34')">
+                        <input type="checkbox" class="skill-checkbox">
+                        <div class="skill-text">Консультирую джунов и мидлов по сложным вопросам</div>
+                    </div>
+                    <div class="skill-item" onclick="toggleSkill(this, 'level34')">
+                        <input type="checkbox" class="skill-checkbox">
+                        <div class="skill-text">Участвую в найме новых сотрудников</div>
+                    </div>
+                    <div class="skill-item" onclick="toggleSkill(this, 'level34')">
+                        <input type="checkbox" class="skill-checkbox">
+                        <div class="skill-text">Представляю команду на встречах с другими отделами</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="level-section">
+                <div class="level-header">
+                    🚀 Уровень 4 → Уровень 5 (Синьор → Тимлид/Архитектор)
+                </div>
+                
+                <div class="skills-group">
+                    <h4>Стратегическое мышление:</h4>
+                    <div class="skill-item" onclick="toggleSkill(this, 'level45')">
+                        <input type="checkbox" class="skill-checkbox">
+                        <div class="skill-text">Вижу техническую картину на 6-12 месяцев вперед</div>
+                    </div>
+                    <div class="skill-item" onclick="toggleSkill(this, 'level45')">
+                        <input type="checkbox" class="skill-checkbox">
+                        <div class="skill-text">Связываю технические решения с бизнес-целями</div>
+                    </div>
+                    <div class="skill-item" onclick="toggleSkill(this, 'level45')">
+                        <input type="checkbox" class="skill-checkbox">
+                        <div class="skill-text">Предвосхищаю технические риски и готовлю план Б</div>
+                    </div>
+                    <div class="skill-item" onclick="toggleSkill(this, 'level45')">
+                        <input type="checkbox" class="skill-checkbox">
+                        <div class="skill-text">Влияю на техническую стратегию продукта/команды</div>
+                    </div>
+                </div>
+
+                <div class="skills-group">
+                    <h4>Лидерство и влияние:</h4>
+                    <div class="skill-item" onclick="toggleSkill(this, 'level45')">
+                        <input type="checkbox" class="skill-checkbox">
+                        <div class="skill-text">Мотивирую команду на достижение целей</div>
+                    </div>
+                    <div class="skill-item" onclick="toggleSkill(this, 'level45')">
+                        <input type="checkbox" class="skill-checkbox">
+                        <div class="skill-text">Принимаю решения в условиях неопределенности</div>
+                    </div>
+                    <div class="skill-item" onclick="toggleSkill(this, 'level45')">
+                        <input type="checkbox" class="skill-checkbox">
+                        <div class="skill-text">Выстраиваю техническую экспертизу в команде</div>
+                    </div>
+                    <div class="skill-item" onclick="toggleSkill(this, 'level45')">
+                        <input type="checkbox" class="skill-checkbox">
+                        <div class="skill-text">Представляю компанию на внешних мероприятиях</div>
+                    </div>
+                </div>
+
+                <div class="skills-group">
+                    <h4>Системное воздействие:</h4>
+                    <div class="skill-item" onclick="toggleSkill(this, 'level45')">
+                        <input type="checkbox" class="skill-checkbox">
+                        <div class="skill-text">Внедрил процесс/практику, которая используется в компании</div>
+                    </div>
+                    <div class="skill-item" onclick="toggleSkill(this, 'level45')">
+                        <input type="checkbox" class="skill-checkbox">
+                        <div class="skill-text">Создал решение, которое переиспользуют другие команды</div>
+                    </div>
+                    <div class="skill-item" onclick="toggleSkill(this, 'level45')">
+                        <input type="checkbox" class="skill-checkbox">
+                        <div class="skill-text">Выстроил техническую культуру (стандарты, процессы)</div>
+                    </div>
+                    <div class="skill-item" onclick="toggleSkill(this, 'level45')">
+                        <input type="checkbox" class="skill-checkbox">
+                        <div class="skill-text">Передал знания, которые повысили уровень коллег</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="results">
+                <h3>📈 Ваши результаты:</h3>
+                
+                <div id="results-level34">
+                    <h4>Уровень 3 → 4:</h4>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-34">0/12</div>
+                    </div>
+                    <div class="result-text" id="result-text-34">
+                        Начните отмечать навыки для получения результата
+                    </div>
+                </div>
+
+                <div id="results-level45">
+                    <h4>Уровень 4 → 5:</h4>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-45">0/12</div>
+                    </div>
+                    <div class="result-text" id="result-text-45">
+                        Начните отмечать навыки для получения результата
+                    </div>
+                </div>
+
+                <button class="reset-btn" onclick="resetAll()">🔄 Сбросить все</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let scores = {
+            level34: 0,
+            level45: 0
+        };
+
+        function toggleSkill(element, level) {
+            const checkbox = element.querySelector('.skill-checkbox');
+            checkbox.checked = !checkbox.checked;
+            
+            if (checkbox.checked) {
+                element.classList.add('checked');
+                scores[level]++;
+            } else {
+                element.classList.remove('checked');
+                scores[level]--;
+            }
+            
+            updateResults();
+        }
+
+        function updateResults() {
+            updateLevelResults('34', scores.level34, 12);
+            updateLevelResults('45', scores.level45, 12);
+        }
+
+        function updateLevelResults(level, score, total) {
+            const progressBar = document.getElementById(`progress-${level}`);
+            const resultText = document.getElementById(`result-text-${level}`);
+            
+            const percentage = (score / total) * 100;
+            progressBar.style.width = percentage + '%';
+            progressBar.textContent = `${score}/${total}`;
+            
+            let message, className;
+            
+            if (level === '34') {
+                if (score >= 12) {
+                    message = '🔥 Готовы к росту! Поздравляем, вы готовы к уровню 4!';
+                    className = 'result-ready';
+                } else if (score >= 8) {
+                    message = '👍 Почти готовы! Подтягивайте слабые места и вперед!';
+                    className = 'result-almost';
+                } else if (score >= 5) {
+                    message = '🧩 Сосредоточьтесь на развитии ключевых навыков';
+                    className = 'result-focus';
+                } else {
+                    message = '🧱 Укрепляйте базовые навыки текущего уровня';
+                    className = 'result-strengthen';
+                }
+            } else {
+                if (score >= 10) {
+                    message = '🔥 Готовы к лидерству! Вы готовы к уровню 5!';
+                    className = 'result-ready';
+                } else if (score >= 6) {
+                    message = '👍 Развивайте стратегическое мышление';
+                    className = 'result-almost';
+                } else if (score >= 4) {
+                    message = '🧩 Фокус на влиянии и системном воздействии';
+                    className = 'result-focus';
+                } else {
+                    message = '🧱 Укрепляйте базу синьора';
+                    className = 'result-strengthen';
+                }
+            }
+            
+            resultText.textContent = message;
+            resultText.className = `result-text ${className}`;
+        }
+
+        function resetAll() {
+            scores = { level34: 0, level45: 0 };
+            
+            document.querySelectorAll('.skill-checkbox').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            
+            document.querySelectorAll('.skill-item').forEach(item => {
+                item.classList.remove('checked');
+            });
+            
+            document.getElementById('progress-34').style.width = '0%';
+            document.getElementById('progress-45').style.width = '0%';
+            document.getElementById('progress-34').textContent = '0/12';
+            document.getElementById('progress-45').textContent = '0/12';
+            
+            document.getElementById('result-text-34').textContent = 'Начните отмечать навыки для получения результата';
+            document.getElementById('result-text-45').textContent = 'Начните отмечать навыки для получения результата';
+            document.getElementById('result-text-34').className = 'result-text';
+            document.getElementById('result-text-45').className = 'result-text';
+        }
+    </script>
+</body>
+</html>
