@@ -153,3 +153,14 @@ if (!window.Map || !window.Set || !Array.from) {
 <link rel="stylesheet" href="/css/sfia-calculator.css">
 <script defer src="/js/sfia-calculator.js"></script>
 {{ end }}
+
+<!-- T-Shape Calculator -->
+{{ if eq .Title "📐 T-Shape Assessment: Определите свой DevOps профиль за 5 минут" }}
+<link rel="stylesheet" href="/css/systems-thinking-calculator.css">
+<script defer src="/js/systems-thinking-calculator.js"></script>
+{{ end }}
+
+{{ define "head-additions" }}
+<link rel="stylesheet" href="/css/systems-thinking-calculator.css">
+<script defer src="/js/tshape-calculator.js"></script>
+{{ end }}
