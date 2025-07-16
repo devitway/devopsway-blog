@@ -1,4 +1,18 @@
 # ===== HUGO BUILD =====
+# Служебные файлы
+*.backup.*
+*-test.*
+theme_backups/
+scripts/
+
+# Sensitive конфиги
+.env*
+*.key
+*.pem
+
+# Временные файлы разработки
+*.txt
+!robots.txt
 # Сгенерированные файлы Hugo
 public/
 resources/
