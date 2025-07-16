@@ -1,5 +1,5 @@
 /**
- * Systems Thinking Assessment - DevOps Way
+ * Диагностика системного мышления - DevOps Way (РУСИФИЦИРОВАННАЯ ВЕРСИЯ)
  * Файл: static/js/systems-thinking-calculator.js
  */
 
@@ -11,32 +11,44 @@ function initSystemsThinkingAssessment() {
     const widget = document.getElementById('systems-thinking-widget');
     if (!widget) return;
 
-    // HTML содержимое Systems Thinking Assessment
+    // HTML содержимое диагностики системного мышления
     widget.innerHTML = `
         <div class="assessment-intro">
-            <h2>🧠 T-shaped Systems Thinking Assessment</h2>
-            <p><strong>Честная диагностика</strong> вашего уровня системного мышления в DevOps</p>
+            <h2>🧠 T-shaped диагностика системного мышления</h2>
+            <p><strong>Честная оценка</strong> вашего уровня системного мышления в контексте DevOps</p>
             
             <div class="reality-check">
-                <h3>🔍 Большинство переоценивают свой T-shaped уровень</h3>
-                <p><strong>Исследование показало:</strong> 78% IT-специалистов считают себя T-shaped, но ведут себя как I-shaped в критических ситуациях</p>
+                <h3>🎯 Проверьте себя честно</h3>
+                <p>Многие IT‑специалисты считают себя T‑shaped, но в критических ситуациях переходят в модель I‑shaped — и это указывает на недостаточность системного мышления в реальных условиях.</p>
                 
-                <div class="stats-grid">
-                    <div class="stat-box">
-                        <div class="stat-number">78%</div>
-                        <div class="stat-label">переоценивают уровень</div>
+                <div class="assessment-principles">
+                    <div class="principle-item">
+                        <div class="principle-icon">🧠</div>
+                        <div class="principle-text">
+                            <strong>Системное мышление</strong><br>
+                            Видите связи между компонентами системы
+                        </div>
                     </div>
-                    <div class="stat-box">
-                        <div class="stat-number">15%</div>
-                        <div class="stat-label">обладают системным мышлением</div>
+                    <div class="principle-item">
+                        <div class="principle-icon">⚖️</div>
+                        <div class="principle-text">
+                            <strong>Архитектурное видение</strong><br>
+                            Понимаете компромиссы и долгосрочные последствия
+                        </div>
                     </div>
-                    <div class="stat-box">
-                        <div class="stat-number">7%</div>
-                        <div class="stat-label">готовы к лидерству</div>
+                    <div class="principle-item">
+                        <div class="principle-icon">🚀</div>
+                        <div class="principle-text">
+                            <strong>Влияние на команду</strong><br>
+                            Формируете процессы и техническую культуру
+                        </div>
                     </div>
                 </div>
                 
-                <p class="warning"><strong>Отмечайте ✅ только то, в чем уверены на 100%</strong></p>
+                <div class="assessment-note">
+                    <span class="note-icon">💡</span>
+                    <strong>Отмечайте ✅ только то, в чем уверены на 100%</strong>
+                </div>
             </div>
         </div>
 
@@ -44,7 +56,7 @@ function initSystemsThinkingAssessment() {
             <!-- T-SHAPED FOUNDATION -->
             <div class="section-container">
                 <div class="section-header foundation-header">
-                    🎯 T-shaped Foundation: Техническая широта + глубина
+                    🎯 T-shaped основа: Техническая широта + глубина
                 </div>
                 
                 <div class="skills-group">
@@ -61,7 +73,7 @@ function initSystemsThinkingAssessment() {
                     <div class="assessment-item" data-category="foundation" data-skill="infrastructure">
                         <input type="checkbox" class="assessment-checkbox">
                         <div class="skill-content">
-                            <div class="skill-title">Понимаю и работаю с инфраструктурой (clouds, containers, CI/CD)</div>
+                            <div class="skill-title">Понимаю и работаю с инфраструктурой (облака, контейнеры, CI/CD)</div>
                             <div class="skill-example">Могу настроить Kubernetes кластер, создать Terraform модули, построить CI/CD пайплайн</div>
                         </div>
                     </div>
@@ -69,7 +81,7 @@ function initSystemsThinkingAssessment() {
                     <div class="assessment-item" data-category="foundation" data-skill="development">
                         <input type="checkbox" class="assessment-checkbox">
                         <div class="skill-content">
-                            <div class="skill-title">Владею основами разработки и могу читать/писать код</div>
+                            <div class="skill-title">Понимаю основы разработки, умею читать и писать код</div>
                             <div class="skill-example">Python/Go для автоматизации, понимаю архитектуру приложений, могу дебажить проблемы</div>
                         </div>
                     </div>
@@ -77,8 +89,8 @@ function initSystemsThinkingAssessment() {
                     <div class="assessment-item" data-category="foundation" data-skill="observability">
                         <input type="checkbox" class="assessment-checkbox">
                         <div class="skill-content">
-                            <div class="skill-title">Понимаю мониторинг, логирование и observability</div>
-                            <div class="skill-example">Prometheus/Grafana, ELK stack, могу создать dashboard и настроить алерты</div>
+                            <div class="skill-title">Понимаю мониторинг, логирование и наблюдаемость</div>
+                            <div class="skill-example">Prometheus/Grafana, ELK stack, могу создать дашборд и настроить алерты</div>
                         </div>
                     </div>
                 </div>
@@ -89,7 +101,7 @@ function initSystemsThinkingAssessment() {
                     <div class="assessment-item" data-category="foundation" data-skill="cross_teams">
                         <input type="checkbox" class="assessment-checkbox">
                         <div class="skill-content">
-                            <div class="skill-title">Эффективно работаю с командами разработки, QA, security</div>
+                            <div class="skill-title">Эффективно работаю с командами разработки, QA, безопасности</div>
                             <div class="skill-example">Говорю на языке каждой команды, понимаю их проблемы и приоритеты</div>
                         </div>
                     </div>
@@ -98,7 +110,7 @@ function initSystemsThinkingAssessment() {
                         <input type="checkbox" class="assessment-checkbox">
                         <div class="skill-content">
                             <div class="skill-title">Понимаю бизнес-контекст технических решений</div>
-                            <div class="skill-example">Связываю техническую работу с бизнес-метриками, понимаю cost impact решений</div>
+                            <div class="skill-example">Связываю техническую работу с бизнес-метриками, понимаю влияние на стоимость решений</div>
                         </div>
                     </div>
                     
@@ -114,7 +126,7 @@ function initSystemsThinkingAssessment() {
                         <input type="checkbox" class="assessment-checkbox">
                         <div class="skill-content">
                             <div class="skill-title">Участвую в принятии решений вне своей прямой зоны ответственности</div>
-                            <div class="skill-example">Влияю на product roadmap, процессы разработки, технические стандарты команды</div>
+                            <div class="skill-example">Влияю на дорожную карту продукта, процессы разработки, технические стандарты команды</div>
                         </div>
                     </div>
                 </div>
@@ -123,7 +135,7 @@ function initSystemsThinkingAssessment() {
             <!-- SYSTEMS THINKING -->
             <div class="section-container">
                 <div class="section-header systems-header">
-                    🧠 Systems Thinking: Видение связей и последствий
+                    🧠 Системное мышление: Видение связей и последствий
                 </div>
                 
                 <div class="skills-group">
@@ -132,7 +144,7 @@ function initSystemsThinkingAssessment() {
                     <div class="assessment-item" data-category="systems" data-skill="root_cause">
                         <input type="checkbox" class="assessment-checkbox">
                         <div class="skill-content">
-                            <div class="skill-title">Анализирую root causes, а не только симптомы проблем</div>
+                            <div class="skill-title">Анализирую первопричины, а не только симптомы проблем</div>
                             <div class="skill-example">При инциденте ищу системные причины: "Почему система позволила этому случиться?"</div>
                         </div>
                     </div>
@@ -141,15 +153,15 @@ function initSystemsThinkingAssessment() {
                         <input type="checkbox" class="assessment-checkbox">
                         <div class="skill-content">
                             <div class="skill-title">Предсказываю каскадные эффекты технических изменений</div>
-                            <div class="skill-example">Понимаю, как изменение в CI/CD повлияет на security, performance, developer experience</div>
+                            <div class="skill-example">Понимаю, как изменение в CI/CD повлияет на безопасность, производительность, опыт разработчиков</div>
                         </div>
                     </div>
                     
                     <div class="assessment-item" data-category="systems" data-skill="tradeoffs">
                         <input type="checkbox" class="assessment-checkbox">
                         <div class="skill-content">
-                            <div class="skill-title">Мыслю в терминах trade-offs и компромиссов</div>
-                            <div class="skill-example">"Если ускорим deployment, что потеряем в stability? Какой риск приемлем для бизнеса?"</div>
+                            <div class="skill-title">Мыслю в терминах компромиссов</div>
+                            <div class="skill-example">"Если ускорим развертывание, что потеряем в стабильности? Какой риск приемлем для бизнеса?"</div>
                         </div>
                     </div>
                     
@@ -169,15 +181,15 @@ function initSystemsThinkingAssessment() {
                         <input type="checkbox" class="assessment-checkbox">
                         <div class="skill-content">
                             <div class="skill-title">Принимаю технические решения на основе бизнес-контекста</div>
-                            <div class="skill-example">Выбираю между performance и cost effectiveness исходя из приоритетов бизнеса</div>
+                            <div class="skill-example">Выбираю между производительностью и экономической эффективностью исходя из приоритетов бизнеса</div>
                         </div>
                     </div>
                     
                     <div class="assessment-item" data-category="systems" data-skill="failure_modeling">
                         <input type="checkbox" class="assessment-checkbox">
                         <div class="skill-content">
-                            <div class="skill-title">Моделирую failure scenarios и проектирую resilience</div>
-                            <div class="skill-example">Chaos engineering, disaster recovery planning, "что если упадет availability zone?"</div>
+                            <div class="skill-title">Моделирую сценарии отказов и проектирую отказоустойчивость</div>
+                            <div class="skill-example">Chaos engineering, планирование аварийного восстановления, "что если упадет зона доступности?"</div>
                         </div>
                     </div>
                     
@@ -185,15 +197,15 @@ function initSystemsThinkingAssessment() {
                         <input type="checkbox" class="assessment-checkbox">
                         <div class="skill-content">
                             <div class="skill-title">Оптимизирую системы как единое целое, а не отдельные компоненты</div>
-                            <div class="skill-example">Понимаю bottlenecks в end-to-end flow: от commit до production</div>
+                            <div class="skill-example">Понимаю узкие места в сквозном потоке: от коммита до продакшена</div>
                         </div>
                     </div>
                     
                     <div class="assessment-item" data-category="systems" data-skill="feedback_loops">
                         <input type="checkbox" class="assessment-checkbox">
                         <div class="skill-content">
-                            <div class="skill-title">Создаю feedback loops для continuous improvement</div>
-                            <div class="skill-example">Метрики → инсайты → действия → измерение результата → новые метрики</div>
+                            <div class="skill-title">Создаю петли обратной связи для непрерывного улучшения</div>
+                            <div class="skill-example">Метрики → выводы → действия → оценка результата → новые метрики</div>
                         </div>
                     </div>
                 </div>
@@ -202,7 +214,7 @@ function initSystemsThinkingAssessment() {
             <!-- LEADERSHIP & INFLUENCE -->
             <div class="section-container">
                 <div class="section-header leadership-header">
-                    🚀 Leadership & Influence: Воздействие на организацию
+                    🚀 Лидерство и влияние: Воздействие на организацию
                 </div>
                 
                 <div class="skills-group">
@@ -212,15 +224,15 @@ function initSystemsThinkingAssessment() {
                         <input type="checkbox" class="assessment-checkbox">
                         <div class="skill-content">
                             <div class="skill-title">Внедрил процесс/практику, которая используется командой</div>
-                            <div class="skill-example">Создал post-mortem процесс, внедрил code review standards, GitOps workflow</div>
+                            <div class="skill-example">Создал процесс разбора инцидентов, внедрил стандарты ревью кода, GitOps рабочий процесс</div>
                         </div>
                     </div>
                     
                     <div class="assessment-item" data-category="leadership" data-skill="teaching">
                         <input type="checkbox" class="assessment-checkbox">
                         <div class="skill-content">
-                            <div class="skill-title">Обучаю коллег системному подходу к решению проблем</div>
-                            <div class="skill-example">Показываю не "как исправить", а "как предотвратить повторение"</div>
+                            <div class="skill-title">Обучаю коллег системному подходу: не просто «как исправить», а «как не допустить повторения»</div>
+                            <div class="skill-example">Показываю системный анализ проблем и методы предотвращения</div>
                         </div>
                     </div>
                     
@@ -228,7 +240,7 @@ function initSystemsThinkingAssessment() {
                         <input type="checkbox" class="assessment-checkbox">
                         <div class="skill-content">
                             <div class="skill-title">Формирую техническую культуру и стандарты</div>
-                            <div class="skill-example">Infrastructure as Code, security practices, monitoring standards</div>
+                            <div class="skill-example">Инфраструктура как код, практики безопасности, стандарты мониторинга</div>
                         </div>
                     </div>
                     
@@ -236,7 +248,7 @@ function initSystemsThinkingAssessment() {
                         <input type="checkbox" class="assessment-checkbox">
                         <div class="skill-content">
                             <div class="skill-title">Выступаю техническим экспертом при принятии стратегических решений</div>
-                            <div class="skill-example">Консультирую по выбору технологий, миграционным стратегиям, архитектурным решениям</div>
+                            <div class="skill-example">Консультирую по выбору технологий, стратегиям миграции, архитектурным решениям</div>
                         </div>
                     </div>
                 </div>
@@ -248,7 +260,7 @@ function initSystemsThinkingAssessment() {
                         <input type="checkbox" class="assessment-checkbox">
                         <div class="skill-content">
                             <div class="skill-title">Создал решение, которое переиспользуется другими командами</div>
-                            <div class="skill-example">Shared Terraform modules, common CI/CD templates, platform components</div>
+                            <div class="skill-example">Общие Terraform модули, шаблоны CI/CD, платформенные компоненты</div>
                         </div>
                     </div>
                     
@@ -256,15 +268,15 @@ function initSystemsThinkingAssessment() {
                         <input type="checkbox" class="assessment-checkbox">
                         <div class="skill-content">
                             <div class="skill-title">Влияю на техническую стратегию продукта/организации</div>
-                            <div class="skill-example">Участвую в планировании cloud migration, platform development, tech debt prioritization</div>
+                            <div class="skill-example">Участвую в планировании облачной миграции, развитии платформы, приоритизации технического долга</div>
                         </div>
                     </div>
                     
                     <div class="assessment-item" data-category="leadership" data-skill="collaboration">
                         <input type="checkbox" class="assessment-checkbox">
                         <div class="skill-content">
-                            <div class="skill-title">Выстраиваю cross-team collaboration и knowledge sharing</div>
-                            <div class="skill-example">DevOps guild, tech talks, documentation culture, communities of practice</div>
+                            <div class="skill-title">Выстраиваю межкомандное сотрудничество и обмен знаниями</div>
+                            <div class="skill-example">DevOps гильдии, технические доклады, культура документации, сообщества практиков</div>
                         </div>
                     </div>
                     
@@ -272,7 +284,7 @@ function initSystemsThinkingAssessment() {
                         <input type="checkbox" class="assessment-checkbox">
                         <div class="skill-content">
                             <div class="skill-title">Представляю экспертизу компании во внешних сообществах</div>
-                            <div class="skill-example">Конференции, open source contributions, tech blogging, industry partnerships</div>
+                            <div class="skill-example">Конференции, вклад в open source, технические блоги, партнерства в индустрии</div>
                         </div>
                     </div>
                 </div>
@@ -286,7 +298,7 @@ function initSystemsThinkingAssessment() {
             <div class="results-grid">
                 <div class="result-category">
                     <div class="category-header">
-                        <div class="category-title">🎯 T-shaped Foundation</div>
+                        <div class="category-title">🎯 T-shaped основа</div>
                         <div class="category-score" id="score-foundation">0/8</div>
                     </div>
                     <div class="progress-bar">
@@ -297,7 +309,7 @@ function initSystemsThinkingAssessment() {
 
                 <div class="result-category">
                     <div class="category-header">
-                        <div class="category-title">🧠 Systems Thinking</div>
+                        <div class="category-title">🧠 Системное мышление</div>
                         <div class="category-score" id="score-systems">0/8</div>
                     </div>
                     <div class="progress-bar">
@@ -308,7 +320,7 @@ function initSystemsThinkingAssessment() {
 
                 <div class="result-category">
                     <div class="category-header">
-                        <div class="category-title">🚀 Leadership & Influence</div>
+                        <div class="category-title">🚀 Лидерство и влияние</div>
                         <div class="category-score" id="score-leadership">0/8</div>
                     </div>
                     <div class="progress-bar">
@@ -330,7 +342,7 @@ function initSystemsThinkingAssessment() {
             <div class="action-buttons">
                 <button onclick="resetAssessment()" class="reset-btn">🔄 Начать заново</button>
                 <button onclick="shareResults()" class="share-btn">📤 Поделиться результатами</button>
-                <button onclick="requestConsultation()" class="consultation-btn">💬 Получить персональную консультацию</button>
+                <button onclick="requestConsultation()" class="consultation-btn">💬 Получить экспертную консультацию</button>
             </div>
         </div>
     `;
@@ -403,7 +415,7 @@ function updateCategory(category, score, total) {
     let message, className;
     
     if (score >= 7) {
-        message = '🔥 Отличный уровень! Вы master в этой области';
+        message = '🔥 Отличный уровень! Вы мастер в этой области';
         className = 'result-excellent';
     } else if (score >= 5) {
         message = '👍 Хороший уровень, есть пространство для роста';
@@ -431,16 +443,16 @@ function updateOverallResult() {
     
     if (totalScore >= 20) {
         resultClass = 'result-master';
-        resultText = '🏆 Systems Thinking Master (20+/24) - Вы готовы к роли архитектора или тех. лидера!';
+        resultText = '🏆 Мастер системного мышления (20+/24) - Вы готовы к роли архитектора или тех. лидера!';
         recommendations = [
-            'Развивайте экспертизу в emerging технологиях (AI/ML Ops, Platform Engineering)',
-            'Сосредоточьтесь на стратегическом планировании и organizational impact',
-            'Рассмотрите возможность менторства и knowledge sharing в индустрии',
-            'Станьте техническим евангелистом и thought leader'
+            'Развивайте экспертизу в новых технологиях (AI/ML Ops, Platform Engineering)',
+            'Сосредоточьтесь на стратегическом планировании и влиянии на организацию',
+            'Рассмотрите возможность менторства и обмена знаниями в индустрии',
+            'Станьте техническим евангелистом и лидером мнений'
         ];
     } else if (totalScore >= 15) {
         resultClass = 'result-advanced';
-        resultText = '🚀 Advanced Systems Thinker (15-19/24) - Сильный Senior с лидерским потенциалом';
+        resultText = '🚀 Системный эксперт (15-19/24) - Сильный Senior с лидерским потенциалом';
         recommendations = [
             'Укрепляйте слабые области из трех категорий',
             'Развивайте навыки влияния и системного воздействия на организацию',
@@ -449,16 +461,16 @@ function updateOverallResult() {
         ];
     } else if (totalScore >= 10) {
         resultClass = 'result-developing';
-        resultText = '📈 Developing Systems Thinker (10-14/24) - Крепкий Mid+ с потенциалом роста';
+        resultText = '📈 Системный практик (10-14/24) - Крепкий Mid+ с потенциалом роста';
         recommendations = [
             'Фокусируйтесь на развитии системного мышления и архитектурного видения',
-            'Практикуйте анализ trade-offs и долгосрочных последствий решений',
-            'Изучайте архитектурные паттерны и industry best practices',
+            'Практикуйте анализ компромиссов и долгосрочных последствий решений',
+            'Изучайте архитектурные паттерны и лучшие практики индустрии',
             'Развивайте навыки кросс-функционального взаимодействия'
         ];
     } else {
         resultClass = 'result-foundational';
-        resultText = '🎯 Foundational Level (0-9/24) - Укрепляйте T-shaped базу';
+        resultText = '🎯 Базовый уровень (0-9/24) - Укрепляйте T-shaped основу';
         recommendations = [
             'Сосредоточьтесь на укреплении технических основ DevOps',
             'Изучайте основы инфраструктуры: облака, контейнеры, CI/CD',
@@ -499,27 +511,72 @@ window.shareResults = function() {
     const leadership = window.systemsScores.leadership;
     const total = foundation + systems + leadership;
     
-    const shareText = `Мои результаты Systems Thinking Assessment:
+    const shareText = `Мои результаты диагностики системного мышления:
 
-🎯 T-shaped Foundation: ${foundation}/8
-🧠 Systems Thinking: ${systems}/8  
-🚀 Leadership & Influence: ${leadership}/8
+🎯 T-shaped основа: ${foundation}/8
+🧠 Системное мышление: ${systems}/8  
+🚀 Лидерство и влияние: ${leadership}/8
 📊 Общий результат: ${total}/24
 
 Пройдите диагностику системного мышления: ${window.location.href}`;
     
     if (navigator.share) {
         navigator.share({
-            title: 'Systems Thinking Assessment - DevOps Way',
+            title: 'Диагностика системного мышления - DevOps Way',
             text: shareText,
             url: window.location.href
         });
     } else {
         navigator.clipboard.writeText(shareText).then(() => {
-            alert('Результаты скопированы в буфер обмена!');
+            showNotification('📋 Результаты скопированы в буфер обмена!');
         });
     }
 };
+
+// Telegram шаринг
+window.shareToTelegram = function() {
+    const foundation = window.systemsScores.foundation;
+    const systems = window.systemsScores.systems;
+    const leadership = window.systemsScores.leadership;
+    const total = foundation + systems + leadership;
+    
+    const shareText = `Прошел диагностику системного мышления на DevOps Way!
+
+🎯 T-shaped основа: ${foundation}/8
+🧠 Системное мышление: ${systems}/8
+🚀 Лидерство и влияние: ${leadership}/8
+
+Проверьте свой уровень:`;
+    
+    const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(shareText)}`;
+    window.open(telegramUrl, '_blank');
+};
+
+// Уведомления
+function showNotification(message) {
+    // Удаляем существующие уведомления
+    const existingNotifications = document.querySelectorAll('.notification-toast');
+    existingNotifications.forEach(notification => notification.remove());
+    
+    const notification = document.createElement('div');
+    notification.className = 'notification-toast';
+    notification.textContent = message;
+    notification.style.cssText = `
+        position: fixed; top: 20px; right: 20px; z-index: 10000;
+        background: #10b981; color: white; padding: 12px 16px;
+        border-radius: 8px; font-weight: 500; font-size: 0.9rem;
+        transform: translateX(100%); transition: transform 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    `;
+    
+    document.body.appendChild(notification);
+    setTimeout(() => notification.style.transform = 'translateX(0)', 100);
+    setTimeout(() => {
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}
 
 window.requestConsultation = function() {
     const foundation = window.systemsScores.foundation;
@@ -527,15 +584,15 @@ window.requestConsultation = function() {
     const leadership = window.systemsScores.leadership;
     const total = foundation + systems + leadership;
     
-    const consultationText = `Здравствуйте! Прошел Systems Thinking Assessment на DevOps Way.
+    const consultationText = `Здравствуйте! Прошел диагностику системного мышления на DevOps Way.
 
 Мои результаты:
-🎯 T-shaped Foundation: ${foundation}/8
-🧠 Systems Thinking: ${systems}/8
-🚀 Leadership & Influence: ${leadership}/8
+🎯 T-shaped основа: ${foundation}/8
+🧠 Системное мышление: ${systems}/8
+🚀 Лидерство и влияние: ${leadership}/8
 
-Хотел бы получить персональную консультацию по развитию системного мышления в DevOps.`;
+Хотел бы получить экспертную консультацию по развитию системного мышления в DevOps.`;
     
-    const telegramUrl = `https://t.me/devopsway?text=${encodeURIComponent(consultationText)}`;
+    const telegramUrl = `https://t.me/devitway_pavel?text=${encodeURIComponent(consultationText)}`;
     window.open(telegramUrl, '_blank');
 };
