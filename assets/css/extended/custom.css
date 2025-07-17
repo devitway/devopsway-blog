@@ -1097,3 +1097,82 @@ body:not(.dark) .highlight .language-yml .nt {
       font-size: 0.8rem !important;
     }
   }
+/* =============================================================================
+   ОПТИМИЗИРОВАННЫЕ ЗАГОЛОВКИ - ДОБАВЛЕНО АВТОМАТИЧЕСКИ
+   ============================================================================= */
+
+/* Базовые переменные */
+:root {
+  --h1-desktop: 2.25rem; --h2-desktop: 2rem; --h3-desktop: 1.5rem;
+  --h1-tablet: 2rem; --h2-tablet: 1.75rem; --h3-tablet: 1.375rem;
+  --h1-mobile: 1.5rem; --h2-mobile: 1.375rem; --h3-mobile: 1.25rem;
+  --h1-small: 1.25rem; --h2-small: 1.125rem; --h3-small: 1rem;
+}
+
+/* Оптимизированные заголовки */
+.post-title, .assessment-intro h2, h1 {
+  font-size: var(--h1-desktop);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  max-width: 32ch;
+  text-wrap: balance;
+}
+
+.section-header, .level-header, h2 {
+  font-size: var(--h2-desktop);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.skills-group h4, h3 {
+  font-size: var(--h3-desktop);
+  line-height: 1.4;
+}
+
+/* Tablet */
+@media screen and (max-width: 1199px) and (min-width: 768px) {
+  .post-title, .assessment-intro h2, h1 { font-size: var(--h1-tablet); }
+  .section-header, .level-header, h2 { font-size: var(--h2-tablet); }
+  .skills-group h4, h3 { font-size: var(--h3-tablet); }
+}
+
+/* Mobile */
+@media screen and (max-width: 767px) and (min-width: 481px) {
+  .post-title, .assessment-intro h2, h1 { 
+    font-size: var(--h1-mobile); 
+    line-height: 1.25; 
+    margin-bottom: 0.75rem; 
+  }
+  .section-header, .level-header, h2 { font-size: var(--h2-mobile); }
+  .skills-group h4, h3 { font-size: var(--h3-mobile); }
+}
+
+/* Small Mobile */
+@media screen and (max-width: 480px) {
+  .post-title, .assessment-intro h2, h1 { 
+    font-size: var(--h1-small); 
+    line-height: 1.2; 
+    word-break: break-word; 
+    hyphens: auto; 
+  }
+  .section-header, .level-header, h2 { 
+    font-size: var(--h2-small); 
+    padding: 0.75rem 1rem; 
+  }
+  .skills-group h4, h3 { font-size: var(--h3-small); }
+}
+
+/* Улучшения читаемости */
+.post-title, .assessment-intro h2, h1, h2, h3, h4 {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Вспомогательные классы */
+.mobile-title { display: none; }
+@media screen and (max-width: 767px) {
+  .desktop-title { display: none; }
+  .mobile-title { display: block; }
+}
+
