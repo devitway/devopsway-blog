@@ -878,3 +878,222 @@ body:not(.dark) .highlight .language-yml .nt {
         padding: 20px 16px;
     }
 }
+/* =============================================================================
+   МОБИЛЬНАЯ ТИПОГРАФИКА - ЗАГОЛОВКИ ПОСТОВ
+   ============================================================================= */
+
+   @media (max-width: 768px) {
+    /* Основной заголовок поста */
+    .post-title,
+    .post-header .post-title,
+    .entry-header .post-title,
+    h1.post-title {
+      font-size: 1.4rem !important;
+      line-height: 1.3 !important;
+      margin: 1rem 0 !important;
+    }
+    
+    /* Описание поста */
+    .post-description,
+    .post-summary,
+    .entry-summary {
+      font-size: 0.95rem !important;
+      line-height: 1.5 !important;
+      margin: 0.75rem 0 !important;
+    }
+    
+    /* Мета-информация (дата, время чтения, автор) */
+    .post-meta,
+    .entry-meta,
+    .post-footer {
+      font-size: 0.8rem !important;
+      line-height: 1.4 !important;
+      margin: 0.5rem 0 !important;
+    }
+    
+    /* Заголовки в содержании */
+    .post-content h1,
+    .entry-content h1 {
+      font-size: 1.5rem !important;
+      line-height: 1.3 !important;
+      margin: 1.5rem 0 1rem 0 !important;
+    }
+    
+    .post-content h2,
+    .entry-content h2 {
+      font-size: 1.3rem !important;
+      line-height: 1.3 !important;
+      margin: 1.25rem 0 0.75rem 0 !important;
+    }
+    
+    .post-content h3,
+    .entry-content h3 {
+      font-size: 1.15rem !important;
+      line-height: 1.3 !important;
+      margin: 1rem 0 0.5rem 0 !important;
+    }
+    
+    .post-content h4,
+    .entry-content h4 {
+      font-size: 1.05rem !important;
+      line-height: 1.3 !important;
+      margin: 0.75rem 0 0.5rem 0 !important;
+    }
+    
+    /* Параграфы в контенте */
+    .post-content p,
+    .entry-content p {
+      font-size: 0.95rem !important;
+      line-height: 1.6 !important;
+      margin: 0.75rem 0 !important;
+    }
+    
+    /* Списки */
+    .post-content ul,
+    .post-content ol,
+    .entry-content ul,
+    .entry-content ol {
+      font-size: 0.95rem !important;
+      line-height: 1.6 !important;
+      margin: 0.75rem 0 !important;
+      padding-left: 1.5rem !important;
+    }
+    
+    .post-content li,
+    .entry-content li {
+      margin: 0.25rem 0 !important;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    /* Очень маленькие экраны - еще более компактно */
+    .post-title,
+    .post-header .post-title,
+    .entry-header .post-title,
+    h1.post-title {
+      font-size: 1.25rem !important;
+      line-height: 1.25 !important;
+      margin: 0.75rem 0 !important;
+    }
+    
+    .post-description,
+    .post-summary,
+    .entry-summary {
+      font-size: 0.9rem !important;
+      line-height: 1.4 !important;
+      margin: 0.5rem 0 !important;
+    }
+    
+    .post-meta,
+    .entry-meta,
+    .post-footer {
+      font-size: 0.75rem !important;
+      line-height: 1.3 !important;
+      margin: 0.25rem 0 !important;
+    }
+    
+    .post-content h1,
+    .entry-content h1 {
+      font-size: 1.3rem !important;
+      line-height: 1.25 !important;
+      margin: 1.25rem 0 0.75rem 0 !important;
+    }
+    
+    .post-content h2,
+    .entry-content h2 {
+      font-size: 1.15rem !important;
+      line-height: 1.25 !important;
+      margin: 1rem 0 0.5rem 0 !important;
+    }
+    
+    .post-content h3,
+    .entry-content h3 {
+      font-size: 1.05rem !important;
+      line-height: 1.25 !important;
+      margin: 0.75rem 0 0.5rem 0 !important;
+    }
+    
+    .post-content h4,
+    .entry-content h4 {
+      font-size: 1rem !important;
+      line-height: 1.25 !important;
+      margin: 0.5rem 0 0.25rem 0 !important;
+    }
+    
+    .post-content p,
+    .entry-content p {
+      font-size: 0.9rem !important;
+      line-height: 1.5 !important;
+      margin: 0.5rem 0 !important;
+    }
+    
+    .post-content ul,
+    .post-content ol,
+    .entry-content ul,
+    .entry-content ol {
+      font-size: 0.9rem !important;
+      line-height: 1.5 !important;
+      margin: 0.5rem 0 !important;
+      padding-left: 1.25rem !important;
+    }
+  }
+  
+  /* =============================================================================
+     ОГЛАВЛЕНИЕ НА МОБИЛЬНЫХ
+     ============================================================================= */
+  
+  @media (max-width: 768px) {
+    .toc,
+    .table-of-contents,
+    #TableOfContents {
+      font-size: 0.85rem !important;
+      line-height: 1.4 !important;
+      margin: 1rem 0 !important;
+      padding: 1rem !important;
+      background: var(--code-bg, #f8f9fa) !important;
+      border-radius: 8px !important;
+      border: 1px solid var(--border, #e2e8f0) !important;
+    }
+    
+    .toc ul,
+    .table-of-contents ul,
+    #TableOfContents ul {
+      font-size: 0.85rem !important;
+      line-height: 1.3 !important;
+      margin: 0.25rem 0 !important;
+      padding-left: 1rem !important;
+    }
+    
+    .toc a,
+    .table-of-contents a,
+    #TableOfContents a {
+      font-size: 0.85rem !important;
+      text-decoration: none !important;
+      color: var(--primary, #3b82f6) !important;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .toc,
+    .table-of-contents,
+    #TableOfContents {
+      font-size: 0.8rem !important;
+      line-height: 1.3 !important;
+      margin: 0.75rem 0 !important;
+      padding: 0.75rem !important;
+    }
+    
+    .toc ul,
+    .table-of-contents ul,
+    #TableOfContents ul {
+      font-size: 0.8rem !important;
+      line-height: 1.25 !important;
+      padding-left: 0.75rem !important;
+    }
+    
+    .toc a,
+    .table-of-contents a,
+    #TableOfContents a {
+      font-size: 0.8rem !important;
+    }
+  }

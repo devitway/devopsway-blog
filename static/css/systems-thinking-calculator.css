@@ -1,5 +1,5 @@
 /* =============================================================================
-   SYSTEMS THINKING ASSESSMENT STYLES - DevOps Way (ОБНОВЛЕННАЯ ВЕРСИЯ)
+   SYSTEMS THINKING ASSESSMENT STYLES - DevOps Way (ИСПРАВЛЕННАЯ ВЕРСИЯ БЕЗ РОЗОВОГО)
    Файл: static/css/systems-thinking-calculator.css
    ============================================================================= */
 
@@ -11,7 +11,7 @@
 }
 
 /* =============================================================================
-   ВВОДНАЯ СЕКЦИЯ (ОБНОВЛЕННАЯ)
+   ВВОДНАЯ СЕКЦИЯ
    ============================================================================= */
 
 .assessment-intro {
@@ -36,7 +36,6 @@
     font-size: 1.1rem;
 }
 
-/* ОБНОВЛЕННЫЙ БЛОК reality-check */
 .reality-check {
     background: rgba(255, 255, 255, 0.1);
     border-radius: 12px;
@@ -48,7 +47,7 @@
 .reality-check h3 {
     margin: 0 0 1rem 0;
     font-size: 1.3rem;
-    color: #ffffff; /* Убрали желтый цвет */
+    color: #ffffff;
     font-weight: 600;
 }
 
@@ -114,15 +113,6 @@
     flex-shrink: 0;
 }
 
-/* Скрываем старые элементы */
-.stats-grid {
-    display: none !important;
-}
-
-.warning {
-    display: none !important;
-}
-
 /* =============================================================================
    СЕКЦИИ ОЦЕНКИ
    ============================================================================= */
@@ -153,16 +143,17 @@
     font-weight: 600;
 }
 
+/* ИСПРАВЛЕННЫЕ ЦВЕТА ЗАГОЛОВКОВ */
 .foundation-header {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
 .systems-header {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
 }
 
 .leadership-header {
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
 }
 
 .skills-group {
@@ -200,6 +191,8 @@
     cursor: pointer;
     border: 2px solid transparent;
     background: var(--theme, #ffffff);
+    min-height: auto !important;
+    overflow: visible !important;
 }
 
 .assessment-item:hover {
@@ -229,6 +222,9 @@
 
 .skill-content {
     flex: 1;
+    min-width: 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .skill-title {
@@ -237,15 +233,26 @@
     font-size: 1rem;
     margin-bottom: 0.5rem;
     line-height: 1.4;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .skill-example {
     font-size: 0.9rem;
-    color: var(--tertiary, #6c757d);
+    color: var(--secondary, #64748b) !important;
     font-style: italic;
     line-height: 1.5;
-    padding-left: 1rem;
-    border-left: 3px solid var(--border, #e9ecef);
+    padding: 0.5rem 0 0 1rem;
+    border-left: 3px solid var(--primary, #3498db);
+    margin-top: 0.5rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal !important;
+    display: block !important;
+    opacity: 0.85 !important;
+    background: rgba(52, 152, 219, 0.05) !important;
+    padding: 0.5rem 0.75rem 0.5rem 1rem !important;
+    border-radius: 0 6px 6px 0 !important;
 }
 
 /* =============================================================================
@@ -290,25 +297,45 @@
 }
 
 .category-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 1rem !important;
+    gap: 0.75rem !important;
+    flex-wrap: nowrap !important;
+    width: 100% !important;
 }
 
 .category-title {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--content, #495057);
+    flex: 1 !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    color: var(--content, #495057) !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
 }
 
 .category-score {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: var(--primary, #3498db);
-    background: var(--code-bg, #f8f9fa);
-    padding: 0.25rem 0.75rem;
-    border-radius: 20px;
+    white-space: nowrap !important;
+    display: inline-block !important;
+    font-size: 1.1rem !important;
+    font-weight: bold !important;
+    color: var(--primary, #3498db) !important;
+    background: var(--code-bg, #f8f9fa) !important;
+    padding: 0.3rem 0.8rem !important;
+    border-radius: 20px !important;
+    min-width: 55px !important;
+    max-width: 80px !important;
+    text-align: center !important;
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
+    word-break: keep-all !important;
+    overflow: hidden !important;
+    text-overflow: clip !important;
+    line-height: 1.1 !important;
 }
 
 .progress-bar {
@@ -327,9 +354,10 @@
     width: 0%;
 }
 
+/* ИСПРАВЛЕННЫЕ ЦВЕТА ПРОГРЕСС-БАРОВ */
 .progress-foundation { background: linear-gradient(90deg, #667eea, #764ba2); }
-.progress-systems { background: linear-gradient(90deg, #f093fb, #f5576c); }
-.progress-leadership { background: linear-gradient(90deg, #4facfe, #00f2fe); }
+.progress-systems { background: linear-gradient(90deg, #4facfe, #00f2fe); }
+.progress-leadership { background: linear-gradient(90deg, #11998e, #38ef7d); }
 
 .result-text {
     font-size: 0.95rem;
@@ -448,7 +476,7 @@
 }
 
 /* =============================================================================
-   КНОПКИ ДЕЙСТВИЙ (ОБНОВЛЕННЫЕ)
+   КНОПКИ ДЕЙСТВИЙ
    ============================================================================= */
 
 .action-buttons {
@@ -485,7 +513,6 @@
     color: white;
 }
 
-/* ИСПРАВЛЕННАЯ КНОПКА КОНСУЛЬТАЦИИ - СИНЯЯ ВМЕСТО КРАСНОЙ */
 .consultation-btn {
     background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%) !important;
     color: white !important;
@@ -503,114 +530,6 @@
     background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%) !important;
     box-shadow: 0 6px 25px rgba(59, 130, 246, 0.4) !important;
     border-color: #60a5fa !important;
-}
-
-/* =============================================================================
-   НОВАЯ СЕКЦИЯ ШАРИНГА
-   ============================================================================= */
-
-.sharing-section {
-    margin-top: 2rem;
-    padding: 1.5rem;
-    background: var(--theme, #ffffff);
-    border: 1px solid var(--border, #e2e8f0);
-    border-radius: 12px;
-    text-align: center;
-}
-
-.sharing-section h4 {
-    margin: 0 0 1rem 0;
-    color: var(--primary, #2c3e50);
-    font-size: 1.2rem;
-    font-weight: 600;
-}
-
-.primary-sharing {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
-}
-
-.secondary-sharing {
-    display: flex;
-    justify-content: center;
-    gap: 0.75rem;
-    margin-bottom: 1rem;
-    flex-wrap: wrap;
-}
-
-/* СТИЛИ КНОПОК ШАРИНГА */
-.telegram-btn {
-    background: linear-gradient(135deg, #0088cc 0%, #005580 100%) !important;
-}
-
-.github-btn {
-    background: linear-gradient(135deg, #24292e 0%, #1a1e22 100%) !important;
-}
-
-.copy-btn {
-    background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%) !important;
-    font-size: 0.9rem !important;
-    padding: 10px 16px !important;
-}
-
-.native-btn {
-    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%) !important;
-    font-size: 0.9rem !important;
-    padding: 10px 16px !important;
-}
-
-/* ДОПОЛНИТЕЛЬНЫЕ ОПЦИИ (СКРЫТЫ ПО УМОЛЧАНИЮ) */
-.more-options {
-    margin-top: 1rem;
-    text-align: center;
-}
-
-.more-options summary {
-    color: var(--tertiary, #6b7280);
-    font-size: 0.9rem;
-    cursor: pointer;
-    padding: 0.5rem;
-    border-radius: 6px;
-    transition: all 0.2s ease;
-}
-
-.more-options summary:hover {
-    background: var(--code-bg, #f8f9fa);
-    color: var(--primary, #2c3e50);
-}
-
-.more-sharing {
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--border, #e2e8f0);
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-}
-
-.share-link {
-    padding: 8px 16px;
-    border-radius: 6px;
-    text-decoration: none;
-    color: var(--tertiary, #6b7280);
-    font-size: 0.85rem;
-    transition: all 0.2s ease;
-    border: 1px solid var(--border, #e2e8f0);
-}
-
-.share-link:hover {
-    background: var(--code-bg, #f8f9fa);
-    color: var(--primary, #2c3e50);
-    text-decoration: none;
-    transform: translateY(-1px);
-}
-
-/* УВЕДОМЛЕНИЯ */
-.notification-toast {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
 }
 
 /* =============================================================================
@@ -667,45 +586,6 @@
     border-color: #475569;
 }
 
-[data-theme="dark"] .sharing-section,
-.dark .sharing-section {
-    background: #334155;
-    border-color: #475569;
-}
-
-[data-theme="dark"] .sharing-section h4,
-.dark .sharing-section h4 {
-    color: #f1f5f9;
-}
-
-[data-theme="dark"] .more-options summary,
-.dark .more-options summary {
-    color: #94a3b8;
-}
-
-[data-theme="dark"] .more-options summary:hover,
-.dark .more-options summary:hover {
-    background: #475569;
-    color: #f1f5f9;
-}
-
-[data-theme="dark"] .more-sharing,
-.dark .more-sharing {
-    border-color: #475569;
-}
-
-[data-theme="dark"] .share-link,
-.dark .share-link {
-    color: #94a3b8;
-    border-color: #475569;
-}
-
-[data-theme="dark"] .share-link:hover,
-.dark .share-link:hover {
-    background: #475569;
-    color: #f1f5f9;
-}
-
 [data-theme="dark"] .skills-group h4,
 .dark .skills-group h4 {
     color: #f1f5f9;
@@ -731,6 +611,13 @@
 [data-theme="dark"] .skill-example,
 .dark .skill-example {
     border-color: #475569;
+}
+
+[data-theme="dark"] .category-score,
+.dark .category-score {
+    background: #475569 !important;
+    color: #60a5fa !important;
+    border: 1px solid #64748b !important;
 }
 
 /* =============================================================================
@@ -811,27 +698,19 @@
         max-width: 280px;
     }
     
-    .primary-sharing,
-    .secondary-sharing {
-        flex-direction: column;
-        align-items: center;
+    .category-score {
+        font-size: 1rem !important;
+        padding: 0.25rem 0.6rem !important;
+        min-width: 50px !important;
+        max-width: 70px !important;
     }
     
-    .primary-sharing .share-btn,
-    .secondary-sharing .share-btn {
-        width: 100%;
-        max-width: 250px;
+    .category-header {
+        gap: 0.5rem !important;
     }
     
-    .more-sharing {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .share-link {
-        width: 100%;
-        max-width: 200px;
-        text-align: center;
+    .category-title {
+        font-size: 0.95rem !important;
     }
 }
 
@@ -875,6 +754,17 @@
         font-size: 1rem;
         padding: 1rem;
     }
+    
+    .category-score {
+        font-size: 0.9rem !important;
+        padding: 0.2rem 0.5rem !important;
+        min-width: 45px !important;
+        max-width: 60px !important;
+    }
+    
+    .category-title {
+        font-size: 0.9rem !important;
+    }
 }
 
 /* =============================================================================
@@ -896,11 +786,6 @@
     outline-offset: 2px;
 }
 
-.telegram-btn:focus, .github-btn:focus, .copy-btn:focus, .native-btn:focus {
-    outline: 2px solid var(--primary, #3498db);
-    outline-offset: 2px;
-}
-
 /* Уменьшение анимаций для пользователей с ограниченными возможностями */
 @media (prefers-reduced-motion: reduce) {
     .assessment-item,
@@ -910,8 +795,7 @@
     .share-btn,
     .consultation-btn,
     .recommendation-item,
-    .principle-item,
-    .notification-toast {
+    .principle-item {
         transition: none !important;
         animation: none !important;
     }
@@ -975,258 +859,7 @@
         border: 1px solid #ccc !important;
     }
     
-    .action-buttons,
-    .sharing-section {
+    .action-buttons {
         display: none !important;
     }
-}
-/* =============================================================================
-   УСИЛЕННОЕ ИСПРАВЛЕНИЕ СЧЕТЧИКА ДЛЯ ВСЕХ УСТРОЙСТВ
-   Добавить в systems-thinking-calculator.css
-   ============================================================================= */
-
-/* БАЗОВЫЕ ПРАВИЛА (применяются везде) */
-.category-score {
-    white-space: nowrap !important;
-    display: inline-block !important;
-    font-size: 1.1rem !important;
-    font-weight: bold !important;
-    color: var(--primary, #3498db) !important;
-    background: var(--code-bg, #f8f9fa) !important;
-    padding: 0.3rem 0.8rem !important;
-    border-radius: 20px !important;
-    min-width: 55px !important;
-    max-width: 80px !important;
-    text-align: center !important;
-    flex-shrink: 0 !important;
-    flex-grow: 0 !important;
-    word-break: keep-all !important;
-    overflow: hidden !important;
-    text-overflow: clip !important;
-    line-height: 1.1 !important;
-}
-
-.category-header {
-    display: flex !important;
-    flex-direction: row !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    margin-bottom: 1rem !important;
-    gap: 0.75rem !important;
-    flex-wrap: nowrap !important;
-    width: 100% !important;
-}
-
-.category-title {
-    flex: 1 !important;
-    font-size: 1rem !important;
-    font-weight: 600 !important;
-    color: var(--content, #495057) !important;
-    min-width: 0 !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    white-space: nowrap !important;
-}
-
-/* МОБИЛЬНЫЕ УСТРОЙСТВА (до 768px) */
-@media screen and (max-width: 768px) {
-    .category-score {
-        font-size: 1rem !important;
-        padding: 0.25rem 0.6rem !important;
-        min-width: 50px !important;
-        max-width: 70px !important;
-        white-space: nowrap !important;
-        display: inline-block !important;
-        flex-shrink: 0 !important;
-    }
-    
-    .category-header {
-        display: flex !important;
-        flex-direction: row !important;
-        justify-content: space-between !important;
-        align-items: center !important;
-        gap: 0.5rem !important;
-        flex-wrap: nowrap !important;
-    }
-    
-    .category-title {
-        font-size: 0.95rem !important;
-        flex: 1 !important;
-        min-width: 0 !important;
-    }
-}
-
-/* ОЧЕНЬ МАЛЕНЬКИЕ ЭКРАНЫ (до 480px) */
-@media screen and (max-width: 480px) {
-    .category-score {
-        font-size: 0.9rem !important;
-        padding: 0.2rem 0.5rem !important;
-        min-width: 45px !important;
-        max-width: 60px !important;
-        white-space: nowrap !important;
-        display: inline-block !important;
-    }
-    
-    .category-header {
-        gap: 0.4rem !important;
-        margin-bottom: 0.75rem !important;
-    }
-    
-    .category-title {
-        font-size: 0.9rem !important;
-    }
-    
-    /* Дополнительная защита для очень узких экранов */
-    .results-grid {
-        grid-template-columns: 1fr !important;
-        gap: 1rem !important;
-    }
-    
-    .result-category {
-        max-width: 100% !important;
-        min-width: 280px !important;
-    }
-}
-
-/* ЭКСТРА-МАЛЕНЬКИЕ ЭКРАНЫ (до 360px) */
-@media screen and (max-width: 360px) {
-    .category-score {
-        font-size: 0.85rem !important;
-        padding: 0.15rem 0.4rem !important;
-        min-width: 40px !important;
-        max-width: 55px !important;
-    }
-    
-    .category-title {
-        font-size: 0.85rem !important;
-        line-height: 1.2 !important;
-    }
-    
-    .category-header {
-        gap: 0.3rem !important;
-    }
-}
-
-/* ДОПОЛНИТЕЛЬНАЯ ЗАЩИТА */
-.category-score,
-.category-score * {
-    white-space: nowrap !important;
-    word-break: keep-all !important;
-    hyphens: none !important;
-    text-wrap: nowrap !important;
-}
-
-/* ПРИНУДИТЕЛЬНОЕ ИСПРАВЛЕНИЕ ЧЕРЕЗ JAVASCRIPT СТИЛИ */
-.category-score[style*="white-space"] {
-    white-space: nowrap !important;
-}
-
-/* ТЕМНАЯ ТЕМА ДЛЯ МОБИЛЬНЫХ */
-@media screen and (max-width: 768px) {
-    [data-theme="dark"] .category-score,
-    .dark .category-score {
-        background: #475569 !important;
-        color: #60a5fa !important;
-        border: 1px solid #64748b !important;
-    }
-}
-
-/* FALLBACK ДЛЯ СТАРЫХ БРАУЗЕРОВ */
-@supports not (display: flex) {
-    .category-header {
-        display: table !important;
-        width: 100% !important;
-        table-layout: fixed !important;
-    }
-    
-    .category-title {
-        display: table-cell !important;
-        vertical-align: middle !important;
-        width: calc(100% - 70px) !important;
-    }
-    
-    .category-score {
-        display: table-cell !important;
-        vertical-align: middle !important;
-        width: 60px !important;
-        text-align: right !important;
-    }
-}
-/* =============================================================================
-   ЭЛЕМЕНТЫ ОЦЕНКИ (ИСПРАВЛЕННЫЕ)
-   ============================================================================= */
-
-   .assessment-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-    padding: 1.25rem;
-    border-radius: 12px;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    border: 2px solid transparent;
-    background: var(--theme, #ffffff);
-    min-height: auto !important;
-    overflow: visible !important;
-}
-
-.assessment-item:hover {
-    background: var(--code-bg, #f0f8ff);
-    border-color: var(--primary, #3498db);
-    transform: translateX(4px);
-    box-shadow: 0 2px 8px rgba(52, 152, 219, 0.15);
-}
-
-.assessment-item.checked {
-    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
-    border-color: #28a745;
-    border-left: 4px solid #28a745;
-    box-shadow: 0 2px 8px rgba(40, 167, 69, 0.2);
-}
-
-.assessment-checkbox {
-    margin: 0;
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-    accent-color: #28a745;
-    transform: scale(1.2);
-    flex-shrink: 0;
-    margin-top: 2px;
-}
-
-.skill-content {
-    flex: 1;
-    min-width: 0;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-}
-
-.skill-title {
-    font-weight: 600;
-    color: var(--content, #333);
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
-    line-height: 1.4;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-}
-
-.skill-example {
-    font-size: 0.9rem;
-    color: var(--secondary, #64748b) !important;
-    font-style: italic;
-    line-height: 1.5;
-    padding: 0.5rem 0 0 1rem;
-    border-left: 3px solid var(--primary, #3498db);
-    margin-top: 0.5rem;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    white-space: normal !important;
-    display: block !important;
-    opacity: 0.85 !important;
-    background: rgba(52, 152, 219, 0.05) !important;
-    padding: 0.5rem 0.75rem 0.5rem 1rem !important;
-    border-radius: 0 6px 6px 0 !important;
 }
