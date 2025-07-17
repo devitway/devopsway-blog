@@ -1,0 +1,305 @@
+# =============================================================================
+# БАЗОВЫЕ НАСТРОЙКИ HUGO - DevOps Way Blog
+# =============================================================================
+
+baseURL = "https://devopsway.ru"
+languageCode = "ru"
+defaultContentLanguage = "ru"
+title = "DevOps Way - Практические гайды"
+theme = "PaperMod"
+
+# Google Analytics
+googleAnalytics = "G-B9KCE8TFRB"
+
+# SEO и производительность
+enableRobotsTXT = true
+canonifyURLs = true
+enableEmoji = true
+enableGitInfo = true
+
+# Сборка
+buildDrafts = false
+buildFuture = false
+buildExpired = false
+enableInlineShortcodes = true
+
+# =============================================================================
+# PAGINATION
+# =============================================================================
+
+[pagination]
+pagerSize = 12
+path = "page"
+
+# =============================================================================
+# МИНИФИКАЦИЯ И ОПТИМИЗАЦИЯ
+# =============================================================================
+
+[minify]
+disableXML = true
+minifyOutput = true
+
+[minify.tdewolff.html]
+keepDefaultAttrVals = false
+keepDocumentTags = true
+keepEndTags = true
+keepQuotes = false
+keepWhitespace = false
+
+[minify.tdewolff.css]
+precision = 1
+keepCSS2 = true
+
+[minify.tdewolff.js]
+precision = 1
+keepVarNames = false
+
+# =============================================================================
+# OUTPUTS И ФОРМАТЫ
+# =============================================================================
+
+[outputs]
+home = ["HTML", "RSS", "JSON"]
+page = ["HTML"]
+section = ["HTML", "RSS"]
+taxonomy = ["HTML", "RSS"]
+term = ["HTML", "RSS"]
+
+[outputFormats]
+[outputFormats.RSS]
+mediatype = "application/rss"
+baseName = "feed"
+
+[outputFormats.JSON]
+mediatype = "application/json"
+baseName = "index"
+
+# =============================================================================
+# SITEMAP НАСТРОЙКИ
+# =============================================================================
+
+[sitemap]
+changefreq = "weekly"
+priority = 0.5
+filename = "sitemap.xml"
+
+# =============================================================================
+# MARKUP И SYNTAX HIGHLIGHTING
+# =============================================================================
+
+[markup]
+# Настройки подсветки синтаксиса
+[markup.highlight]
+style = "github-dark"
+lineNos = false
+codeFences = true
+guessSyntax = true
+hl_Lines = ""
+lineNumbersInTable = false
+noClasses = false
+tabWidth = 4
+
+# Настройки Goldmark (Markdown парсер)
+[markup.goldmark]
+[markup.goldmark.renderer]
+unsafe = true
+hardWraps = false
+
+[markup.goldmark.parser]
+autoHeadingID = true
+autoHeadingIDType = "github"
+wrapStandAloneImageWithinParagraph = false
+
+[markup.goldmark.extensions]
+definitionList = true
+footnote = true
+linkify = true
+linkifyProtocol = "https"
+strikethrough = true
+table = true
+taskList = true
+typographer = true
+
+# Настройки содержания (Table of Contents)
+[markup.tableOfContents]
+startLevel = 2
+endLevel = 4
+ordered = false
+
+# =============================================================================
+# TAXONOMIES
+# =============================================================================
+
+[taxonomies]
+category = "categories"
+tag = "tags"
+series = "series"
+
+# =============================================================================
+# ПАРАМЕТРЫ ТЕМЫ PAPERMOD
+# =============================================================================
+
+[params]
+# Окружение
+env = "production"
+
+# Основная информация
+title = "DevOps Way"
+description = "DevOps Way - практические гайды по автоматизации, CI/CD, мониторингу и управлению инфраструктурой. Пошаговые инструкции для DevOps инженеров всех уровней."
+keywords = ["DevOps", "Docker", "Kubernetes", "CI/CD", "Monitoring", "Automation", "Infrastructure", "Git", "SSH", "Ansible", "Terraform", "Jenkins", "GitHub Actions", "Prometheus", "Grafana"]
+author = "DevOps Way"
+images = ["/images/devopsway-og.png"]
+
+# Дата и время
+DateFormat = "2 January 2006"
+defaultTheme = "auto"
+disableThemeToggle = false
+
+# Функциональность
+ShowReadingTime = true
+ShowShareButtons = false
+ShowPostNavLinks = true
+ShowBreadCrumbs = true
+ShowCodeCopyButtons = true
+ShowWordCount = true
+ShowRssButtonInSectionTermList = true
+ShowToc = true
+TocOpen = false
+ShowLastMod = true
+ShowFullTextinRSS = true
+
+# Поиск
+fuseOpts = true
+
+# Комментарии и социальное
+comments = true
+disableShare = false
+disableSpecial1stPost = false
+disableScrollToTop = false
+hidemeta = false
+hideSummary = false
+showtoc = true
+tocopen = false
+
+# Навигация
+UseHugoToc = true
+disableAnchoredHeadings = false
+
+# Включить диаграммы глобально (опционально)
+enableDiagrams = false  # true для включения на всех страницах
+
+  # Настройки диаграмм
+  [params.diagrams]
+    # CDN для D3.js
+    d3Version = "7.8.5"
+    
+    # Глобальные настройки по умолчанию
+    defaultHeight = "500"
+    defaultWidth = "100%"
+    
+    # Включить отладку (только для development)
+    debug = false
+    
+    # Настройки производительности
+    lazyLoad = true        # Загружать диаграммы при появлении в viewport
+    minifyAssets = true    # Минифицировать CSS и JS диаграмм
+
+# =============================================================================
+# ГЛАВНАЯ СТРАНИЦА
+# =============================================================================
+
+[params.homeInfoParams]
+Title = "🚀 DevOps Way - Практические гайды"
+Content = """
+**Практические DevOps инструкции, которые реально работают в production!**
+
+🐳 **Docker & Kubernetes** - от основ до продвинутых техник  
+⚙️ **CI/CD Pipeline** - автоматизация развертывания  
+📊 **Monitoring & Logging** - наблюдаемость систем  
+🔧 **Infrastructure as Code** - Terraform, Ansible  
+🛡️ **Security & Best Practices** - безопасность DevOps  
+
+*Каждый гайд проверен на практике и содержит рабочие примеры!*
+"""
+
+# Социальные ссылки
+[[params.socialIcons]]
+name = "telegram"
+url = "https://t.me/devitway"
+
+[[params.socialIcons]]
+name = "github"
+url = "https://github.com/devopsway"
+
+[[params.socialIcons]]
+name = "rss"
+url = "/feed.xml"
+
+# =============================================================================
+# НАВИГАЦИОННОЕ МЕНЮ
+# =============================================================================
+
+[menu]
+[[menu.main]]
+identifier = "posts"
+name = "📚 Все посты"
+url = "/posts/"
+weight = 10
+
+[[menu.main]]
+identifier = "categories"
+name = "🏷️ Категории"
+url = "/categories/"
+weight = 20
+
+[[menu.main]]
+identifier = "search"
+name = "🔍 Поиск"
+url = "/search/"
+weight = 30
+
+[[menu.main]]
+identifier = "about"
+name = "👨‍💻 О проекте"
+url = "/about/"
+weight = 40
+
+[[menu.main]]
+identifier = "telegram"
+name = "💬 Telegram"
+url = "https://t.me/devitway"
+weight = 50
+
+# =============================================================================
+# ДОПОЛНИТЕЛЬНЫЕ НАСТРОЙКИ
+# =============================================================================
+
+[services]
+[services.googleAnalytics]
+ID = "G-B9KCE8TFRB"
+
+[privacy]
+[privacy.googleAnalytics]
+disable = false
+respectDoNotTrack = true
+anonymizeIP = true
+
+# =============================================================================
+# СБОРКА И ДЕПЛОЙ
+# =============================================================================
+
+[build]
+writeStats = true
+
+[caches]
+[caches.getjson]
+maxAge = "10m"
+
+[caches.getcsv]
+maxAge = "10m"
+
+[caches.images]
+maxAge = "1h"
+
+[caches.assets]
+maxAge = "1h"
