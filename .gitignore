@@ -1,5 +1,6 @@
 # ===== HUGO BUILD =====
 # Служебные файлы
+*.sh
 *.backup.*
 *-test.*
 theme_backups/
