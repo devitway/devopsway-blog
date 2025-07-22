@@ -1,8 +1,14 @@
-<!-- Минимальная версия без ошибок -->
+<!-- =============================================================================
+     ЧИСТЫЙ EXTEND_HEAD.HTML - DevOps Way Blog
+     ============================================================================= -->
+
+<!-- Основные мета-теги -->
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="{{ .Permalink }}">
 
-<!-- Встроенное исправление номеров строк -->
+<!-- =============================================================================
+     ИСПРАВЛЕНИЕ НОМЕРОВ СТРОК
+     ============================================================================= -->
 <script>
 (function() {
     function hideLineNumbers() {
@@ -15,43 +21,155 @@
     setTimeout(hideLineNumbers, 100);
 })();
 </script>
-<!-- Добавить В КОНЕЦ существующего файла layouts/partials/extend_head.html -->
 
-<!-- Mermaid.js для диаграмм -->
-<script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+<!-- =============================================================================
+     MERMAID ДИАГРАММЫ (ИСПРАВЛЕННАЯ ВЕРСИЯ)
+     ============================================================================= -->
+{{ $needsDiagrams := false }}
+{{ if or .Params.diagrams 
+          .Site.Params.enableDiagrams
+          (findRE `{{<\s*mermaid` .RawContent)
+          (findRE `class="mermaid"` .RawContent) }}
+  {{ $needsDiagrams = true }}
+{{ end }}
+
+{{ if $needsDiagrams }}
+<!-- CSS диаграмм -->
+{{ with resources.Get "css/extended/diagrams.css" }}
+  {{ $diagramCSS := . | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ $diagramCSS.RelPermalink }}">
+{{ end }}
+
+<!-- Mermaid.js - ЕДИНСТВЕННАЯ загрузка -->
+<script src="https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js"></script>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+  if (typeof mermaid !== 'undefined') {
+    console.log('✅ Mermaid загружен, версия:', mermaid.version);
+    
+    // Определяем текущую тему
+    function getCurrentTheme() {
+      return document.documentElement.getAttribute('data-theme') === 'dark' || 
+             document.body.classList.contains('dark') ? 'dark' : 'base';
+    }
+    
+    // Инициализация Mermaid
     mermaid.initialize({
-        startOnLoad: true,
-        theme: document.body.classList.contains('dark') ? 'dark' : 'default',
-        securityLevel: 'loose',
-        fontFamily: 'inherit',
-        flowchart: {
-            useMaxWidth: true,
-            htmlLabels: true
-        }
+      startOnLoad: false,
+      theme: getCurrentTheme(),
+      securityLevel: 'loose',
+      fontFamily: 'Inter, sans-serif',
+      flowchart: {
+        useMaxWidth: true,
+        htmlLabels: true
+      }
     });
     
-    // Поддержка переключения темы
-    const themeToggle = document.getElementById('theme-toggle');
-    if (themeToggle) {
-        themeToggle.addEventListener('click', () => {
-            setTimeout(() => {
-                const newTheme = document.body.classList.contains('dark') ? 'dark' : 'default';
-                mermaid.initialize({ theme: newTheme });
-                // Перерисовываем диаграммы
-                document.querySelectorAll('.mermaid').forEach(el => {
-                    if (el.getAttribute('data-processed')) {
-                        el.removeAttribute('data-processed');
-                        const graph = el.innerHTML;
-                        el.innerHTML = el.textContent || el.innerText;
-                    }
-                });
-                mermaid.init();
-            }, 100);
-        });
+    // Рендеринг диаграмм
+    function renderDiagrams() {
+      document.querySelectorAll('.mermaid:not([data-processed])').forEach(function(element, index) {
+        const text = element.textContent.trim();
+        if (text) {
+          const id = 'mermaid-' + Date.now() + '-' + index;
+          
+          mermaid.render(id, text).then(function(result) {
+            console.log('✅ Диаграмма', index + 1, 'отрендерена');
+            element.innerHTML = result.svg;
+            element.setAttribute('data-processed', 'true');
+            
+            // Базовая оптимизация SVG
+            const svg = element.querySelector('svg');
+            if (svg) {
+              svg.style.maxWidth = '100%';
+              svg.style.height = 'auto';
+              svg.removeAttribute('height');
+            }
+          }).catch(function(error) {
+            console.error('❌ Ошибка диаграммы', index + 1, ':', error);
+            element.innerHTML = '<div style="padding: 1rem; color: #dc3545; border: 2px dashed #dc3545; border-radius: 8px;">⚠️ Ошибка синтаксиса диаграммы</div>';
+            element.setAttribute('data-processed', 'error');
+          });
+        }
+      });
     }
+    
+    // Первоначальный рендеринг
+    renderDiagrams();
+    
+    // ИСПРАВЛЕНИЕ: Обработка переключения темы БЕЗ переинициализации
+    const observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        if (mutation.type === 'attributes' && 
+            (mutation.attributeName === 'data-theme' || mutation.attributeName === 'class')) {
+          
+          console.log('🎨 Смена темы обнаружена');
+          
+          // НЕ переинициализируем Mermaid - просто применяем CSS стили
+          const newTheme = getCurrentTheme();
+          console.log('🎨 Новая тема:', newTheme);
+          
+          // Применяем тему через CSS классы вместо переинициализации
+          document.querySelectorAll('.mermaid[data-processed="true"]').forEach(function(element) {
+            element.setAttribute('data-theme', newTheme);
+          });
+        }
+      });
+    });
+    
+    // Наблюдаем за изменениями темы
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme', 'class']
+    });
+    
+    observer.observe(document.body, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+    
+    // Простые функции отладки
+    window.debugMermaid = function() {
+      console.log('=== ОТЛАДКА MERMAID ===');
+      console.log('Доступен:', typeof mermaid !== 'undefined');
+      console.log('Версия:', mermaid?.version || 'неизвестно');
+      console.log('Текущая тема:', getCurrentTheme());
+      console.log('Диаграмм всего:', document.querySelectorAll('.mermaid').length);
+      console.log('Обработано:', document.querySelectorAll('.mermaid[data-processed="true"]').length);
+      console.log('С ошибками:', document.querySelectorAll('.mermaid[data-processed="error"]').length);
+    };
+    
+    // АВАРИЙНАЯ функция для сброса диаграмм
+    window.resetMermaid = function() {
+      console.log('🔄 Аварийный сброс всех диаграмм');
+      
+      // Сбрасываем все диаграммы
+      document.querySelectorAll('.mermaid').forEach(function(element) {
+        if (element.getAttribute('data-processed')) {
+          element.removeAttribute('data-processed');
+          element.removeAttribute('data-theme');
+        }
+      });
+      
+      // Переинициализируем с текущей темой
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: getCurrentTheme(),
+        securityLevel: 'loose',
+        fontFamily: 'Inter, sans-serif'
+      });
+      
+      // Заново рендерим
+      setTimeout(renderDiagrams, 100);
+    };
+    
+  } else {
+    console.error('❌ Mermaid не загружен');
+  }
 });
+
+console.log('🎯 Mermaid с исправлением тем загружен');
+console.log('Команды: debugMermaid(), resetMermaid()');
 </script>
 
 <!-- Стили для Mermaid -->
@@ -59,108 +177,91 @@ document.addEventListener('DOMContentLoaded', function() {
 .mermaid {
     text-align: center;
     margin: 2rem 0;
-    background: transparent;
-}
-
-.mermaid svg {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-}
-
-.post-content .mermaid {
-    overflow-x: auto;
     padding: 1rem;
     border: 1px solid var(--border);
     border-radius: 8px;
     background: var(--code-bg);
 }
 
+.mermaid svg {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
 @media (max-width: 768px) {
     .mermaid {
         font-size: 14px;
+        margin: 1rem -1rem;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
     }
 }
 </style>
-<!-- Добавить в конец файла layouts/partials/extend_head.html -->
+{{ end }}
 
-<!-- =================================================================== -->
-<!-- ИСПРАВЛЕНИЕ НОМЕРОВ СТРОК (всегда подключаем) -->
-<!-- =================================================================== -->
-{{ $fixLineNumbers := resources.Get "js/fix-line-numbers.js" | resources.Minify }}
-<script defer src="{{ $fixLineNumbers.RelPermalink }}"></script>
-
-<!-- =================================================================== -->
-<!-- СИСТЕМА ДИАГРАММ (условное подключение) -->
-<!-- =================================================================== -->
-{{ if or (.Params.diagrams) (in .Content "diagram ") (.Site.Params.enableDiagrams) }}
-
-<!-- Подключение D3.js без integrity для избежания ошибок -->
+<!-- =============================================================================
+     D3.js ДИАГРАММЫ (при необходимости)
+     ============================================================================= -->
+{{ if .Params.diagrams }}
+<!-- D3.js для интерактивных диаграмм -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js" 
         crossorigin="anonymous" 
         referrerpolicy="no-referrer"></script>
 
-<!-- Подключение CSS диаграмм -->
-{{ $diagramCSS := resources.Get "css/extended/diagrams.css" | resources.Minify }}
-<link rel="stylesheet" href="{{ $diagramCSS.RelPermalink }}">
-
-<!-- Подключение JavaScript диаграмм -->
-{{ $diagramJS := resources.Get "js/diagram-system.js" | resources.Minify }}
-<script defer src="{{ $diagramJS.RelPermalink }}"></script>
-
-<!-- Отладочная информация (только в development) -->
-{{ if eq .Site.Params.env "development" }}
-<script>
-console.log('🎯 Диаграммы включены для страницы:', '{{ .Title }}');
-console.log('📊 Параметр diagrams:', {{ .Params.diagrams | default false }});
-console.log('🔍 Найден шорткод diagram в контенте:', {{ if in .Content "diagram " }}true{{ else }}false{{ end }});
-console.log('🌐 Глобальное включение:', {{ .Site.Params.enableDiagrams | default false }});
-</script>
+<!-- JavaScript диаграмм -->
+{{ with resources.Get "js/diagram-system.js" }}
+  {{ $diagramJS := . | minify | fingerprint }}
+  <script defer src="{{ $diagramJS.RelPermalink }}"></script>
+{{ end }}
 {{ end }}
 
-{{ end }}
-
-<!-- =================================================================== -->
-<!-- FALLBACK ДЛЯ СТАРЫХ БРАУЗЕРОВ -->
-<!-- =================================================================== -->
-<script>
-// Проверка поддержки современного JavaScript
-if (!window.Map || !window.Set || !Array.from) {
-    console.warn('⚠️ Диаграммы требуют современный браузер с поддержкой ES6');
-    
-    // Показываем предупреждение пользователю
-    document.addEventListener('DOMContentLoaded', function() {
-        const diagrams = document.querySelectorAll('[data-diagram-type]');
-        diagrams.forEach(function(diagram) {
-            diagram.innerHTML = '<div style="padding: 2rem; text-align: center; background: #f7fafc; border: 1px solid #e2e8f0; border-radius: 8px; color: #4a5568;">' +
-                '<p style="margin: 0 0 1rem 0;">⚠️ Для просмотра диаграмм необходим современный браузер.</p>' +
-                '<p style="margin: 0; font-size: 0.875rem;">Рекомендуется использовать последние версии Chrome, Firefox, Safari или Edge.</p>' +
-                '</div>';
-        });
-    });
-}
-</script>
-
-<!-- =================================================================== -->
-<!-- DNS PREFETCH (без preload для избежания warnings) -->
-<!-- =================================================================== -->
-{{ if eq .Site.Params.env "production" }}
-<link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
-{{ end }}
-
-<!-- SFIA Calculator -->
+<!-- =============================================================================
+     КАЛЬКУЛЯТОРЫ (специальные страницы)
+     ============================================================================= -->
 {{ if eq .Title "🎯 SFIA Calculator: Проверьте свой уровень за 2 минуты" }}
 <link rel="stylesheet" href="/css/sfia-calculator.css">
 <script defer src="/js/sfia-calculator.js"></script>
 {{ end }}
 
-<!-- T-Shape Calculator -->
 {{ if eq .Title "📐 T-Shape Assessment: Определите свой DevOps профиль за 5 минут" }}
 <link rel="stylesheet" href="/css/systems-thinking-calculator.css">
 <script defer src="/js/systems-thinking-calculator.js"></script>
 {{ end }}
 
-{{ define "head-additions" }}
-<link rel="stylesheet" href="/css/systems-thinking-calculator.css">
-<script defer src="/js/tshape-calculator.js"></script>
+<!-- =============================================================================
+     ПРОИЗВОДИТЕЛЬНОСТЬ
+     ============================================================================= -->
+{{ if eq .Site.Params.env "production" }}
+<link rel="dns-prefetch" href="//unpkg.com">
+<link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
 {{ end }}
+
+<!-- =============================================================================
+     FALLBACK ДЛЯ СТАРЫХ БРАУЗЕРОВ
+     ============================================================================= -->
+<script>
+// Проверка поддержки ES6
+if (!window.Map || !window.Set || !Array.from) {
+    console.warn('⚠️ Требуется современный браузер');
+}
+
+// Fallback для CSS Custom Properties
+if (!window.CSS || !CSS.supports('color', 'var(--test)')) {
+    document.documentElement.classList.add('no-css-variables');
+}
+</script>
+
+<style>
+/* Fallback стили */
+.no-css-variables {
+    background-color: #ffffff;
+    color: #1d1d1d;
+}
+
+.no-css-variables.dark {
+    background-color: #1d1d1d;
+    color: #ffffff;
+}
+</style>
