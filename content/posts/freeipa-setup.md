@@ -60,38 +60,74 @@ editPost:
 
 ### 🏗️ Архитектура FreeIPA компонентов
 
-```mermaid
-flowchart TB
-    DS[Directory Server<br/>389-ds-base]
-    KDC[Kerberos KDC<br/>krb5-kdc]
-    CA[Certificate Authority<br/>dogtag-pki]
-    DNS[DNS Server<br/>named]
-    HTTP[Web Interface<br/>httpd]
-    
-    GitLab[GitLab]
-    Ansible[Ansible Tower]
-    Grafana[Grafana]
-    
-    Linux[Linux Clients]
-    Windows[Windows AD]
-    Mobile[Mobile Apps]
-    
-    DS --> GitLab
-    DS --> Ansible
-    DS --> Grafana
-    
-    CA --> GitLab
-    CA --> Ansible
-    CA --> Grafana
-    
-    KDC --> GitLab
-    KDC --> Ansible
-    KDC --> Grafana
-    
-    GitLab --> Linux
-    GitLab --> Windows
-    GitLab --> Mobile
-```
+# Архитектура компонентов FreeIPA
+
+Полная архитектура FreeIPA разделена на логические блоки:
+
+---
+
+## 🗂️ Общая структура компонентов
+
+{{< mermaid >}}
+graph TD
+  Client["Linux Client"]
+  Server["FreeIPA Server"]
+  DevOps["DevOps Tools (GitLab, Ansible, Grafana)"]
+
+  Client --> Server
+  DevOps --> Server
+
+  Server --> LDAP["LDAP Directory"]
+  Server --> Kerberos["Kerberos KDC"]
+  Server --> DNS["DNS Server"]
+  Server --> CA["Certificate Authority"]
+  Server --> WebAPI["Web API / UI"]
+{{< /mermaid >}}
+
+---
+
+## 🔐 Аутентификация и доступ
+
+{{< mermaid >}}
+flowchart LR
+  Client[SSSD / PAM / autofs / ssh] -->|Auth| Kerberos[(Kerberos KDC)]
+  Client -->|LDAP Bind| LDAP[(389 Directory Server)]
+  Client -->|API / HTTPS| WebAPI[(IPA Web UI)]
+
+  Kerberos -->|Tickets| Client
+  LDAP -->|Directory Data| Client
+{{< /mermaid >}}
+
+---
+
+## ⚙️ Интеграции с DevOps-инструментами
+
+{{< mermaid >}}
+flowchart LR
+  GitLab[GitLab]
+  Ansible[Ansible]
+  Grafana[Grafana]
+
+  GitLab -->|LDAP| LDAP
+  GitLab -->|Certs| CA
+  Ansible -->|LDAP Lookup| LDAP
+  Grafana -->|LDAP Auth| LDAP
+{{< /mermaid >}}
+
+---
+
+## 🌐 Сетевые протоколы и порты
+
+{{< mermaid >}}
+graph TD
+  LDAP["LDAP Directory"] -->|TCP 389 / LDAPS 636| LDAP_Port["LDAP"]
+  Kerberos["Kerberos KDC"] -->|TCP/UDP 88, 464| Kerberos_Port["Kerberos"]
+  DNS["DNS Server"] -->|UDP/TCP 53| DNS_Port["DNS"]
+  WebUI["Web Interface"] -->|TCP 443| HTTPS_Port["HTTPS"]
+{{< /mermaid >}}
+
+---
+
 
 ### 🚀 1. Подготовка системы
 

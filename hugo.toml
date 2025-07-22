@@ -278,11 +278,20 @@ weight = 50
 [services.googleAnalytics]
 ID = "G-B9KCE8TFRB"
 
+# =============================================================================
+# PRIVACY НАСТРОЙКИ (ИСПРАВЛЕНО)
+# =============================================================================
+
 [privacy]
 [privacy.googleAnalytics]
 disable = false
 respectDoNotTrack = true
 anonymizeIP = true
+
+# ИСПРАВЛЕНИЕ: Обновлены настройки Twitter/X для Hugo v0.141.0+
+[privacy.x]
+enableDNT = true
+simple = false
 
 # =============================================================================
 # СБОРКА И ДЕПЛОЙ
@@ -303,3 +312,15 @@ maxAge = "1h"
 
 [caches.assets]
 maxAge = "1h"
+
+# =============================================================================
+# МЕДИА ТИПЫ (ИСПРАВЛЕНИЕ ДЛЯ WEBAPPMANIFEST)
+# =============================================================================
+
+[mediaTypes]
+[mediaTypes."application/manifest+json"]
+suffixes = ["webmanifest"]
+
+[outputFormats.WebAppManifest]
+mediaType = "application/manifest+json"
+rel = "manifest"
