@@ -148,14 +148,6 @@ RED отлично подходит для алертинга и монитор�
 
 ### Дополнительные материалы
 
-{{< button href="https://prometheus.io/docs/practices/naming/" >}}
-Prometheus Naming Conventions
-{{< /button >}}
-
-{{< button href="https://grafana.com/docs/grafana/latest/dashboards/" >}}
-Grafana Dashboard Best Practices  
-{{< /button >}}
-
 ---
 
 
