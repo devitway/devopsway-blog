@@ -146,10 +146,7 @@ RED отлично подходит для алертинга и монитор�
 6. [The RED method: A new strategy for monitoring microservices](https://www.infoworld.com/article/2270578/the-red-method-a-new-strategy-for-monitoring-microservices.html) — InfoWorld
 7. [The RED Method: How to Instrument Your Services](https://grafana.com/blog/2018/08/02/the-red-method-how-to-instrument-your-services/) — Grafana Labs
 
-### Дополнительные материалы
-
 ---
-
 
 **Совет:** Начинай с Four Golden Signals или RED для сервисов, затем добавляй USE для инфраструктуры. Это даст максимальное покрытие при минимальных усилиях.
 
