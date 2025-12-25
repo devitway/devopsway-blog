@@ -56,13 +56,6 @@ editPost:
 - Понимание PKI и сертификатов
 - РЕД ОС 7.3 или CentOS Stream 9 / AlmaLinux 9
 
-{{< alert "info" >}}
-**Связанные статьи:**
-1. [Настройка FreeIPA сервера](/posts/freeipa-setup/)
-2. [FreeIPA + NFS + autofs](/posts/freeipa-nfs-autofs/)
-3. Hashicorp Vault + FreeIPA (эта статья)
-{{< /alert >}}
-
 ---
 
 ## 🏗️ Архитектура решения
