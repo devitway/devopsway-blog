@@ -1061,7 +1061,7 @@ git push origin HEAD@{N}:branch-name --force-with-lease
 **A: Проверка качества истории:**
 
 ```bash
-# Убедитесь что история линейна
+# Убедитесь, что история линейна
 git log --oneline --graph -20
 
 # Если есть merge коммиты, используйте:
