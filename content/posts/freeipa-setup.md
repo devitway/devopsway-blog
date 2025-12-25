@@ -63,14 +63,14 @@ editPost:
 
 ## 🏗️ Архитектура FreeIPA
 
-```mermaid
+{{< mermaid >}}
 graph TB
   A[FreeIPA Сервер]
   A --> B[LDAP<br/>389 Directory]
   A --> C[Kerberos<br/>MIT KDC]
   A --> D[DNS<br/>BIND]
   A --> E[CA<br/>Dogtag]
-```
+{{< /mermaid >}}
 
 **Компоненты:**
 

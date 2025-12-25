@@ -77,7 +77,7 @@ editPost:
 
 ## 🏗️ Архитектура
 
-```mermaid
+{{< mermaid >}}
 graph LR
   A[FreeIPA]
   B[NFS Сервер]
@@ -87,7 +87,7 @@ graph LR
   B -->|NFS shares| C
   A -->|Kerberos| B
   A -->|Kerberos| C
-```
+{{< /mermaid >}}
 
 **Процесс монтирования:**
 
