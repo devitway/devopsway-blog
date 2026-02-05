@@ -4,9 +4,10 @@ date: 2025-12-15T10:00:00+03:00
 lastmod: 2025-12-15T10:00:00+03:00
 draft: false
 weight: 2
-categories: ["Storage", "DevOps Essentials", "System Administration"]
+categories: ["Storage", "DevOps основы", "System Administration"]
 tags: ["freeipa", "nfs", "autofs", "linux", "storage", "automount", "ldap", "rhel", "almalinux", "security"]
 author: "DevOps Way"
+series: "FreeIPA"
 description: "Production-ready NFS + Autofs с FreeIPA: безопасная конфигурация, Kerberos, правильные mount options. Проверено в enterprise"
 canonical: ""
 showToc: true

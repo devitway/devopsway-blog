@@ -4,13 +4,13 @@ date: 2025-06-11T10:00:00+03:00
 lastmod: 2025-06-11T10:00:00+03:00
 draft: false
 weight: 5
-categories: ["DevOps Essentials"]
+categories: ["DevOps основы"]
 tags: ["git", "hooks", "security", "automation", "pre-commit", "husky", "ci-cd", "quality-gates", "prevention", "team-workflow", "best-practices", "safety"]
 author: "DevOps Way"
 description: "Автоматизация Git безопасности с Husky и Commitlint. Предотвращение 90% ошибок через pre-commit hooks. Готовые скрипты для команд и enterprise внедрения."
 keywords: ["git hooks", "husky", "commitlint", "автоматизация", "безопасность", "pre-commit", "git security"]
 canonical: ""
-series: "Git Mastery Series"
+series: "Git Mastery"
 showToc: true
 TocOpen: false
 hidemeta: false

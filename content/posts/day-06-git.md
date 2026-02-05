@@ -4,12 +4,12 @@ date: 2025-06-13T10:00:00+03:00
 lastmod: 2025-06-13T10:00:00+03:00
 draft: false
 weight: 6
-categories: ["DevOps Основы"]
+categories: ["DevOps основы"]
 tags: ["git", "rebase", "merge", "стратегия", "команда", "архитектура", "история", "рабочий-процесс", "линейность", "автоматизация"]
 author: "DevOps Way"
 description: "Архитектурное решение: rebase vs merge для команд. A/B тестирование стратегий на реальном проекте. Повышение точности git bisect на 75% через единую стратегию."
 canonical: ""
-series: "Git Mastery Series"
+series: "Git Mastery"
 showToc: true
 TocOpen: false
 hidemeta: false

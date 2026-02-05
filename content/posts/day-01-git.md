@@ -4,9 +4,10 @@ date: 2025-06-02T10:00:00+03:00
 lastmod: 2025-06-02T10:00:00+03:00
 draft: false
 weight: 2
-categories: ["DevOps Essentials"]
+categories: ["DevOps основы"]
 tags: ["git", "conventional-commits", "team", "automation", "devops", "best-practices"]
 author: "DevOps Way"
+series: "Git Mastery"
 description: "Превратите хаотичную историю коммитов в профессиональный стандарт команды. Practical guide по Conventional Commits, автоматизации валидации и измерению улучшений."
 canonical: ""
 showToc: true

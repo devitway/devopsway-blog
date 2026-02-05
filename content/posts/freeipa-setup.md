@@ -4,9 +4,10 @@ date: 2025-06-01T10:00:00+03:00
 lastmod: 2025-12-15T10:00:00+03:00
 draft: false
 weight: 1
-categories: ["Security", "DevOps Essentials", "System Administration"]
+categories: ["Security", "DevOps основы", "System Administration"]
 tags: ["freeipa", "ldap", "kerberos", "dns", "ca", "linux", "security", "authentication", "rhel", "almalinux", "identity-management"]
 author: "DevOps Way"
+series: "FreeIPA"
 description: "Production-ready руководство по FreeIPA: установка, настройка, мониторинг."
 canonical: ""
 showToc: true
