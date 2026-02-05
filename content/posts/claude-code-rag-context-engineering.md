@@ -869,30 +869,17 @@ ollama pull qwen2.5:14b-instruct
 
 **Наш стек:**
 
-{{< mermaid >}}
-flowchart LR
-    subgraph Stack["Context Engineering Stack"]
-        direction LR
-        O["🦙 Ollama<br/>:11434<br/>qwen3:30b"]
-        L["🔀 LiteLLM<br/>:4000<br/>API proxy"]
-        Q["🔍 Qdrant<br/>:6333<br/>16,548 chunks"]
-        M["🔧 MCP<br/>:4002<br/>search_knowledge"]
+| Компонент | Порт | Роль |
+|-----------|------|------|
+| 🦙 **Ollama** | :11434 | LLM qwen3:30b |
+| 🔀 **LiteLLM** | :4000 | API proxy |
+| 🔍 **Qdrant** | :6333 | 16,548 chunks |
+| 🔧 **MCP** | :4002 | search_knowledge |
 
-        L --> O
-        M --> Q
-        M --> O
-    end
-
-    F["Context = System + RAG + Tools + History<br/>Response = f(Context)"]
-
-    Stack --> F
-
-    style O fill:#fff3e0
-    style L fill:#fce4ec
-    style Q fill:#e8f5e9
-    style M fill:#e3f2fd
-    style F fill:#f5f5f5
-{{< /mermaid >}}
+```
+Context = System + RAG + Tools + History
+Response = f(Context) — не f(Prompt)
+```
 
 ---
 
