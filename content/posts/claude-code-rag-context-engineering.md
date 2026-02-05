@@ -877,8 +877,8 @@ ollama pull qwen2.5:14b-instruct
 | 🔧 **MCP** | :4002 | search_knowledge |
 
 ```
-Context = System + RAG + Tools + History
-Response = f(Context) — не f(Prompt)
+Context  = System + RAG + Tools + History
+Response = f(Context), а не f(Prompt)
 ```
 
 ---
