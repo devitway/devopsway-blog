@@ -326,7 +326,7 @@ MAX_EMBED_CHARS = 8000 # Лимит embedding модели
 VECTOR_SIZE = 1024     # mxbai-embed-large
 
 # Индексируем только нужные директории
-ALLOWED_DIRS = ["weeks", "bookstack", "application"]
+ALLOWED_DIRS = ["docs", "guides", "tutorials"]
 ```
 
 **Почему эти значения:**
@@ -402,7 +402,7 @@ COLLECTION = "knowledge_base"
 CHUNK_SIZE = 800
 CHUNK_OVERLAP = 150
 MAX_EMBED_CHARS = 8000
-ALLOWED_DIRS = ["weeks", "bookstack", "application"]
+ALLOWED_DIRS = ["docs", "guides", "tutorials"]
 
 
 def get_embedding(text: str) -> list[float]:
