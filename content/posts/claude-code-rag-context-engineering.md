@@ -122,41 +122,20 @@ graph TB
 ### Анатомия контекста в нашей системе
 
 {{< mermaid >}}
-flowchart TB
-    subgraph CW["CONTEXT WINDOW ~16K tokens"]
-        direction TB
+flowchart TD
+    S1["1️⃣ SYSTEM PROMPT ~500 tokens<br/>You are DevOps mentor. ALWAYS use tools first.<br/>→ Определяет ПОВЕДЕНИЕ"]
+    S2["2️⃣ RAG RESULTS ~2000 tokens<br/>search_knowledge → nginx-guide.md:45-89<br/>→ Определяет ЗНАНИЯ"]
+    S3["3️⃣ TOOL RESULTS ~1000 tokens<br/>Read nginx.conf, Bash: nginx -t<br/>→ Определяет ФАКТЫ"]
+    S4["4️⃣ HISTORY ~2000 tokens<br/>User: nginx не запускается<br/>→ Определяет КОНТЕКСТ"]
+    S5["5️⃣ LLM RESPONSE<br/>Вижу в nginx.conf:45 ошибка...<br/>Согласно nginx-guide.md..."]
 
-        subgraph S1["1. SYSTEM PROMPT ~500 tokens"]
-            SP["You are DevOps mentor.<br/>ALWAYS use tools first.<br/>→ Определяет ПОВЕДЕНИЕ"]
-        end
+    S1 --> S2 --> S3 --> S4 --> S5
 
-        subgraph S2["2. RAG RESULTS ~2000 tokens"]
-            RAG["search_knowledge('nginx')<br/>nginx-guide.md:45-89 (0.92)<br/>→ Определяет ЗНАНИЯ"]
-        end
-
-        subgraph S3["3. TOOL RESULTS ~1000 tokens"]
-            TR["Read /etc/nginx/nginx.conf<br/>Bash: nginx -t<br/>→ Определяет ФАКТЫ"]
-        end
-
-        subgraph S4["4. HISTORY ~2000 tokens"]
-            H["User: nginx не запускается<br/>Assistant: Давай посмотрим...<br/>→ Определяет КОНТЕКСТ"]
-        end
-
-        subgraph S5["5. LLM RESPONSE"]
-            R["Вижу в nginx.conf:45 ошибка.<br/>Согласно nginx-guide.md..."]
-        end
-
-        S1 --> S5
-        S2 --> S5
-        S3 --> S5
-        S4 --> S5
-    end
-
-    style S1 fill:#e3f2fd
-    style S2 fill:#e8f5e9
-    style S3 fill:#fff3e0
-    style S4 fill:#fce4ec
-    style S5 fill:#f3e5f5
+    style S1 fill:#e3f2fd,stroke:#1976d2
+    style S2 fill:#e8f5e9,stroke:#388e3c
+    style S3 fill:#fff3e0,stroke:#f57c00
+    style S4 fill:#fce4ec,stroke:#c2185b
+    style S5 fill:#f3e5f5,stroke:#7b1fa2
 {{< /mermaid >}}
 
 ### Где мы инженерим контекст
