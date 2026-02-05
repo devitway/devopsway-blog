@@ -4,12 +4,12 @@ date: 2025-06-18T10:00:00+03:00
 lastmod: 2025-06-18T10:00:00+03:00
 draft: false
 weight: 8
-categories: ["DevOps Основы"]
+categories: ["DevOps основы"]
 tags: ["git", "git-lfs", "large-files", "repository-optimization", "bandwidth", "performance", "binary-files", "storage", "team-workflow", "automation", "monitoring", "enterprise"]
 author: "DevOps Way"
 description: "Практическое решение проблемы раздутых репозиториев: размер -91% (2.1GB → 180MB), время клонирования -88% (25мин → 3мин), экономия ₽6,600/месяц через Git LFS"
 canonical: ""
-series: "Git Mastery Series"
+series: "Git Mastery"
 showToc: true
 TocOpen: false
 hidemeta: false

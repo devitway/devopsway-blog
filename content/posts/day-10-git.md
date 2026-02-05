@@ -4,12 +4,12 @@ date: 2025-06-23T10:00:00+03:00
 lastmod: 2025-06-23T10:00:00+03:00
 draft: false
 weight: 10
-categories: ["DevOps Основы"]
+categories: ["DevOps основы"]
 tags: ["git", "aliases", "автоматизация", "продуктивность", "typing-overhead", "команды", "рабочий-процесс", "senior-developer", "метрики", "keystrokes"]
 author: "DevOps Way"
 description: "Финальный урок серии: автоматизация 80% Git операций через smart aliases. Senior developer tracking: 2,847 keystrokes/день. Результат: -69% keystrokes, -70% typing time, -83% command errors."
 canonical: ""
-series: "Git Mastery Series"
+series: "Git Mastery"
 showToc: true
 TocOpen: false
 hidemeta: false

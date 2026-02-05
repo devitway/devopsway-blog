@@ -4,9 +4,10 @@ date: 2025-01-15T10:00:00+03:00
 lastmod: 2025-01-15T10:00:00+03:00
 draft: false
 weight: 1
-categories: ["DevOps Essentials"]
+categories: ["DevOps основы"]
 tags: ["git", "ssh", "github", "devops", "automation", "security", "beginner"]
 author: "DevOps Way"
+series: "Git Mastery"
 description: "Полный практический гайд по настройке SSH для GitHub: генерация ключей Ed25519/RSA, настройка ssh-agent, работа с несколькими аккаунтами, backup и безопасность ключей"
 canonical: ""
 showToc: true

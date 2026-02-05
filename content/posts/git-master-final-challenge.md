@@ -7,7 +7,7 @@ categories: ["Git Mastery Series"]
 author: "DevOpsWay Team"
 toc: true
 draft: false
-series: ["Git Mastery"]
+series: "Git Mastery"
 weight: 11
 featured: true
 ---

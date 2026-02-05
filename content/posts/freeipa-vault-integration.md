@@ -4,9 +4,10 @@ date: 2025-12-15T10:00:00+03:00
 lastmod: 2025-12-15T10:00:00+03:00
 draft: false
 weight: 4
-categories: ["Security", "DevOps Essentials", "Secrets Management"]
+categories: ["Security", "DevOps основы", "Secrets Management"]
 tags: ["vault", "hashicorp", "freeipa", "ldap", "secrets", "security", "devops", "kubernetes"]
 author: "DevOps Way"
+series: "FreeIPA"
 description: "Полное руководство по интеграции Hashicorp Vault с FreeIPA для централизованного управления секретами. LDAP аутентификация, динамические учетные данные, PKI интеграция."
 canonical: ""
 showToc: true

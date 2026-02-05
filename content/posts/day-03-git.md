@@ -4,12 +4,12 @@ date: 2025-06-06T10:00:00+03:00
 lastmod: 2025-06-06T10:00:00+03:00
 draft: false
 weight: 3
-categories: ["DevOps Essentials"]
+categories: ["DevOps основы"]
 tags: ["git", "reset", "recovery", "emergency", "data-loss", "fintech", "safety", "reflog", "fsck", "hooks", "automation", "devops", "best-practices"]
 author: "DevOps Way"
 description: "Emergency recovery после катастрофических ошибок: от 10 часов восстановления к 5 минутам через reflog, fsck и автоматизированные safety системы"
 canonical: ""
-series: "Git Mastery Series"
+series: "Git Mastery"
 showToc: true
 TocOpen: false
 hidemeta: false

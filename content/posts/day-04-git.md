@@ -4,12 +4,12 @@ date: 2025-06-09T10:00:00+03:00
 lastmod: 2025-06-09T10:00:00+03:00
 draft: false
 weight: 4
-categories: ["DevOps Основы"]
+categories: ["DevOps основы"]
 tags: ["git", "gitflow", "github-flow", "workflow", "ветвление", "dora-метрики", "развертывание", "feature-flags", "ci-cd", "автоматизация", "продуктивность", "enterprise", "devops", "лучшие-практики"]
 author: "DevOps Way"
 description: "Трансформация от Git Flow бюрократии к GitHub Flow эффективности: deployment frequency +1600%, lead time -86%, MTTR -98% через feature flags и automation"
 canonical: ""
-series: "Git Mastery Series"
+series: "Git Mastery"
 showToc: true
 TocOpen: false
 hidemeta: false

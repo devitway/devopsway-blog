@@ -4,12 +4,12 @@ date: 2025-06-15T10:00:00+03:00
 lastmod: 2025-06-15T10:00:00+03:00
 draft: false
 weight: 7
-categories: ["DevOps Essentials"]
+categories: ["DevOps основы"]
 tags: ["git", "submodules", "dependency-management", "monorepo", "package-manager", "subtrees", "migration", "productivity", "automation", "enterprise", "workflow", "devops", "best-practices"]
 author: "DevOps Way"
 description: "Миграция от submodules nightmare к современному управлению зависимостями: время настройки -93% (45min → 3min), Developer NPS +125% через менеджеры пакетов и автоматизированное разрешение зависимостей"
 canonical: ""
-series: "Git Mastery Series"
+series: "Git Mastery"
 showToc: true
 TocOpen: false
 hidemeta: false

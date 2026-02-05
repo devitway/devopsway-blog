@@ -4,9 +4,10 @@ date: 2025-06-04T10:00:00+03:00
 lastmod: 2025-06-04T10:00:00+03:00
 draft: false
 weight: 3
-categories: ["DevOps Essentials"]
+categories: ["DevOps основы"]
 tags: ["git", "merge", "rebase", "workflow", "dora-metrics", "team", "automation", "devops", "best-practices"]
 author: "DevOps Way"
+series: "Git Mastery"
 description: "Превратите merge конфликты из трехчасового кошмара в эффективный rebase workflow. Практический гайд по trunk-based development, feature flags и достижению DORA Elite метрик."
 canonical: ""
 showToc: true
