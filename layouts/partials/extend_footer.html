@@ -1,65 +1,65 @@
-{{/* Дополнительные улучшения для темы */}}
+{{/* CTA - подписка на Telegram (только на страницах постов) */}}
+{{ if and .IsPage (eq .Section "posts") }}
+<div class="post-cta" style="margin:2rem 0;padding:1.5rem;background:var(--code-bg);border:1px solid var(--border);border-radius:8px;text-align:center;">
+  <p style="margin:0 0 1rem;font-size:1.1rem;"><strong>Понравился материал?</strong></p>
+  <p style="margin:0 0 1rem;color:var(--secondary);">Подписывайтесь на Telegram-канал — новые гайды, обновления и DevOps практики</p>
+  <a href="https://t.me/devitway" target="_blank" rel="noopener"
+     style="display:inline-block;padding:0.75rem 1.5rem;background:#2563eb;color:#fff;text-decoration:none;border-radius:6px;font-weight:500;">
+    Подписаться на канал
+  </a>
+</div>
+{{ end }}
 
 <script>
-// Улучшения для пользовательского опыта
+// Плавная прокрутка для якорных ссылок
 document.addEventListener('DOMContentLoaded', function() {
-  
-  // Плавная прокрутка для якорных ссылок
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
+  document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+    anchor.addEventListener('click', function(e) {
       e.preventDefault();
-      const target = document.querySelector(this.getAttribute('href'));
+      var target = document.querySelector(this.getAttribute('href'));
       if (target) {
-        target.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     });
   });
-  
+
   // Lazy loading для изображений
   if ('IntersectionObserver' in window) {
-    const imageObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+    var imageObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
         if (entry.isIntersecting) {
-          const img = entry.target;
-          img.src = img.dataset.src;
-          img.classList.remove('lazy');
+          var img = entry.target;
+          if (img.dataset.src) {
+            img.src = img.dataset.src;
+            img.classList.remove('lazy');
+          }
           imageObserver.unobserve(img);
         }
       });
     });
-    
-    document.querySelectorAll('img[data-src]').forEach(img => {
+    document.querySelectorAll('img[data-src]').forEach(function(img) {
       imageObserver.observe(img);
     });
   }
-  
-  // Улучшенная обработка кода
-  document.querySelectorAll('pre code').forEach((block) => {
-    // Добавляем атрибут языка к родительскому элементу
-    const language = block.className.match(/language-(\w+)/);
-    if (language) {
-      const highlight = block.closest('.highlight');
-      if (highlight) {
-        highlight.setAttribute('data-lang', language[1]);
-      }
+
+  // Атрибут языка для блоков кода
+  document.querySelectorAll('pre code').forEach(function(block) {
+    var match = block.className.match(/language-(\w+)/);
+    if (match) {
+      var highlight = block.closest('.highlight');
+      if (highlight) highlight.setAttribute('data-lang', match[1]);
     }
   });
-  
-  console.log('🚀 DevOps Way Blog - Все улучшения загружены!');
 });
 
-// Улучшенная система аналитики (если включена)
+// Аналитика времени чтения и скролла
 if (typeof gtag !== 'undefined') {
-  // Отслеживание времени чтения
-  let startTime = Date.now();
-  let maxScroll = 0;
-  
-  window.addEventListener('beforeunload', () => {
-    const timeSpent = Math.round((Date.now() - startTime) / 1000);
-    if (timeSpent > 10) { // Отправляем только если провел больше 10 секунд
+  var startTime = Date.now();
+  var maxScroll = 0;
+
+  window.addEventListener('beforeunload', function() {
+    var timeSpent = Math.round((Date.now() - startTime) / 1000);
+    if (timeSpent > 10) {
       gtag('event', 'page_view_time', {
         event_category: 'engagement',
         event_label: window.location.pathname,
@@ -67,16 +67,15 @@ if (typeof gtag !== 'undefined') {
       });
     }
   });
-  
-  // Отслеживание прокрутки
-  window.addEventListener('scroll', () => {
-    const scrollPercent = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+
+  window.addEventListener('scroll', function() {
+    var scrollPercent = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
     if (scrollPercent > maxScroll) {
       maxScroll = scrollPercent;
-      if (maxScroll % 25 === 0 && maxScroll > 0) { // Каждые 25%
+      if (maxScroll % 25 === 0 && maxScroll > 0) {
         gtag('event', 'scroll_depth', {
           event_category: 'engagement',
-          event_label: `${maxScroll}%`,
+          event_label: maxScroll + '%',
           value: maxScroll
         });
       }
@@ -85,13 +84,9 @@ if (typeof gtag !== 'undefined') {
 }
 </script>
 
-{{/* Service Worker для PWA (опционально) */}}
+{{/* Service Worker для PWA */}}
 <script>
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js').then(function(registration) {
-    console.log('SW registered: ', registration);
-  }).catch(function(registrationError) {
-    console.log('SW registration failed: ', registrationError);
-  });
+  navigator.serviceWorker.register('/sw.js').catch(function() {});
 }
 </script>

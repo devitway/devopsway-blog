@@ -1,0 +1,29 @@
+{{ define "main" }}
+<article class="post-single">
+  <header class="post-header">
+    <h1 class="post-title">404 — Страница не найдена</h1>
+  </header>
+  <div class="post-content">
+    <p>Запрашиваемая страница не существует или была перемещена.</p>
+
+    <h2>Что можно сделать:</h2>
+    <ul>
+      <li><a href="/">Перейти на главную</a></li>
+      <li><a href="/posts/">Посмотреть все посты</a></li>
+      <li><a href="/search/">Воспользоваться поиском</a></li>
+    </ul>
+
+    <h2>Популярные материалы:</h2>
+    <ul>
+      {{ range first 5 (where .Site.RegularPages "Section" "posts") }}
+      <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
+      {{ end }}
+    </ul>
+
+    <p style="margin-top: 2rem;">
+      <a href="https://t.me/devitway" target="_blank" rel="noopener">Telegram канал</a> —
+      подписывайтесь на обновления
+    </p>
+  </div>
+</article>
+{{ end }}
