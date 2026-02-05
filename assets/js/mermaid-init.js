@@ -4,7 +4,7 @@
 
   function getCurrentTheme() {
     return document.documentElement.getAttribute('data-theme') === 'dark' ||
-           document.body.classList.contains('dark') ? 'dark' : 'base';
+           document.body.classList.contains('dark') ? 'dark' : 'default';
   }
 
   function initMermaid() {
