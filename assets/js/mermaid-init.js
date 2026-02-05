@@ -33,7 +33,7 @@
     document.body.appendChild(overlay);
 
     var style = document.createElement('style');
-    style.textContent = '#mermaid-lightbox{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.9);z-index:9999;display:none;align-items:center;justify-content:center;cursor:zoom-out}#mermaid-lightbox.active{display:flex}.mermaid-lightbox-content{max-width:95vw;max-height:90vh;overflow:auto;background:var(--code-bg,#1e1e1e);padding:2rem;border-radius:12px}.mermaid-lightbox-content svg{max-width:none!important;width:auto;height:auto;min-width:60vw}.mermaid-lightbox-close{position:absolute;top:20px;right:30px;font-size:40px;color:#fff;cursor:pointer}.mermaid-lightbox-hint{position:absolute;bottom:20px;color:rgba(255,255,255,.5);font-size:14px}.mermaid{cursor:zoom-in}';
+    style.textContent = '#mermaid-lightbox{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.85);z-index:9999;display:none;align-items:center;justify-content:center;cursor:zoom-out}#mermaid-lightbox.active{display:flex}.mermaid-lightbox-content{max-width:95vw;max-height:90vh;overflow:auto;background:#1d1e20;padding:2rem;border-radius:12px}.mermaid-lightbox-content svg{max-width:none!important;width:auto;height:auto}.mermaid-lightbox-close{position:absolute;top:20px;right:30px;font-size:40px;color:#fff;cursor:pointer}.mermaid-lightbox-hint{position:absolute;bottom:20px;color:rgba(255,255,255,.5);font-size:14px}.mermaid{cursor:zoom-in}#mermaid-lightbox:not(.dark) .mermaid-lightbox-content{background:#f8f8f8}#mermaid-lightbox:not(.dark) .mermaid-lightbox-close{color:#333}';
     document.head.appendChild(style);
 
     overlay.addEventListener('click', closeLightbox);
@@ -45,7 +45,18 @@
   function openLightbox(svg) {
     var lightbox = document.getElementById('mermaid-lightbox');
     var content = lightbox.querySelector('.mermaid-lightbox-content');
-    content.innerHTML = svg.outerHTML.replace(/max-width:\s*100%/g, 'max-width:none');
+    // Клонируем SVG чтобы сохранить все стили
+    var clone = svg.cloneNode(true);
+    clone.style.maxWidth = 'none';
+    clone.style.minWidth = '60vw';
+    content.innerHTML = '';
+    content.appendChild(clone);
+    // Применяем тему к lightbox
+    if (document.body.classList.contains('dark')) {
+      lightbox.classList.add('dark');
+    } else {
+      lightbox.classList.remove('dark');
+    }
     lightbox.classList.add('active');
     document.body.style.overflow = 'hidden';
   }
