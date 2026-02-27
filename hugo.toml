@@ -301,11 +301,9 @@ simple = false
 writeStats = true
 
 [caches]
-[caches.getjson]
+[caches.getresource]
 maxAge = "10m"
 
-[caches.getcsv]
-maxAge = "10m"
 
 [caches.images]
 maxAge = "1h"
