@@ -111,3 +111,42 @@ body:not(.dark) .mermaid .node rect,body:not(.dark) .mermaid .node circle,body:n
 <!-- Fallback для старых браузеров -->
 <script>if(!window.CSS||!CSS.supports('color','var(--test)'))document.documentElement.classList.add('no-css-variables');</script>
 <style>.no-css-variables{background:#fff;color:#1d1d1d}.no-css-variables.dark{background:#1d1d1d;color:#fff}</style>
+
+
+<!-- =============================================================================
+     YANDEX.METRIKA (107227061)
+     ============================================================================= -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=107227061', 'ym');
+    ym(107227061, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/107227061" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+
+<!-- =============================================================================
+     COOKIE BANNER (152-FZ)
+     ============================================================================= -->
+<style>
+.cookie-banner{position:fixed;bottom:0;left:0;right:0;background:var(--entry);border-top:1px solid var(--border);padding:1rem 1.5rem;z-index:9999;display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap;font-size:0.85rem;color:var(--primary);box-shadow:0 -2px 10px rgba(0,0,0,0.1)}
+.cookie-banner a{color:var(--primary);text-decoration:underline}
+.cookie-banner button{padding:0.5rem 1.25rem;background:#2563eb;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:0.85rem;font-weight:500;white-space:nowrap}
+.cookie-banner button:hover{background:#1d4ed8}
+.cookie-banner.hidden{display:none}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  if(localStorage.getItem('cookie_consent'))return;
+  var b=document.createElement('div');
+  b.className='cookie-banner';
+  b.innerHTML='<span>Мы используем файлы cookie и Яндекс.Метрику для анализа посещаемости. Продолжая использование, вы соглашаетесь с <a href="/privacy/">политикой конфиденциальности</a>.</span><button id="cookie-accept">Принять</button>';
+  document.body.appendChild(b);
+  document.getElementById('cookie-accept').addEventListener('click',function(){
+    localStorage.setItem('cookie_consent','accepted');
+    b.classList.add('hidden');
+  });
+});
+</script>
