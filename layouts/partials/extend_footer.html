@@ -52,36 +52,6 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-// Аналитика времени чтения и скролла
-if (typeof gtag !== 'undefined') {
-  var startTime = Date.now();
-  var maxScroll = 0;
-
-  window.addEventListener('beforeunload', function() {
-    var timeSpent = Math.round((Date.now() - startTime) / 1000);
-    if (timeSpent > 10) {
-      gtag('event', 'page_view_time', {
-        event_category: 'engagement',
-        event_label: window.location.pathname,
-        value: timeSpent
-      });
-    }
-  });
-
-  window.addEventListener('scroll', function() {
-    var scrollPercent = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
-    if (scrollPercent > maxScroll) {
-      maxScroll = scrollPercent;
-      if (maxScroll % 25 === 0 && maxScroll > 0) {
-        gtag('event', 'scroll_depth', {
-          event_category: 'engagement',
-          event_label: maxScroll + '%',
-          value: maxScroll
-        });
-      }
-    }
-  });
-}
 </script>
 
 {{/* Service Worker для PWA */}}
@@ -90,3 +60,17 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/sw.js').catch(function() {});
 }
 </script>
+
+{{/* Юридическая информация */}}
+<footer class="legal-footer" style="margin-top:3rem;padding:1.5rem 0;border-top:1px solid var(--border);text-align:center;font-size:0.75rem;color:var(--secondary);line-height:1.6;">
+  <div style="max-width:800px;margin:0 auto;padding:0 1rem;">
+    <p style="margin:0 0 0.25rem;">ООО «ТАИАРС» | ИНН 7728854272 | ОГРН 1137746796813</p>
+    <p style="margin:0 0 0.25rem;">117198, г. Москва, ул. Саморы Машела, д. 8, к. 1</p>
+    <p style="margin:0;">
+      <a href="/privacy/" style="color:var(--secondary);text-decoration:underline;">Политика конфиденциальности</a>
+      &nbsp;|&nbsp;
+      <a href="mailto:DevITWay@gmail.com" style="color:var(--secondary);text-decoration:underline;">DevITWay@gmail.com</a>
+    </p>
+    <p style="margin:0.5rem 0 0;font-size:0.7rem;color:var(--secondary);opacity:0.7;">© {{ now.Year }} DevOps Way. Все права защищены.</p>
+  </div>
+</footer>

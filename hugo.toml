@@ -9,7 +9,7 @@ title = "DevOps Way - Практические гайды"
 theme = "PaperMod"
 
 # Google Analytics
-googleAnalytics = "G-B9KCE8TFRB"
+# Google Analytics removed — using Yandex.Metrika (107227061)
 
 # SEO и производительность
 enableRobotsTXT = true
@@ -276,7 +276,7 @@ weight = 50
 
 [services]
 [services.googleAnalytics]
-ID = "G-B9KCE8TFRB"
+# Removed — migrated to Yandex.Metrika
 
 # =============================================================================
 # PRIVACY НАСТРОЙКИ (ИСПРАВЛЕНО)
@@ -284,9 +284,7 @@ ID = "G-B9KCE8TFRB"
 
 [privacy]
 [privacy.googleAnalytics]
-disable = false
-respectDoNotTrack = true
-anonymizeIP = true
+disable = true
 
 # ИСПРАВЛЕНИЕ: Обновлены настройки Twitter/X для Hugo v0.141.0+
 [privacy.x]
