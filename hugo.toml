@@ -47,11 +47,11 @@ keepQuotes = false
 keepWhitespace = false
 
 [minify.tdewolff.css]
-precision = 1
+precision = 0
 keepCSS2 = true
 
 [minify.tdewolff.js]
-precision = 1
+precision = 0
 keepVarNames = false
 
 # =============================================================================
