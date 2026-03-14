@@ -895,3 +895,8 @@ Response = f(Context), а не f(Prompt)
 ---
 
 *DevOps Way — Context Engineering на практике*
+
+---
+
+📱 Telegram: [@DevITWay](https://t.me/DevITWay)  
+🌐 Сайт: [devopsway.ru](https://devopsway.ru/)

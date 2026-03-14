@@ -221,3 +221,8 @@ Qwen Code — не замена Claude Code. У Claude лучше качеств
 Главный минус: грабли на каждом шагу. Модели-ловушки без tool calling, баг с thinking в Ollama, неработающие бесплатные провайдеры. Всё решаемо, но будьте готовы потратить вечер на настройку.
 
 Рабочий минимум: `npm install -g @qwen-code/qwen-code@latest && qwen-code` → `/auth` → работаете.
+
+---
+
+📱 Telegram: [@DevITWay](https://t.me/DevITWay)  
+🌐 Сайт: [devopsway.ru](https://devopsway.ru/)
