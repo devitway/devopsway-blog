@@ -32,3 +32,7 @@ toc: true
 
 <link rel="stylesheet" href="/css/systems-thinking-calculator.css">
 <script src="/js/systems-thinking-calculator.js"></script>
+---
+
+📱 Telegram: [@DevITWay](https://t.me/DevITWay)  
+🌐 Сайт: [devopsway.ru](https://devopsway.ru/)
