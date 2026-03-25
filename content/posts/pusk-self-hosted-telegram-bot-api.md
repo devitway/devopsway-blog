@@ -5,7 +5,7 @@ tags: ["devops", "golang", "telegram", "self-hosted", "artais"]
 description: "РКН замедляет мессенджер, мониторинг 50+ компаний под угрозой. Рассказываю, как за неделю собрать автономный бот-шлюз на Go, когда в штате нет лишних девопсов."
 ---
 
-> «У нас было два бинарника на 11 МБ, 75 SQLite-файлов, 5 петабайт ИИ-данных в НОРЕ и целое множество энкодеров всех сортов и расцветок...»
+> «У нас было два бинарника на 22 МБ, 75 SQLite-файлов, 5 петабайт ИИ-данных в НОРЕ и целое множество энкодеров всех сортов и расцветок...»
 
 Мы оказались где-то посреди цифровой пустыни между Лас-Вегасом и Бейкерсфилдом, когда до нас начало доходить: Telegram — всё. С 10 февраля медиа тормозят, а 1 апреля маячит полная блокировка.
 
@@ -24,7 +24,7 @@ description: "РКН замедляет мессенджер, мониторин
 #### Почему это сработало:
 * **Миграция в одну строку:** В коде бота меняется только `base_url`. Всё. aiogram, telegraf и прочие думают, что они в ТГ.
 * **Webhook Relay:** Моя любимая фича. Бот подключается через WebSocket. **ngrok больше не нужен** — алерты долетают до бота за NAT мгновенно по исходящему соединению.
-* **Железная стабильность:** 28 E2E тестов и аудит безопасности. 11 МБ бинарника, который «кушает» 3 МБ RAM при старте.
+* **Железная стабильность:** 42 E2E + 98 unit-тестов и аудит безопасности. 22 МБ бинарника, который «кушает» 3 МБ RAM при старте.
 * **Multi-tenant:** Каждая организация живет в своей изолированной SQLite базе. Бэкап? Просто `cp pusk.db`.
 
 ### Как выглядит миграция
@@ -39,10 +39,10 @@ bot = Bot(token="my-token", base_url="https://pusk.company.ru")
 
 Один diff. aiogram, python-telegram-bot, telegraf (Node.js), curl — всё работает. JSON-формат `sendMessage`, `InlineKeyboardMarkup`, `CallbackQuery` — идентичен Telegram. Бот даже не узнает, что переехал.
 
-### Архитектура: что внутри 11 МБ
+### Архитектура: что внутри 22 МБ
 
 ```
-pusk (11 MB binary)
+pusk (22 MB binary)
 ├── Bot API    /bot/{token}/{method}    ← Telegram-совместимый
 ├── Client API /api/*                   ← PWA backend
 ├── WebSocket  /api/ws                  ← real-time push
@@ -52,7 +52,7 @@ pusk (11 MB binary)
 └── SQLite     data/orgs/{slug}/pusk.db ← per-tenant
 ```
 
-2900 строк Go. 3 зависимости за пределами stdlib: gorilla/websocket, modernc.org/sqlite (pure Go, без CGO), webpush-go. БД — один файл. Бинарник работает на любом Linux без libc.
+7900 строк Go. 6 прямых зависимостей: gorilla/websocket, modernc.org/sqlite (pure Go, без CGO), webpush-go, golang-jwt, prometheus, x/crypto. БД — один файл. Бинарник работает на любом Linux без libc.
 
 ### Webhook Relay: почему ngrok больше не нужен
 
@@ -119,7 +119,7 @@ Security audit прошёл параллельно с разработкой. 27
 - Файлы требуют JWT, WebSocket — origin-validation
 - Graceful shutdown: SIGTERM → 5s grace → SQLite flush
 
-28 E2E Playwright-тестов: auth, IDOR, rate limit, multi-tenant isolation, Bot API.
+42 E2E Playwright + 98 unit-тестов: auth, IDOR, rate limit, multi-tenant isolation, Bot API.
 
 ### CI/CD: те же рельсы, что у NORA
 
@@ -149,7 +149,7 @@ Self-hosted runner, те же пайплайны:
 
 | | Pusk | Mattermost | Rocket.Chat | Matrix |
 |---|---|---|---|---|
-| Размер | 11 MB | ~800 MB | ~400 MB | ~200 MB |
+| Размер | 22 MB | ~800 MB | ~400 MB | ~200 MB |
 | RAM | 3-27 MB | 4+ GB | 2+ GB | 1-4 GB |
 | БД | SQLite | PostgreSQL | MongoDB (replica!) | PostgreSQL |
 | Настройка | `./pusk` | docker-compose | MongoDB + конфиг | homeserver.yaml |
@@ -163,7 +163,6 @@ BSL 1.1, как у Sentry и CockroachDB. Self-hosted для своей кома
 
 - **Write queue** — буферизация записей для burst-сценариев
 - **PostgreSQL** — когда 500+ org
-- **Prometheus /metrics** — мониторинг самого Pusk
 - **RBAC** — роли внутри организации
 - **Audit log** — для compliance
 
