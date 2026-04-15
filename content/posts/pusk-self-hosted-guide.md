@@ -78,6 +78,7 @@ services:
       - ./data:/app/data
     environment:
       - PUSK_ADDR=:8443
+      - PUSK_ADMIN_TOKEN=change-me-to-random-string
     restart: unless-stopped
 EOF
 ```
@@ -86,7 +87,10 @@ EOF
 - `image` — берём готовый образ Pusk из GitHub Container Registry.
 - `ports` — пробрасываем порт 8443 наружу. По этому порту будет веб-интерфейс.
 - `volumes` — папка `data` на хосте монтируется внутрь контейнера. Данные живут на диске, а не внутри контейнера.
+- `PUSK_ADMIN_TOKEN` — секретный токен для управления инстансом. **Замени `change-me-to-random-string` на что-то своё.** Без него любой сможет создавать организации.
 - `restart: unless-stopped` — если сервер перезагрузится, Pusk запустится автоматически.
+
+> **Безопасность по умолчанию:** Pusk разрешает создать только одну организацию. Этого хватает для 99% случаев. Если нужно больше — добавь `PUSK_MAX_ORGS=5` (или сколько нужно). С `PUSK_ADMIN_TOKEN` можно создавать организации через API без лимита.
 
 ## Шаг 4. Разбираемся с правами на папку
 
@@ -144,7 +148,7 @@ http://IP-АДРЕС-СЕРВЕРА:8443
 - **Organization ID** — латиницей, без пробелов (например, `myteam`)
 - **Name** — название (например, `My Team`)
 - **Admin username** — логин админа
-- **Password** — пароль
+- **Password** — пароль (минимум 8 символов)
 
 ![Форма создания организации](/images/pusk-guide/pusk-create-org.png)
 
@@ -224,14 +228,24 @@ pusk.example.com {
 Весь процесс — 6 команд:
 
 ```bash
-sudo apt install -y docker.io docker-compose-v2   # Docker
-sudo systemctl enable --now docker                  # Включить
-mkdir -p ~/pusk/data && cd ~/pusk                   # Папка
-cat > docker-compose.yml << 'EOF'                   # Конфиг
-# ... содержимое выше
+sudo apt install -y docker.io docker-compose-v2     # Docker
+sudo systemctl enable --now docker                    # Включить
+mkdir -p ~/pusk/data && cd ~/pusk                     # Папка
+cat > docker-compose.yml << 'EOF'                     # Конфиг
+services:
+  pusk:
+    image: ghcr.io/getpusk/pusk:latest
+    ports:
+      - "8443:8443"
+    volumes:
+      - ./data:/app/data
+    environment:
+      - PUSK_ADDR=:8443
+      - PUSK_ADMIN_TOKEN=change-me-to-random-string
+    restart: unless-stopped
 EOF
-sudo chown -R 100:101 ~/pusk/data                  # Права
-docker compose up -d                                 # Запуск
+sudo chown -R 100:101 ~/pusk/data                    # Права
+docker compose up -d                                   # Запуск
 ```
 
 Один контейнер, один порт, один файл конфигурации. Данные на диске, бэкап — копирование папки. Обновление — `pull && up -d`.
