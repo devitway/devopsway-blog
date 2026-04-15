@@ -77,7 +77,6 @@ services:
     volumes:
       - ./data:/app/data
     environment:
-      - PUSK_ADDR=:8443
       - PUSK_ADMIN_TOKEN=change-me-to-random-string
     restart: unless-stopped
 EOF
@@ -87,7 +86,7 @@ EOF
 - `image` — берём готовый образ Pusk из GitHub Container Registry.
 - `ports` — пробрасываем порт 8443 наружу. По этому порту будет веб-интерфейс.
 - `volumes` — папка `data` на хосте монтируется внутрь контейнера. Данные живут на диске, а не внутри контейнера.
-- `PUSK_ADMIN_TOKEN` — секретный токен для управления инстансом. **Замени `change-me-to-random-string` на что-то своё.** Без него любой сможет создавать организации.
+- `PUSK_ADMIN_TOKEN` — секретный токен для управления инстансом. **Замени `change-me-to-random-string` на что-то своё.** Без него любой сможет создавать организации. В продакшене лучше вынести в `.env` файл рядом с `docker-compose.yml` — Docker Compose подхватит его автоматически.
 - `restart: unless-stopped` — если сервер перезагрузится, Pusk запустится автоматически.
 
 > **Безопасность по умолчанию:** Pusk разрешает создать только одну организацию. Этого хватает для 99% случаев. Если нужно больше — добавь `PUSK_MAX_ORGS=5` (или сколько нужно). С `PUSK_ADMIN_TOKEN` можно создавать организации через API без лимита.
@@ -240,7 +239,6 @@ services:
     volumes:
       - ./data:/app/data
     environment:
-      - PUSK_ADDR=:8443
       - PUSK_ADMIN_TOKEN=change-me-to-random-string
     restart: unless-stopped
 EOF
