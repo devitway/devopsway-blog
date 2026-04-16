@@ -2,7 +2,7 @@
 title: "День 6: bisect — Git находит сломавший коммит за вас"
 date: 2026-04-16T10:00:00+03:00
 lastmod: 2026-04-16T10:00:00+03:00
-draft: true
+draft: false
 weight: 6
 categories: ["DevOps основы"]
 tags: ["git", "bisect", "debugging", "regression", "ci"]
