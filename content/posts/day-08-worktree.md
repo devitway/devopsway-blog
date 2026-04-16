@@ -275,7 +275,7 @@ git wtr ../myrepo-hotfix-login   # убрать когда закончили
 
 ## Что дальше
 
-- **Challenge** → `docker run devitway/git-challenge`: там есть задача «разрулить параллельно hotfix и feature без потери правок» — worktree решает её в два шага.
+- **[Challenge](/posts/git-master-final-challenge/)** → сломанный репозиторий с 10 проблемами. Задачи P9 и P10 — параллельный hotfix + feature и prune осиротевших worktree-записей.
 - **Системно с нуля** → «Курс молодого бойца» DevIT Academy — git в рабочем потоке, не как набор команд.
 
 ---

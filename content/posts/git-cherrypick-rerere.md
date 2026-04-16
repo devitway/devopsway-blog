@@ -324,7 +324,7 @@ git rr-diff                             # посмотреть как именн
 ## Что дальше
 
 - **День 8** → worktree: работать одновременно в двух ветках без `git stash` и `git checkout`. Вы сможете держать hotfix-ветку открытой параллельно с feature-веткой, в разных каталогах, с общим `.git/`.
-- **Challenge** → `docker run devitway/git-challenge`: одна из 10 задач — перенести коммит с неверной ветки на правильную. cherry-pick там ждёт.
+- **[Challenge](/posts/git-master-final-challenge/)** → сломанный репозиторий с 10 проблемами. Задача P8 — cherry-pick с конфликтом + rerere запомнит решение.
 
 ---
 
