@@ -2,7 +2,7 @@
 title: "День 0: SSH — один ключ вместо пароля везде"
 date: 2026-04-16T12:00:00+03:00
 lastmod: 2026-04-16T12:00:00+03:00
-draft: true
+draft: false
 weight: 1
 categories: ["DevOps основы"]
 tags: ["git", "ssh", "github", "ed25519", "ssh-agent"]
