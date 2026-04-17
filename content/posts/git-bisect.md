@@ -3,7 +3,7 @@ title: "День 6: bisect — Git находит сломавший комми�
 date: 2026-04-16T10:00:00+03:00
 lastmod: 2026-04-16T10:00:00+03:00
 draft: false
-weight: 6
+weight: 7
 categories: ["DevOps основы"]
 tags: ["git", "bisect", "debugging", "regression", "ci"]
 author: "DevOps Way"
@@ -58,7 +58,7 @@ Git-история — это **DAG коммитов**. Каждый комми�
 ### Шаг 1. Собираем репо с регрессией
 
 ```bash
-mkdir -p demo-bisect && cd demo-bisect
+mkdir -p /tmp/demo-bisect && cd /tmp/demo-bisect
 git init -q
 
 # Пишем простой калькулятор процентов

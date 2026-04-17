@@ -3,7 +3,7 @@ title: "День 7: cherry-pick и rerere — перенос коммитов и
 date: 2026-04-16T10:00:00+03:00
 lastmod: 2026-04-16T10:00:00+03:00
 draft: false
-weight: 7
+weight: 8
 categories: ["DevOps основы"]
 tags: ["git", "cherry-pick", "rerere", "merge", "conflict"]
 author: "DevOps Way"

@@ -38,7 +38,7 @@ searchHidden: false
 
 ## Теория за 3 минуты
 
-Пароль от GitHub вы пишете глазами — и его украдёт любой shoulder-surfing, phishing, случайный скриншот. SSH-ключ этот механизм убирает.
+Пароль от GitHub вы вводите на клавиатуре у всех на виду — и его украдёт shoulder-surfing, phishing, случайный скриншот. SSH-ключ этот механизм убирает.
 
 **Как это работает:**
 
@@ -345,7 +345,7 @@ ssh -T git@github.com && ssh-add -l && ls -l ~/.ssh/config ~/.ssh/id_ed25519
 ## Что дальше
 
 - **День 1** → commits: три состояния (working / staging / committed), `git status` как компас, осознанный коммит вместо «git add .»
-- **Challenge** → `docker run devitway/git-challenge`: первая же задача использует SSH-ключ — проверите себя в бою
+- **[Challenge](/posts/git-master-final-challenge/)** → сломанный репозиторий с 10 проблемами. Первая же задача использует SSH-ключ — проверите себя в бою
 - **Системно с нуля** → «Курс молодого бойца» DevIT Academy — Linux + Git + Docker + K8s + CI/CD за 16 недель
 
 ---

@@ -311,7 +311,7 @@ git recover-staged      # вытащить всё из dangling blobs
 ## Что дальше
 
 - **День 3** → ветки и merge: когда fast-forward, когда `--no-ff`, как читать `git log --graph`
-- **Challenge** → `docker run devitway/git-challenge`: в одной из 10 задач ждёт dangling blob без подсказок — найдёте за 2 команды
+- **[Challenge](/posts/git-master-final-challenge/)** → сломанный репозиторий с 10 проблемами. Задача P2 — dangling blob без подсказок, найдёте за 2 команды
 - **Системно с нуля** → «Курс молодого бойца» DevIT Academy, Git разбираем в Неделе 2
 
 ---
