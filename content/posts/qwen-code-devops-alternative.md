@@ -98,7 +98,7 @@ Qwen Code выдал аккуратную ASCII-таблицу с дисками
 
 ### Железо и окружение
 
-Та же рабочая машина: Intel i3-8100, 16 GB RAM, **RTX 3090** (24 GB VRAM). Ollama крутится локально на `192.168.1.23:11434`. Всё, что описано ниже, воспроизводимо на любой карте с 16+ GB VRAM для 14b-моделей.
+Та же рабочая машина: Intel i3-8100, 16 GB RAM, **RTX 3090** (24 GB VRAM). Ollama крутится локально на `localhost:11434`. Всё, что описано ниже, воспроизводимо на любой карте с 16+ GB VRAM для 14b-моделей.
 
 ### settings.json — подключаем Qwen Code к Ollama
 
@@ -106,7 +106,7 @@ Qwen Code выдал аккуратную ASCII-таблицу с дисками
 {
   "provider": "openai",
   "openaiKey": "ollama",
-  "openaiBaseUrl": "http://192.168.1.23:11434/v1"
+  "openaiBaseUrl": "http://localhost:11434/v1"
 }
 ```
 
