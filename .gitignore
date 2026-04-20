@@ -1,176 +1,61 @@
 # ===== HUGO BUILD =====
-# Служебные файлы
-*.sh
-*.backup.*
-*-test.*
-theme_backups/
-scripts/
-
-# Sensitive конфиги
-.env*
-*.key
-*.pem
-
-# Временные файлы разработки
-*.txt
-!robots.txt
-# Сгенерированные файлы Hugo
+# Сгенерированные файлы
 public/
 resources/
 .hugo_build.lock
+hugo_stats.json
 
 # Кэш Hugo
 .cache/
 resources/_gen/
 
-# Hugo статистика
-hugo_stats.json
-
-# ===== РЕЗЕРВНЫЕ КОПИИ =====
-# Бэкапы конфигурации
+# ===== СЛУЖЕБНЫЕ ФАЙЛЫ =====
+*.sh
 *.backup.*
-hugo.toml.backup.*
+*.backup
+*.pre-*
+*-test.*
 theme_backups/
-
-# Скрипты утилиты (локальные)
 scripts/
 
-# ===== OBSIDIAN =====
-# Персональные настройки Obsidian
-.obsidian/workspace.json
-.obsidian/workspace
-.obsidian/workspace-mobile.json
-.obsidian/hotkeys.json
-.obsidian/appearance.json
-.obsidian/core-plugins.json
-.obsidian/community-plugins.json
-.obsidian/app.json
-
-# НЕ игнорируем важные настройки Obsidian
-# !.obsidian/graph.json
-# !.obsidian/templates.json
-
-# ===== NODE.JS =====
-# Зависимости (если есть)
-node_modules/
-npm-debug.log*
-package-lock.json
-
-# ===== ОПЕРАЦИОННАЯ СИСТЕМА =====
-# macOS
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-
-# Windows
-Thumbs.db
-ehthumbs.db
-Desktop.ini
-$RECYCLE.BIN/
-
-# Linux
-*~
-.fuse_hidden*
-.directory
-.Trash-*
-
-# ===== РЕДАКТОРЫ =====
-# VSCode
-.vscode/
-!.vscode/settings.json
-!.vscode/tasks.json
-
-# Vim
-*.swp
-*.swo
-
-# Emacs
-*~
-\#*\#
+# ===== SENSITIVE =====
+.env*
+*.key
+*.pem
 
 # ===== ВРЕМЕННЫЕ ФАЙЛЫ =====
 *.tmp
 *.temp
-.tmp/
-temp/
 *.log
 *.bak
-*.backup
-
-# ===== GIT =====
+*.txt
+!robots.txt
 *.orig
+*~
 
-# ===== РАЗРАБОТКА =====
-# Локальные конфиги
-.env
-.env.local
-.env.production
+# ===== NODE.JS =====
+node_modules/
+npm-debug.log*
+package-lock.json
 
-# Тестовые файлы
-test-*
-*-test.*
-
-# ===== HUGO СПЕЦИФИЧНОЕ =====
-# Черновики (если нужно)
-# content/drafts/
-# content/private/
-
-# Локальные ресурсы
-assets/jsconfig.json
-
-# ===== ДУБЛИРУЮЩИЕСЯ CSS ФАЙЛЫ =====
-# Если у вас есть основной custom.css, дублирующие можно игнорировать
-#assets/css/extended/dark-theme-enhanced.css
-
-# ===== КОММЕНТАРИИ =====
-# Раскомментируйте если нужно игнорировать:
-#
-# Все изображения:
-# *.png
-# *.jpg
-# *.jpeg
-# *.gif
-# *.svg
-#
-# Определенные папки контента:
-# content/private/
-# content/drafts/
-
-# =============================================================================
-# HUGO АВТОГЕНЕРИРУЕМЫЕ ФАЙЛЫ (НЕ КОММИТИТЬ)
-# =============================================================================
-
-# Папка со сгенерированным сайтом
-public/
-
-# Hugo ресурсы и кэш
-resources/
-.hugo_build.lock
-
-# Hugo статистика
-hugo_stats.json
-
-# =============================================================================
-# ВРЕМЕННЫЕ И СИСТЕМНЫЕ ФАЙЛЫ
-# =============================================================================
-
-# VS Code
-.vscode/settings.json
-.vscode/launch.json
-
-# Временные файлы
-*.tmp
-*.temp
-*.log
-*.bak
-*.backup
-
-# OS файлы
+# ===== OS =====
 .DS_Store
 Thumbs.db
-public/
-resources/
-.hugo_build.lock
+Desktop.ini
+$RECYCLE.BIN/
+.fuse_hidden*
+.directory
+.Trash-*
+
+# ===== EDITORS =====
+.vscode/
+*.swp
+*.swo
+\#*\#
+
+# ===== OBSIDIAN =====
 content/.obsidian/
+.obsidian/
+
+# ===== MISC =====
+assets/jsconfig.json
