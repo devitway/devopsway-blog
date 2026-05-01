@@ -141,24 +141,13 @@ cover:
 Данные из 279 вакансий с зарплатой в рублях (getmatch, на руки):
 
 <div style="overflow-x: auto; margin: 2em 0;">
-<pre style="background: var(--code-bg, #1a1a2e); color: var(--code-color, #e0e0e0); padding: 1.5em; border-radius: 8px; font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace; font-size: 0.85em; line-height: 1.6; border: 1px solid var(--border, #333); white-space: pre;">
-                    ╔═══════════╗
-                    ║   <span style="color:#ff6b6b;font-weight:bold">1М+ ₽</span>   ║  4 вакансии – CTO, Head of ML Platform
-                    ╠═══════════╣
-                 ╔══╩═══════════╩══╗
-                 ║  <span style="color:#ffa94d;font-weight:bold">500–700К ₽</span>     ║  11 вакансий – Architect, Principal
-                 ╠═════════════════╣
-              ╔══╩═════════════════╩══╗
-              ║    <span style="color:#ffd43b;font-weight:bold">400–500К ₽</span>         ║  51 вакансия – Senior MLOps/SRE
-              ╠═══════════════════════╣
-        ╔═════╩═══════════════════════╩═════╗
-        ║         <span style="color:#69db7c;font-weight:bold">300–400К ₽</span>                ║  139 вакансий – Mid/Senior DevOps+MLOps
-        ╠═══════════════════════════════════╣
-    ╔═══╩═══════════════════════════════════╩═══╗
-    ║             <span style="color:#74c0fc;font-weight:bold">200–300К ₽</span>                    ║  57 вакансий – Junior+/Mid DevOps
-    ╠═══════════════════════════════════════════╣
-    ║             <span style="color:#b197fc;font-weight:bold">50–200К ₽</span>                      ║  17 вакансий – Entry level
-    ╚═══════════════════════════════════════════╝
+<pre style="background: var(--code-bg, #1a1a2e); color: var(--code-color, #e0e0e0); padding: 1.5em; border-radius: 8px; font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace; font-size: 0.85em; line-height: 1.8; border: 1px solid var(--border, #333); white-space: pre;">
+          <span style="color:#ff6b6b">████████</span>            1М+ ₽ (4)      CTO, Head of ML Platform
+        <span style="color:#ffa94d">████████████</span>          500–700К (11)  Architect, Principal
+      <span style="color:#ffd43b">████████████████</span>        400–500К (51)  Senior MLOps/SRE
+    <span style="color:#69db7c;font-weight:bold">████████████████████</span>      300–400К (139) Mid/Senior  <span style="color:#69db7c">◀ ПИК</span>
+  <span style="color:#74c0fc">████████████████████████</span>    200–300К (57)  Junior+/Mid DevOps
+<span style="color:#b197fc">████████████████████████████</span>  50–200К (17)   Entry level
 </pre>
 </div>
 
