@@ -240,9 +240,10 @@ TOP-10 компаний по количеству вакансий за 9 мес
 ### Шаг 1. Python для ML-пайплайнов
 
 Не «учить Python с нуля». А понять, как:
- – читать и модифицировать `train.py`
- – работать с pandas/numpy для данных
- – запускать FastAPI для model serving
+
+- читать и модифицировать `train.py`
+- работать с pandas/numpy для данных
+- запускать FastAPI для model serving
 
 Ваш bash-скриптинг никуда не денется – Python его дополняет, а не заменяет.
 
@@ -270,27 +271,29 @@ with DAG("retrain_model", schedule="@weekly") as dag:
 ### Шаг 4. Model serving на K8s
 
 Вы уже знаете Kubernetes. Добавьте:
- – **Seldon Core** (16% вакансий) – model serving с canary, A/B, shadow
- – **Triton Inference Server** (16% вакансий) – GPU-оптимизация
+
+- **Seldon Core** (16% вакансий) – model serving с canary, A/B, shadow
+- **Triton Inference Server** (16% вакансий) – GPU-оптимизация
 
 Деплой модели – это тот же Helm chart, только с gRPC-эндпоинтом вместо HTTP.
 
 ### Шаг 5 (опционально). GPU и LLM
 
 14.5% MLOps-вакансий уже просят LLM/GPT. Тренд растёт. Если хотите 400К+:
- – CUDA basics – как модель использует GPU
- – vLLM – serving для LLM
- – GPU-мониторинг (DCGM + Prometheus)
+
+- CUDA basics – как модель использует GPU
+- vLLM – serving для LLM
+- GPU-мониторинг (DCGM + Prometheus)
 
 ---
 
 ## Чего точно не нужно учить прямо сейчас
 
- – **W&B / Neptune** – 0 вакансий в РФ, MLflow покрывает 100% задач
- – **Feast (Feature Store)** – 2 из 566, на практике DataFrame хватает
- – **Dagster / Prefect** – Airflow доминирует, переучитесь, когда (если) рынок изменится
- – **SageMaker / Vertex AI** – если вы не в AWS/GCP-конторе, это мёртвый груз
- – **Great Expectations** – концепция правильная, инструмент нишевый (0 вакансий)
+- **W&B / Neptune** – 0 вакансий в РФ, MLflow покрывает 100% задач
+- **Feast (Feature Store)** – 2 из 566, на практике DataFrame хватает
+- **Dagster / Prefect** – Airflow доминирует, переучитесь, когда (если) рынок изменится
+- **SageMaker / Vertex AI** – если вы не в AWS/GCP-конторе, это мёртвый груз
+- **Great Expectations** – концепция правильная, инструмент нишевый (0 вакансий)
 
 ---
 
@@ -299,10 +302,10 @@ with DAG("retrain_model", schedule="@weekly") as dag:
 MLOps – это не 90 тем. Это DevOps + два инструмента (Airflow + MLflow) + понимание того, чем модель отличается от микросервиса.
 
 Рынок подтверждает:
- – **12 навыков** покрывают 80% вакансий
- – **Медиана** – 325К на руки
- – **65%** вакансий – удалёнка
- – **Переход DevOps → MLOps** реалистичен – 10 из 12 ключевых навыков у вас уже есть
+- **12 навыков** покрывают 80% вакансий
+- **Медиана** – 325К на руки
+- **65%** вакансий – удалёнка
+- **Переход DevOps → MLOps** реалистичен – 10 из 12 ключевых навыков у вас уже есть
 
 Не учите всё. Учите то, что просят.
 
