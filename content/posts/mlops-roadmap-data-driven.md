@@ -141,7 +141,7 @@ cover:
 Данные из 279 вакансий с зарплатой в рублях (getmatch, на руки):
 
 <div style="overflow-x: auto; margin: 2em 0;">
-<pre style="background: var(--code-bg, #1a1a2e); color: var(--code-color, #e0e0e0); padding: 1.5em; border-radius: 8px; font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace; font-size: 0.85em; line-height: 1.6; border: 1px solid var(--border, #333); white-space: pre; text-align: center;">
+<pre style="background: var(--code-bg, #1a1a2e); color: var(--code-color, #e0e0e0); padding: 1.5em; border-radius: 8px; font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace; font-size: 0.85em; line-height: 1.6; border: 1px solid var(--border, #333); white-space: pre;">
                     ╔═══════════╗
                     ║   <span style="color:#ff6b6b;font-weight:bold">1М+ ₽</span>   ║  4 вакансии – CTO, Head of ML Platform
                     ╠═══════════╣
