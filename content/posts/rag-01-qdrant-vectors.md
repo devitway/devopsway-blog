@@ -146,7 +146,7 @@ docker run -d \
 
 ```bash
 curl -s http://localhost:6333/healthz
-# ok
+# healthz check passed
 ```
 
 Dashboard доступен в браузере: `http://localhost:6333/dashboard`
@@ -210,7 +210,7 @@ points = [
 resp = requests.put(f"{QDRANT}/collections/demo/points",
                     json={"points": points})
 print(resp.json())
-# {"result":{"operation_id":0,"status":"completed"},...}
+# {"result":{"operation_id":0,"status":"acknowledged"},...}
 ```
 
 ```bash
@@ -253,7 +253,7 @@ for hit in resp.json()["result"]:
 ```bash
 python3 demo-search.py
 #   [1.0000] nginx-guide.md: Для reverse proxy в nginx используйте proxy_pass
-#   [0.0042] docker-guide.md: Docker Compose описывает многоконтейнерное...
+#   [0.0353] docker-guide.md: Docker Compose описывает многоконтейнерное...
 ```
 
 Точка с nginx получила score 1.0 (идеальное совпадение -- мы искали тем же вектором). Docker получил почти 0 -- совсем другой смысл.
@@ -402,7 +402,7 @@ echo "=== Qdrant Health Check ==="
 
 # 1. Health
 HEALTH=$(curl -sf "$QDRANT_URL/healthz" 2>/dev/null || echo "FAIL")
-if [ "$HEALTH" = "ok" ]; then
+if echo "$HEALTH" | grep -q "passed"; then
     echo "[OK] Qdrant is healthy"
 else
     echo "[FAIL] Qdrant is not responding at $QDRANT_URL"
