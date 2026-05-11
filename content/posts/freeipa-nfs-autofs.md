@@ -67,7 +67,7 @@ editPost:
 | Параметр | ❌ Лаборатория | ✅ Production |
 |---|---|---|
 | **NFS exports** | no_root_squash | root_squash |
-| **Монтирование /home** | soft | hard,intr |
+| **Монтирование /home** | soft | hard |
 | **DNS** | chattr +i | NetworkManager |
 | **Kerberos** | Опционально | Обязательно |
 | **SELinux** | Permissive | Enforcing |
@@ -288,7 +288,7 @@ ipa automountkey-add default auto.master \
 # ВАЖНО: hard mounts для /home!
 ipa automountkey-add default auto.home \
     --key='*' \
-    --info='-rw,hard,intr,sec=krb5p nfs-server.example.com:/export/home/&'
+    --info='-rw,hard,sec=krb5p nfs-server.example.com:/export/home/&'
 ```
 
 **О параметрах /home:**
@@ -296,8 +296,9 @@ ipa automountkey-add default auto.home \
 | Параметр | Почему |
 |---|---|
 | hard | Без потери данных! soft → битые .ssh, .bashrc |
-| intr | Прерывание зависших операций (для совместимости) |
 | krb5p | Kerberos + шифрование |
+
+> **Примечание:** опция `intr` deprecated с ядра 2.6.25 и игнорируется в NFSv4. Не используйте.
 
 **❌ НИКОГДА soft для /home!**
 
@@ -519,15 +520,14 @@ cat >> /etc/fstab << 'EOF'
 EOF
 
 mount -o remount /export
-quotacheck -cug /export
-quotaon /export
 
-# Установка квоты (10GB)
-setquota -u testuser 10000000 11000000 0 0 /export
-quota -vs testuser
+# XFS (RHEL 8/9) — используйте xfs_quota, НЕ quotacheck/quotaon
+xfs_quota -x -c 'limit bsoft=10g bhard=11g testuser' /export
+xfs_quota -x -c 'report -h' /export
 ```
 
-⚠️ **Для XFS (RHEL 9):** User quota работает, но рекомендуется project quota для shared NFS
+> **Важно:** `quotacheck` и `quotaon` — утилиты для ext4. На XFS (стандарт RHEL 8/9)
+> квоты управляются через `xfs_quota` и включаются mount-опциями `usrquota,grpquota`.
 
 ### SELinux
 

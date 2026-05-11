@@ -338,6 +338,9 @@ vault kv put secret/prod/myapp password=test      # Denied!
 
 ## 🗄️ Часть 4: Управление секретами
 
+> **Примечание:** KV engine должен быть включён **до** использования `vault kv put`.
+> Если вы выполняли примеры из Части 3 — включите engine сейчас.
+
 ### Включение KV секретов
 
 ```bash
@@ -554,8 +557,8 @@ vault token revoke <token>
 #!/bin/bash
 # deploy-with-secrets.sh
 
-# Вход
-vault login -method=ldap username=deploy-user password=xxx
+# Вход (пароль запрашивается интерактивно — не передавайте в аргументах!)
+vault login -method=ldap username=deploy-user
 
 # Получение секретов
 DB_PASS=$(vault kv get -field=password secret/prod/database)
@@ -633,7 +636,7 @@ echo "✅ Backup завершён: ${DATE}"
 Для production рекомендуется:
 
 - 3+ серверов Vault
-- Consul или etcd backend
+- Integrated Storage (Raft) — встроенный backend с Vault 1.4+
 - Load balancer перед Vault
 - Auto-unseal через облачные KMS
 

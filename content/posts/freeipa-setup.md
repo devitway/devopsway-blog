@@ -441,7 +441,9 @@ echo "Web UI: $HTTP_STATUS"
 
 # LDAP
 kinit -k
-ldapsearch -Y GSSAPI -b "dc=example,dc=com" -LLL dn &>/dev/null && echo "LDAP: OK"
+DOMAIN=$(hostname -d)
+BASE_DN=$(echo "$DOMAIN" | sed 's/\./,dc=/g; s/^/dc=/')
+ldapsearch -Y GSSAPI -b "$BASE_DN" -LLL dn &>/dev/null && echo "LDAP: OK"
 
 # Сертификат
 openssl x509 -in /var/lib/ipa/certs/httpd.crt -noout -enddate
