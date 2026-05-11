@@ -24,8 +24,8 @@ draft: false  # ← Добавьте эту строку
 
 ## 📚 Популярные темы:
 
-- [DevOps Essentials](/categories/devops-essentials/) - основы для начинающих
-- [Git и SSH](/posts/day-00-git-basics/) - настройка и troubleshooting
+- [DevOps основы](/categories/devops-основы/) - Git, SSH, Docker, автоматизация
+- [Git и SSH](/posts/day-00-ssh/) - настройка ключей и troubleshooting
 
 <div id="searchbox">
   <input id="searchInput" autofocus placeholder="Поиск по гайдам DevOps..." aria-label="search" type="search" autocomplete="off" style="width: 100%; padding: 1rem; border: 2px solid var(--border); border-radius: 8px; font-size: 1.1rem; background: var(--theme); color: var(--content);">
