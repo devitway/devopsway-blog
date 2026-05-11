@@ -3,7 +3,7 @@ title: "Qwen Code — бесплатная альтернатива Claude Code 
 date: 2026-02-25
 draft: true
 description: "Честный обзор Qwen Code v0.10.6: облачный и локальный режимы, реальные тесты на Ubuntu-десктопе с RTX 3090, грабли с Ollama и матрица выбора для DevOps-задач"
-categories: ["AI", "DevOps", "Tutorial"]
+categories: ["AI и MLOps"]
 tags: ["qwen-code", "ollama", "devops", "cli", "open-source"]
 ---
 

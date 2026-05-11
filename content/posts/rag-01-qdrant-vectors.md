@@ -4,7 +4,7 @@ date: 2026-05-07T12:00:00+03:00
 lastmod: 2026-05-07T12:00:00+03:00
 draft: false
 weight: 1
-categories: ["AI/ML"]
+categories: ["AI и MLOps"]
 tags: ["rag", "qdrant", "vector-database", "ai", "devops"]
 author: "DevOps Way"
 series: "RAG Pipeline"

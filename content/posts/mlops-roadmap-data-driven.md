@@ -3,7 +3,7 @@ title: "MLOps Roadmap: 838 вакансий против 90 тем roadmap.sh"
 date: 2026-05-01T14:00:00+03:00
 lastmod: 2026-05-01T14:00:00+03:00
 draft: false
-categories: ["MLOps", "Карьера"]
+categories: ["AI и MLOps", "Карьера"]
 tags: ["mlops", "roadmap", "devops", "career", "data-driven", "sfia", "airflow", "mlflow", "kubernetes"]
 author: "DevOps Way"
 description: "Анализ 838 реальных вакансий показывает: 80% рынка MLOps покрывается 12 навыками. Разбираем, что из roadmap.sh реально нужно, что – балласт, и строим рабочий план обучения с привязкой к зарплатам."

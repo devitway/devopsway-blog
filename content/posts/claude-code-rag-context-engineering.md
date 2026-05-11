@@ -4,7 +4,7 @@ date: 2026-02-05T12:00:00+03:00
 lastmod: 2026-02-05T12:00:00+03:00
 draft: true
 weight: 1
-categories: ["AI", "DevOps", "Tutorial"]
+categories: ["AI и MLOps"]
 tags: ["claude-code", "rag", "ollama", "qdrant", "mcp", "context-engineering", "devops", "llm", "vector-database", "litellm"]
 author: "DevOps Way"
 series: ""

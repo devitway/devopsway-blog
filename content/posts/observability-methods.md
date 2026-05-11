@@ -4,7 +4,7 @@ date: 2025-09-25T00:00:00Z
 draft: false
 description: "Комплексное руководство по методологиям мониторинга: USE, RED, Four Golden Signals и организации дашбордов"
 tags: ["мониторинг", "observability", "SRE", "DevOps", "дашборды"]
-categories: ["Инфраструктура", "Мониторинг"]
+categories: ["Мониторинг"]
 author: "SRE Team"
 weight: 10
 toc: true
