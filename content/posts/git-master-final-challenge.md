@@ -8,7 +8,6 @@ categories: ["DevOps основы"]
 tags: ["git", "challenge", "practice"]
 author: "DevOps Way"
 description: "Сломанный enterprise-репозиторий с 10 проблемами: грязная история, merge-конфликты, утечки секретов, раздутые бинарники, потеря контекста. Практика после 9 уроков серии Git Mastery."
-canonical: ""
 series: "Git Mastery"
 aliases:
   - /posts/day-10-git/

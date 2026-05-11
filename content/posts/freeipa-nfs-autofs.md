@@ -9,7 +9,6 @@ tags: ["freeipa", "nfs", "autofs", "linux", "storage", "automount", "ldap", "rhe
 author: "DevOps Way"
 series: "FreeIPA"
 description: "Production-ready NFS + Autofs с FreeIPA: безопасная конфигурация, Kerberos, правильные mount options. Проверено в enterprise"
-canonical: ""
 showToc: true
 TocOpen: false
 hidemeta: false
@@ -55,7 +54,7 @@ editPost:
 - Статический IP
 - Root доступ
 
-** Серия статей:**
+**Серия статей:** [все части](/series/freeipa/)
 1. [Установка FreeIPA](/posts/freeipa-setup/)
 2. **NFS + Autofs** (эта статья)
 3. [Hashicorp Vault интеграция](/posts/freeipa-vault-integration/)
@@ -669,9 +668,11 @@ systemctl restart nfs-server
 
 ---
 
-## Следующая статья
+## Что дальше
 
-**Часть 3:** [Hashicorp Vault интеграция](/posts/freeipa-vault-integration/)
+- **[Часть 3: Hashicorp Vault](/posts/freeipa-vault-integration/)** — управление секретами: LDAP-аутентификация через FreeIPA, политики на основе групп, KV engine
+- **[Часть 1: Установка FreeIPA](/posts/freeipa-setup/)** — если пропустили: полная установка FreeIPA с DNS, CA, Kerberos
+- **[Вся серия FreeIPA](/series/freeipa/)** — карта всех гайдов серии
 
 ---
 

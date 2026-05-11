@@ -9,7 +9,6 @@ tags: ["vault", "hashicorp", "freeipa", "ldap", "secrets", "security", "devops",
 author: "DevOps Way"
 series: "FreeIPA"
 description: "Полное руководство по интеграции Hashicorp Vault с FreeIPA для централизованного управления секретами. LDAP аутентификация, динамические учетные данные, PKI интеграция."
-canonical: ""
 showToc: true
 TocOpen: false
 hidemeta: false
@@ -60,13 +59,18 @@ graph TB
 4. Vault выдаёт токен доступа
 5. Пользователь работает с секретами
 
+**Серия статей:** [все части](/series/freeipa/)
+1. [Установка FreeIPA](/posts/freeipa-setup/)
+2. [NFS + Autofs интеграция](/posts/freeipa-nfs-autofs/)
+3. **Hashicorp Vault интеграция** (эта статья)
+
 ---
 
 ## Требования
 
 | Компонент | Требования |
 |---|---|
-| FreeIPA | Настроен и работает |
+| FreeIPA | Настроен и работает ([часть 1](/posts/freeipa-setup/)) |
 | Vault Server | Linux, 2GB RAM |
 | Клиенты | Vault CLI |
 | Сеть | Доступ к FreeIPA:389 |
@@ -791,11 +795,14 @@ vault kv rollback
 
 ---
 
-## Дополнительное чтение
+## Что дальше
 
-**Смотрите также:**
-- [Установка FreeIPA](/posts/freeipa-setup/)
-- [NFS + Autofs интеграция](/posts/freeipa-nfs-autofs/)
+Это финальная часть серии FreeIPA. Полная экосистема настроена: FreeIPA для аутентификации, NFS для хранилища, Vault для секретов.
+
+**Предыдущие части:**
+- **[Часть 1: Установка FreeIPA](/posts/freeipa-setup/)** — установка сервера, DNS, CA, Kerberos, управление пользователями
+- **[Часть 2: NFS + Autofs](/posts/freeipa-nfs-autofs/)** — централизованное хранилище с автомонтированием и Kerberos
+- **[Вся серия FreeIPA](/series/freeipa/)** — карта всех гайдов серии
 
 **Внешние ресурсы:**
 - [Vault Documentation](https://www.vaultproject.io/docs)

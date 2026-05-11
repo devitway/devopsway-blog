@@ -8,7 +8,6 @@ categories: ["DevOps основы"]
 tags: ["git", "rebase", "merge", "history", "interactive"]
 author: "DevOps Way"
 description: "Как rebase переставляет коммиты вместо слияния. Линейная история vs merge-пузыри. Interactive rebase для чистки коммитов перед PR. Золотое правило: не ребейсить публичные ветки."
-canonical: ""
 series: "Git Mastery"
 aliases:
   - /posts/day-04-git/

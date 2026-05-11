@@ -8,7 +8,6 @@ categories: ["DevOps основы"]
 tags: ["git", "reflog", "fsck", "recovery", "reset"]
 author: "DevOps Way"
 description: "Честный разбор: когда reflog и fsck восстанавливают данные после git reset --hard, а когда уже ничего не сделать. Три состояния файла → три сценария восстановления. Защитные алиасы в ~/.gitconfig."
-canonical: ""
 series: "Git Mastery"
 aliases:
   - /posts/day-02-git/

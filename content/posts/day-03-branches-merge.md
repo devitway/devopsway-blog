@@ -8,7 +8,6 @@ categories: ["DevOps основы"]
 tags: ["git", "branch", "merge", "conflicts", "workflow"]
 author: "DevOps Way"
 description: "Как работают ветки: указатель на коммит. Два способа слить feature в main — fast-forward и --no-ff. Чтение git log --graph. Решение merge-конфликтов через diff3."
-canonical: ""
 series: "Git Mastery"
 aliases:
   - /posts/day-03-git/
