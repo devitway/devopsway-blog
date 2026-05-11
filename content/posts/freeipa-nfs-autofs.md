@@ -5,7 +5,7 @@ lastmod: 2025-12-15T10:00:00+03:00
 draft: false
 weight: 2
 categories: ["Инфраструктура", "Безопасность"]
-tags: ["freeipa", "nfs", "autofs", "linux", "storage", "automount", "ldap", "rhel", "almalinux", "security"]
+tags: ["freeipa", "nfs", "autofs", "linux", "ldap", "security"]
 author: "DevOps Way"
 series: "FreeIPA"
 description: "Production-ready NFS + Autofs с FreeIPA: безопасная конфигурация, Kerberos, правильные mount options. Проверено в enterprise"

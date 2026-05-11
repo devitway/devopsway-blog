@@ -5,7 +5,7 @@ lastmod: 2025-12-15T10:00:00+03:00
 draft: false
 weight: 1
 categories: ["Безопасность"]
-tags: ["freeipa", "ldap", "kerberos", "dns", "ca", "linux", "security", "authentication", "rhel", "almalinux", "identity-management"]
+tags: ["freeipa", "ldap", "kerberos", "linux", "security", "authentication", "identity-management"]
 author: "DevOps Way"
 series: "FreeIPA"
 description: "Production-ready руководство по FreeIPA: установка сервера, DNS, Certificate Authority, Kerberos, управление пользователями и группами. Проверено на AlmaLinux 9."

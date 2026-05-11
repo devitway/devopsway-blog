@@ -3,7 +3,7 @@ title: "Стратегии наблюдаемости и примеры дашб
 date: 2025-09-25T00:00:00Z
 draft: false
 description: "Методологии мониторинга USE, RED и Four Golden Signals на практике. Пятиуровневая модель дашбордов: от бизнес-метрик до сырых трейсов. Примеры панелей для Grafana."
-tags: ["мониторинг", "observability", "SRE", "DevOps", "дашборды"]
+tags: ["monitoring", "observability", "sre", "devops", "dashboards"]
 categories: ["Мониторинг"]
 author: "DevOps Way"
 weight: 10
