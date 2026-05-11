@@ -8,7 +8,6 @@ categories: ["DevOps основы"]
 tags: ["git", "status", "staging", "workflow"]
 author: "DevOps Way"
 description: "Три состояния файла в Git — working / staging / committed. Как читать git status, зачем git add -p, и почему git add . убивает историю. Sandbox-проверено."
-canonical: ""
 series: "Git Mastery"
 aliases:
   - /posts/day-01-git/

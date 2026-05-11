@@ -8,8 +8,7 @@ categories: ["Безопасность"]
 tags: ["freeipa", "ldap", "kerberos", "dns", "ca", "linux", "security", "authentication", "rhel", "almalinux", "identity-management"]
 author: "DevOps Way"
 series: "FreeIPA"
-description: "Production-ready руководство по FreeIPA: установка, настройка, мониторинг."
-canonical: ""
+description: "Production-ready руководство по FreeIPA: установка сервера, DNS, Certificate Authority, Kerberos, управление пользователями и группами. Проверено на AlmaLinux 9."
 showToc: true
 TocOpen: false
 hidemeta: false
@@ -55,7 +54,7 @@ editPost:
 - Статический IP и FQDN
 - Доступ root
 
-** Серия статей:**
+**Серия статей:** [все части](/series/freeipa/)
 1. **Установка FreeIPA** (эта статья)
 2. [NFS + Autofs интеграция](/posts/freeipa-nfs-autofs/)
 3. [Hashicorp Vault интеграция](/posts/freeipa-vault-integration/)
@@ -657,10 +656,11 @@ ipa group-add/show/del groupname
 
 ---
 
-## Следующие статьи
+## Что дальше
 
-- **Часть 2:** [NFS + Autofs интеграция](/posts/freeipa-nfs-autofs/)
-- **Часть 3:** [Hashicorp Vault интеграция](/posts/freeipa-vault-integration/)
+- **[Часть 2: NFS + Autofs](/posts/freeipa-nfs-autofs/)** — централизованное хранилище: NFS с root_squash, автомонтирование домашних каталогов через Autofs + FreeIPA LDAP, Kerberos-шифрование
+- **[Часть 3: Hashicorp Vault](/posts/freeipa-vault-integration/)** — управление секретами: LDAP-аутентификация через FreeIPA, политики на основе групп, KV engine
+- **[Вся серия FreeIPA](/series/freeipa/)** — карта всех гайдов серии
 
 ---
 

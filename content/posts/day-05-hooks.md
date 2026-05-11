@@ -8,7 +8,6 @@ categories: ["DevOps основы"]
 tags: ["git", "hooks", "pre-commit", "commit-msg", "automation"]
 author: "DevOps Way"
 description: "Git hooks без Husky и Node — чистый bash. Pre-commit блокирует секреты и trailing whitespace. Commit-msg проверяет Conventional Commits regex'ом. Распространение hooks на команду через core.hooksPath."
-canonical: ""
 series: "Git Mastery"
 aliases:
   - /posts/day-05-git/

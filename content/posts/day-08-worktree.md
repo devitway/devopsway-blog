@@ -8,7 +8,6 @@ categories: ["DevOps основы"]
 tags: ["git", "worktree", "parallel", "workflow"]
 author: "DevOps Way"
 description: "Как держать открытыми одновременно feature и hotfix ветку в разных каталогах, не трогая git stash и git checkout. Одно хранилище .git, несколько рабочих деревьев."
-canonical: ""
 series: "Git Mastery"
 aliases:
   - /posts/day-08-git/

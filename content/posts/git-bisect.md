@@ -8,7 +8,6 @@ categories: ["DevOps основы"]
 tags: ["git", "bisect", "debugging", "regression", "ci"]
 author: "DevOps Way"
 description: "Бинарный поиск по истории коммитов. За 10 шагов найти виновника среди 1024 коммитов. Ручной bisect, автоматический через bisect run, и когда использовать skip."
-canonical: ""
 series: "Git Mastery"
 aliases:
   - /posts/day-06-git/

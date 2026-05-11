@@ -9,7 +9,6 @@ tags: ["claude-code", "rag", "ollama", "qdrant", "mcp", "context-engineering", "
 author: "DevOps Way"
 series: ""
 description: "Как настроить Claude Code CLI с локальным RAG и почему context engineering важнее prompt engineering. Полный стек: Ollama, LiteLLM, Qdrant, MCP."
-canonical: ""
 showToc: true
 TocOpen: true
 hidemeta: false

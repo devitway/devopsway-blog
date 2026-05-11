@@ -8,7 +8,6 @@ categories: ["DevOps основы"]
 tags: ["git", "ssh", "github", "ed25519", "ssh-agent"]
 author: "DevOps Way"
 description: "Один SSH-ключ на GitHub, GitLab, прод-серверы. Ed25519, ssh-agent, ~/.ssh/config под несколько аккаунтов. Сандбокс-проверено: после урока git clone работает без паролей."
-canonical: ""
 series: "Git Mastery"
 aliases:
   - /posts/day-00-git/

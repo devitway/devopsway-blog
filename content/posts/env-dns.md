@@ -15,7 +15,6 @@ homepage: false
 seo:
   title: "DevOps гайд: Архитектура контуров разработки по критичности систем"
   description: "Полное руководство по проектированию DevOps архитектуры с учетом критичности систем. Практические примеры, современные технологии 2025, troubleshooting и чеклисты."
-  canonical: ""
   noindex: false
 toc: true
 math: true
