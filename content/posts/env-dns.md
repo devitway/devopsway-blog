@@ -9,7 +9,7 @@ weight: 50
 images: []
 categories: ["Инфраструктура"]
 tags: ["devops", "kubernetes", "gitops", "architecture", "containers", "ci-cd", "security", "monitoring", "infrastructure", "критичность-систем", "контуры-разработки", "изоляция", "автоматизация"]
-contributors: ["DevOps School"]
+contributors: ["DevOps Way"]
 pinned: false
 homepage: false
 seo:
@@ -20,7 +20,7 @@ seo:
 toc: true
 math: true
 highlight: true
-author: "DevOps School"
+author: "DevOps Way"
 featured: true
 difficulty: "beginner"
 time_to_read: "25 минут"
