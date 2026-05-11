@@ -390,11 +390,11 @@ def get_embedding(text: str) -> list[float]:
         text = text[:MAX_EMBED_CHARS]
 
     response = httpx.post(
-        f"{OLLAMA_URL}/api/embeddings",
-        json={"model": EMBED_MODEL, "prompt": text},
+        f"{OLLAMA_URL}/api/embed",
+        json={"model": EMBED_MODEL, "input": text},
         timeout=60.0
     )
-    return response.json()["embedding"]
+    return response.json()["embeddings"][0]
 
 
 def chunk_file(text: str, file_path: str) -> list[dict]:
