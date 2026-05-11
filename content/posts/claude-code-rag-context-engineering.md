@@ -5,7 +5,7 @@ lastmod: 2026-02-05T12:00:00+03:00
 draft: true
 weight: 1
 categories: ["AI и MLOps"]
-tags: ["claude-code", "rag", "ollama", "qdrant", "mcp", "context-engineering", "devops", "llm", "vector-database", "litellm"]
+tags: ["claude-code", "rag", "ollama", "qdrant", "mcp", "context-engineering", "llm"]
 author: "DevOps Way"
 series: ""
 description: "Как настроить Claude Code CLI с локальным RAG и почему context engineering важнее prompt engineering. Полный стек: Ollama, LiteLLM, Qdrant, MCP."

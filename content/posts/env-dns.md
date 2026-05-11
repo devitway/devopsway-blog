@@ -8,7 +8,7 @@ draft: true
 weight: 50
 images: []
 categories: ["Инфраструктура"]
-tags: ["devops", "kubernetes", "gitops", "architecture", "containers", "ci-cd", "security", "monitoring", "infrastructure", "критичность-систем", "контуры-разработки", "изоляция", "автоматизация"]
+tags: ["devops", "kubernetes", "architecture", "ci-cd", "infrastructure", "monitoring"]
 contributors: ["DevOps Way"]
 pinned: false
 homepage: false
