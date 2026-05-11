@@ -457,7 +457,7 @@ git rba                  # отменить rebase
 
 ## Что дальше
 
-- **День 5** → git hooks: pre-commit + commit-msg, как не пропустить мусор в коммиты
+- **[День 5](/posts/day-05-hooks/)** → git hooks: pre-commit + commit-msg, как не пропустить мусор в коммиты
 - **[Challenge](/posts/git-master-final-challenge/)** → сломанный репозиторий с 10 проблемами. Задача P6 — применить `rebase -i` к 20 коммитам и получить читаемую историю из 4
 - **Системно с нуля** → «Курс молодого бойца» DevIT Academy, продвинутый Git в Неделе 3
 

@@ -38,7 +38,7 @@ searchHidden: false
 
 ## Теория: что такое «потеря данных» в Git
 
-В Дне 1 вы видели три состояния — working / staging / committed. Сегодня смотрим на них **под углом reset'а**.
+В [Дне 1](/posts/day-01-three-states/) вы видели три состояния — working / staging / committed. Сегодня смотрим на них **под углом reset'а**.
 
 `git reset --hard HEAD` делает **три разные вещи одновременно**:
 
@@ -310,7 +310,7 @@ git recover-staged      # вытащить всё из dangling blobs
 
 ## Что дальше
 
-- **День 3** → ветки и merge: когда fast-forward, когда `--no-ff`, как читать `git log --graph`
+- **[День 3](/posts/day-03-branches-merge/)** → ветки и merge: когда fast-forward, когда `--no-ff`, как читать `git log --graph`
 - **[Challenge](/posts/git-master-final-challenge/)** → сломанный репозиторий с 10 проблемами. Задача P2 — dangling blob без подсказок, найдёте за 2 команды
 - **Системно с нуля** → «Курс молодого бойца» DevIT Academy, Git разбираем в Неделе 2
 

@@ -364,7 +364,7 @@ This activates pre-commit and commit-msg hooks.
 
 ## Что дальше
 
-- **День 6** → `git bisect`: двоичный поиск коммита, сломавшего код
+- **[День 6](/posts/git-bisect/)** → `git bisect`: двоичный поиск коммита, сломавшего код
 - **[Challenge](/posts/git-master-final-challenge/)** → сломанный репозиторий с 10 проблемами. Задача P5 — починить репо, где вредный commit-msg hook блокирует все коммиты
 - **Системно с нуля** → «Курс молодого бойца» DevIT Academy, продвинутый Git в Неделе 3
 
