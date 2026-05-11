@@ -345,7 +345,7 @@ ssh -T git@github.com && ssh-add -l && ls -l ~/.ssh/config ~/.ssh/id_ed25519
 
 ## Что дальше
 
-- **День 1** → commits: три состояния (working / staging / committed), `git status` как компас, осознанный коммит вместо «git add .»
+- **[День 1](/posts/day-01-three-states/)** → commits: три состояния (working / staging / committed), `git status` как компас, осознанный коммит вместо «git add .»
 - **[Challenge](/posts/git-master-final-challenge/)** → сломанный репозиторий с 10 проблемами. Первая же задача использует SSH-ключ — проверите себя в бою
 - **Системно с нуля** → «Курс молодого бойца» DevIT Academy — Linux + Git + Docker + K8s + CI/CD за 16 недель
 
