@@ -1,6 +1,7 @@
 ---
 title: "Обслуживание серверов"
 layout: "single"
+draft: true
 url: "/maintenance/"
 description: "Обслуживание Linux-серверов и приложений. Обновления, резервные копии, мониторинг. От 990 рублей в месяц."
 showToc: false

@@ -2,7 +2,7 @@
 title: "Linux: 10 принципов — 1. Автоматизация"
 date: 2026-05-07T14:00:00+03:00
 lastmod: 2026-05-07T14:00:00+03:00
-draft: false
+draft: true
 weight: 1
 categories: ["Linux"]
 tags: ["linux", "bash", "cron", "systemd", "automation"]
