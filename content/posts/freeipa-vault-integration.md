@@ -4,7 +4,7 @@ date: 2025-12-15T10:00:00+03:00
 lastmod: 2025-12-15T10:00:00+03:00
 draft: false
 weight: 4
-categories: ["Security", "DevOps основы", "Secrets Management"]
+categories: ["Безопасность"]
 tags: ["vault", "hashicorp", "freeipa", "ldap", "secrets", "security", "devops", "kubernetes"]
 author: "DevOps Way"
 series: "FreeIPA"

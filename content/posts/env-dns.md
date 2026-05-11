@@ -7,7 +7,7 @@ lastmod: 2025-06-10T14:30:00+01:00
 draft: false
 weight: 50
 images: []
-categories: ["DevOps", "Architecture", "Best Practices"]
+categories: ["Инфраструктура"]
 tags: ["devops", "kubernetes", "gitops", "architecture", "containers", "ci-cd", "security", "monitoring", "infrastructure", "критичность-систем", "контуры-разработки", "изоляция", "автоматизация"]
 contributors: ["DevOps School"]
 pinned: false

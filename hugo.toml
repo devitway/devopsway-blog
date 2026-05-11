@@ -253,6 +253,18 @@ url = "/categories/"
 weight = 20
 
 [[menu.main]]
+identifier = "series"
+name = "📖 Серии"
+url = "/series/"
+weight = 25
+
+[[menu.main]]
+identifier = "archives"
+name = "📋 Архив"
+url = "/archives/"
+weight = 27
+
+[[menu.main]]
 identifier = "search"
 name = "🔍 Поиск"
 url = "/search/"
@@ -263,12 +275,6 @@ identifier = "about"
 name = "👨‍💻 О проекте"
 url = "/about/"
 weight = 40
-
-[[menu.main]]
-identifier = "telegram"
-name = "💬 Telegram"
-url = "https://t.me/devitway"
-weight = 50
 
 # =============================================================================
 # ДОПОЛНИТЕЛЬНЫЕ НАСТРОЙКИ

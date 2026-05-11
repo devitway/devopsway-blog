@@ -5,7 +5,7 @@ date: 2025-06-19T23:00:00+02:00
 lastmod: 2025-06-19T23:00:00+02:00
 draft: true
 diagrams: true  # Включает подключение скриптов диаграмм для этой страницы
-categories: ["DevOps", "Architecture", "Tutorial"]
+categories: ["DevOps основы"]
 tags: ["диаграммы", "микросервисы", "архитектура", "hugo", "d3js"]
 author: "DevOps Way"
 ---
