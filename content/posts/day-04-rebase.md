@@ -11,8 +11,7 @@ description: "Как rebase переставляет коммиты вместо
 canonical: ""
 series: "Git Mastery"
 aliases:
-  - /posts/day-02-git/
-  - /posts/day-06-git/
+  - /posts/day-04-git/
 showToc: true
 TocOpen: false
 hidemeta: false
