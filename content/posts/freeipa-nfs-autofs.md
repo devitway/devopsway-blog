@@ -1,5 +1,5 @@
 ---
-title: "💾 FreeIPA + NFS + Autofs: Production-Grade централизованное хранилище"
+title: "FreeIPA + NFS + Autofs: Production-Grade централизованное хранилище"
 date: 2025-12-15T10:00:00+03:00
 lastmod: 2025-12-15T10:00:00+03:00
 draft: false
@@ -37,10 +37,10 @@ editPost:
     
 ---
 
-💾 **Категория:** Системное администрирование  
-💡 **Цель:** Настроить безопасное NFS хранилище с автомонтированием
+ **Категория:** Системное администрирование 
+ **Цель:** Настроить безопасное NFS хранилище с автомонтированием
 
-🧠 **Чему научитесь:**
+ **Чему научитесь:**
 
 - Безопасная настройка NFS (без no_root_squash!)
 - Правильные параметры монтирования (hard vs soft)
@@ -48,23 +48,23 @@ editPost:
 - Kerberos для NFS
 - Решение проблем
 
-⚠️ **Требования:**
+ **Требования:**
 
 - FreeIPA настроен ([часть 1](/posts/freeipa-setup/))
 - RHEL/CentOS Stream/AlmaLinux/Rocky 8-9
 - Статический IP
 - Root доступ
 
-**📚 Серия статей:**
+** Серия статей:**
 1. [Установка FreeIPA](/posts/freeipa-setup/)
 2. **NFS + Autofs** (эта статья)
 3. [Hashicorp Vault интеграция](/posts/freeipa-vault-integration/)
 
 ---
 
-## 🚨 Production vs Лаборатория
+## Production vs Лаборатория
 
-| Параметр | ❌ Лаборатория | ✅ Production |
+| Параметр | Лаборатория | Production |
 |---|---|---|
 | **NFS exports** | no_root_squash | root_squash |
 | **Монтирование /home** | soft | hard |
@@ -72,22 +72,22 @@ editPost:
 | **Kerberos** | Опционально | Обязательно |
 | **SELinux** | Permissive | Enforcing |
 
-🔥 **Важно:** `no_root_squash` в production = нарушение безопасности!
+ **Важно:** `no_root_squash` в production = нарушение безопасности!
 
 ---
 
-## 🏗️ Архитектура
+## Архитектура
 
 {{< mermaid >}}
 graph LR
-  A[FreeIPA]
-  B[NFS Сервер]
-  C[Клиенты]
-  
-  A -->|Autofs maps| C
-  B -->|NFS shares| C
-  A -->|Kerberos| B
-  A -->|Kerberos| C
+ A[FreeIPA]
+ B[NFS Сервер]
+ C[Клиенты]
+ 
+ A -->|Autofs maps| C
+ B -->|NFS shares| C
+ A -->|Kerberos| B
+ A -->|Kerberos| C
 {{< /mermaid >}}
 
 **Процесс монтирования:**
@@ -100,7 +100,7 @@ graph LR
 
 ---
 
-## 💻 Требования
+## Требования
 
 | Компонент | Требования |
 |---|---|
@@ -111,7 +111,7 @@ graph LR
 
 ---
 
-## 🚀 Часть 1: NFS Сервер
+## Часть 1: NFS Сервер
 
 ### Настройка hostname и DNS
 
@@ -128,7 +128,7 @@ ipa dnsrecord-add example.com nfs-server --a-rec=192.168.1.20
 
 **На NFS сервере (NetworkManager!):**
 
-⚠️ **НЕ используйте `chattr +i`!**
+ **НЕ используйте `chattr +i`!**
 
 ```bash
 # Определяем подключение
@@ -156,7 +156,7 @@ dnf install -y nfs-utils rpcbind
 systemctl enable --now rpcbind nfs-server
 ```
 
-⚠️ **rpcbind:** Для NFSv4-only не обязателен, но рекомендуется для совместимости
+ **rpcbind:** Для NFSv4-only не обязателен, но рекомендуется для совместимости
 
 ### Firewall
 
@@ -184,14 +184,14 @@ EOF
 
 ### NFS Exports (PRODUCTION!)
 
-🚨 **КРИТИЧНО:** `no_root_squash` = SECURITY РИСК!
+ **КРИТИЧНО:** `no_root_squash` = SECURITY РИСК!
 
 ```bash
 cat > /etc/exports << 'EOF'
 # Production конфигурация - root_squash ОБЯЗАТЕЛЕН!
 
-/export/home    192.168.1.0/24(rw,sync,root_squash,no_subtree_check)
-/export/shared  192.168.1.0/24(rw,sync,root_squash,no_subtree_check)
+/export/home 192.168.1.0/24(rw,sync,root_squash,no_subtree_check)
+/export/shared 192.168.1.0/24(rw,sync,root_squash,no_subtree_check)
 EOF
 
 exportfs -ra
@@ -199,7 +199,7 @@ exportfs -v
 showmount -e localhost
 ```
 
-⚠️ **О sec=sys:** На начальном этапе используется `sec=sys`. Далее переключаемся на Kerberos. В production Kerberos **обязателен**!
+ **О sec=sys:** На начальном этапе используется `sec=sys`. Далее переключаемся на Kerberos. В production Kerberos **обязателен**!
 
 **Таблица параметров монтирования:**
 
@@ -222,13 +222,13 @@ dnf install -y ipa-client
 
 # Подключение
 ipa-client-install \
-    --server=ipa-master.example.com \
-    --domain=example.com \
-    --realm=EXAMPLE.COM \
-    --principal=admin \
-    --mkhomedir \
-    --enable-dns-updates \
-    --unattended
+ --server=ipa-master.example.com \
+ --domain=example.com \
+ --realm=EXAMPLE.COM \
+ --principal=admin \
+ --mkhomedir \
+ --enable-dns-updates \
+ --unattended
 
 kinit admin
 
@@ -238,8 +238,8 @@ ipa service-add nfs/nfs-server.example.com
 
 # Keytab
 ipa-getkeytab -s ipa-master.example.com \
-    -p nfs/nfs-server.example.com \
-    -k /etc/krb5.keytab
+ -p nfs/nfs-server.example.com \
+ -k /etc/krb5.keytab
 
 # Проверка
 klist -k /etc/krb5.keytab
@@ -264,7 +264,7 @@ chown -R "$UID:$GID" "/export/home/$USERNAME"
 
 ---
 
-## 🗺️ Часть 2: Autofs в FreeIPA
+## Часть 2: Autofs в FreeIPA
 
 ### Создание Location
 
@@ -300,7 +300,7 @@ ipa automountkey-add default auto.home \
 
 > **Примечание:** опция `intr` deprecated с ядра 2.6.25 и игнорируется в NFSv4. Не используйте.
 
-**❌ НИКОГДА soft для /home!**
+** НИКОГДА soft для /home!**
 
 ### Map для /shared
 
@@ -332,7 +332,7 @@ ipa automountkey-add default auto.shared \
 
 ---
 
-## 💻 Часть 3: Клиенты
+## Часть 3: Клиенты
 
 ### Подготовка
 
@@ -371,7 +371,7 @@ systemctl status autofs
 
 ---
 
-## 🔒 Часть 4: Kerberos для NFS
+## Часть 4: Kerberos для NFS
 
 ### NFS сервер
 
@@ -391,8 +391,8 @@ EOF
 cat > /etc/exports << 'EOF'
 # Kerberos-secured
 
-/export/home    192.168.1.0/24(rw,sync,sec=krb5p,root_squash,no_subtree_check)
-/export/shared  192.168.1.0/24(rw,sync,sec=krb5i,root_squash,no_subtree_check)
+/export/home 192.168.1.0/24(rw,sync,sec=krb5p,root_squash,no_subtree_check)
+/export/shared 192.168.1.0/24(rw,sync,sec=krb5i,root_squash,no_subtree_check)
 EOF
 
 exportfs -ra
@@ -401,7 +401,7 @@ systemctl restart nfs-server
 
 ### Клиент (проверка!)
 
-⚠️ **КРИТИЧНО:** Проверить, что Kerberos работает!
+ **КРИТИЧНО:** Проверить, что Kerberos работает!
 
 ```bash
 su - testuser
@@ -421,7 +421,7 @@ exit
 
 ---
 
-## 🧪 Тестирование
+## Тестирование
 
 ### Тест 1: Автомонтирование
 
@@ -441,7 +441,7 @@ exit
 ```bash
 # Read-only
 ls /shared/docs
-touch /shared/docs/test.txt  # Должна ошибка!
+touch /shared/docs/test.txt # Должна ошибка!
 
 # Read-write
 echo "Notes" > /shared/projects/notes.txt
@@ -452,10 +452,10 @@ cat /shared/projects/notes.txt
 
 ```bash
 kdestroy
-ls /home/testuser  # Должна ошибка!
+ls /home/testuser # Должна ошибка!
 
 kinit testuser
-ls /home/testuser  # Работает!
+ls /home/testuser # Работает!
 ```
 
 ### Тест 4: Hard vs Soft
@@ -465,8 +465,8 @@ ls /home/testuser  # Работает!
 systemctl stop nfs-server
 
 # На клиенте
-ls /home/testuser  # Зависает (правильно!)
-ls /shared/docs    # Ошибка через timeout
+ls /home/testuser # Зависает (правильно!)
+ls /shared/docs # Ошибка через timeout
 
 # Восстановление
 systemctl start nfs-server
@@ -474,7 +474,7 @@ systemctl start nfs-server
 
 ---
 
-## 🔧 Production конфигурация
+## Production конфигурация
 
 ### Скрипт создания домашних директорий
 
@@ -506,7 +506,7 @@ for user in $USERS; do
         chmod 700 "$USER_HOME"
         mkdir -p "$USER_HOME"/{Documents,Downloads,Projects}
         chown -R "$UID:$GID" "$USER_HOME"
-        echo "✅ Создано: $USER_HOME"
+        echo " Создано: $USER_HOME"
     fi
 done
 ```
@@ -516,7 +516,7 @@ done
 ```bash
 # В /etc/fstab (для сохранения после reboot!)
 cat >> /etc/fstab << 'EOF'
-/dev/mapper/vg-export  /export  xfs  defaults,usrquota,grpquota  0 0
+/dev/mapper/vg-export /export xfs defaults,usrquota,grpquota 0 0
 EOF
 
 mount -o remount /export
@@ -549,32 +549,32 @@ setsebool -P use_nfs_home_dirs on
 
 ---
 
-## 📊 Мониторинг
+## Мониторинг
 
 ```bash
 #!/bin/bash
 # nfs-monitor.sh
 
-echo "📊 NFS Server Monitoring"
+echo " NFS Server Monitoring"
 
 nfsstat -s | head -20
 exportfs -v
-showmount -a  # Legacy, но для быстрой диагностики
+showmount -a # Legacy, но для быстрой диагностики
 klist -k /etc/krb5.keytab | grep nfs
 df -h /export
 
 echo "Top 10 файлов:"
 find /export/home -type f -exec du -h {} + 2>/dev/null | sort -rh | head -10
 
-echo "✅ Завершено: $(date)"
+echo " Завершено: $(date)"
 ```
 
 ---
 
-## 🔧 Решение проблем
+## Решение проблем
 
 <details>
-<summary><b>❌ Проблема 1: Autofs не монтирует</b></summary>
+<summary><b> Проблема 1: Autofs не монтирует</b></summary>
 
 ```bash
 automount -m
@@ -594,7 +594,7 @@ journalctl -u autofs -f
 </details>
 
 <details>
-<summary><b>❌ Проблема 2: Permission denied</b></summary>
+<summary><b> Проблема 2: Permission denied</b></summary>
 
 ```bash
 # Проверка Kerberos
@@ -611,7 +611,7 @@ exportfs -v | grep sec
 </details>
 
 <details>
-<summary><b>❌ Проблема 3: Stale file handle</b></summary>
+<summary><b> Проблема 3: Stale file handle</b></summary>
 
 ```bash
 # Клиент
@@ -628,7 +628,7 @@ systemctl restart nfs-server
 
 ---
 
-## ✅ Production Checklist
+## Production Checklist
 
 Перед запуском:
 
@@ -646,19 +646,19 @@ systemctl restart nfs-server
 
 ---
 
-## 🎯 Заключение
+## Заключение
 
 Настроили production-grade NFS + Autofs:
 
 **Безопасность:**
-- ✅ root_squash вместо no_root_squash
-- ✅ Kerberos шифрование (krb5p для /home)
-- ✅ SELinux Enforcing
+- root_squash вместо no_root_squash
+- Kerberos шифрование (krb5p для /home)
+- SELinux Enforcing
 
 **Надёжность:**
-- ✅ hard mounts для критичных данных
-- ✅ Правильная DNS конфигурация
-- ✅ Управление квотами
+- hard mounts для критичных данных
+- Правильная DNS конфигурация
+- Управление квотами
 
 **Принципы:**
 
@@ -669,14 +669,14 @@ systemctl restart nfs-server
 
 ---
 
-## 📚 Следующая статья
+## Следующая статья
 
 **Часть 3:** [Hashicorp Vault интеграция](/posts/freeipa-vault-integration/)
 
 ---
 
-## 📞 КОНТАКТНАЯ ИНФОРМАЦИЯ
+## КОНТАКТНАЯ ИНФОРМАЦИЯ
 
-📱 **Telegram:** [@DevITWay](https://t.me/DevITWay)
+ **Telegram:** [@DevITWay](https://t.me/DevITWay)
 
-🌐 **Сайт:** [devopsway.ru](https://devopsway.ru/)
+ **Сайт:** [devopsway.ru](https://devopsway.ru/)
