@@ -259,12 +259,6 @@ url = "/search/"
 weight = 30
 
 [[menu.main]]
-identifier = "maintenance"
-name = "🔧 Обслуживание"
-url = "/maintenance/"
-weight = 35
-
-[[menu.main]]
 identifier = "about"
 name = "👨‍💻 О проекте"
 url = "/about/"
