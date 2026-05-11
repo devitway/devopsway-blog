@@ -11,6 +11,7 @@ description: "Один SSH-ключ на GitHub, GitLab, прод-серверы
 canonical: ""
 series: "Git Mastery"
 aliases:
+  - /posts/day-00-git/
   - /posts/day-00-git-basics/
 showToc: true
 TocOpen: false

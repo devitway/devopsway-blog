@@ -11,7 +11,7 @@ description: "Как работают ветки: указатель на ком
 canonical: ""
 series: "Git Mastery"
 aliases:
-  - /posts/day-04-git/
+  - /posts/day-03-git/
 showToc: true
 TocOpen: false
 hidemeta: false

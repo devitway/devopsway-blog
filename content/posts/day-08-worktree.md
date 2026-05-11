@@ -11,7 +11,7 @@ description: "Как держать открытыми одновременно 
 canonical: ""
 series: "Git Mastery"
 aliases:
-  - /posts/day-09-git/
+  - /posts/day-08-git/
 showToc: true
 TocOpen: false
 hidemeta: false

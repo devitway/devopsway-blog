@@ -10,6 +10,8 @@ author: "DevOps Way"
 description: "Как точечно перенести один коммит между ветками через cherry-pick. Как включить rerere — и Git будет сам разрешать повторяющиеся конфликты, запоминая ваше решение."
 canonical: ""
 series: "Git Mastery"
+aliases:
+  - /posts/day-07-git/
 showToc: true
 TocOpen: false
 hidemeta: false
