@@ -1,5 +1,5 @@
 ---
-title: "🔐 FreeIPA: руководство по установке централизованной системы управления идентификацией"
+title: "FreeIPA: руководство по установке централизованной системы управления идентификацией"
 date: 2025-06-01T10:00:00+03:00
 lastmod: 2025-12-15T10:00:00+03:00
 draft: false
@@ -37,10 +37,10 @@ editPost:
 
 ---
 
-🔒 **Категория:** Системное администрирование  
-💡 **Цель:** Развернуть production FreeIPA с учётом всех подводных камней
+ **Категория:** Системное администрирование 
+ **Цель:** Развернуть production FreeIPA с учётом всех подводных камней
 
-🧠 **Чему научитесь:**
+ **Чему научитесь:**
 
 - Правильная установка FreeIPA
 - Настройка LDAP, Kerberos, DNS, CA
@@ -48,21 +48,21 @@ editPost:
 - Мониторинг и решение проблем
 - Резервное копирование
 
-⚠️ **Требования:**
+ **Требования:**
 
 - RHEL/CentOS Stream/AlmaLinux/Rocky 8-9
 - Минимум 4GB RAM
 - Статический IP и FQDN
 - Доступ root
 
-**📚 Серия статей:**
+** Серия статей:**
 1. **Установка FreeIPA** (эта статья)
 2. [NFS + Autofs интеграция](/posts/freeipa-nfs-autofs/)
 3. [Hashicorp Vault интеграция](/posts/freeipa-vault-integration/)
 
 ---
 
-## 🏗️ Архитектура FreeIPA
+## Архитектура FreeIPA
 
 {{< mermaid >}}
 graph TB
@@ -84,27 +84,27 @@ graph TB
 
 **Возможности:**
 
-- 🔐 Централизованная аутентификация
-- 🎫 Kerberos SSO
-- 📜 Встроенный CA
-- 🌐 Интегрированный DNS
-- 👥 Управление пользователями
-- 🔑 SSH ключи
-- ⚡ Правила sudo
+- Централизованная аутентификация
+- Kerberos SSO
+- Встроенный CA
+- Интегрированный DNS
+- Управление пользователями
+- SSH ключи
+- Правила sudo
 
 ---
 
-## 💻 Системные требования
+## Системные требования
 
 **Поддерживаемые ОС:**
 
 | ОС | Рекомендация |
 |---|---|
-| RHEL 8, 9 | ✅ Production |
-| CentOS Stream 8, 9 | ✅ Production |
-| AlmaLinux 8, 9 | ✅ Production |
-| Rocky Linux 8, 9 | ✅ Production |
-| Fedora 38+ | ⚠️ Только тесты |
+| RHEL 8, 9 | Production |
+| CentOS Stream 8, 9 | Production |
+| AlmaLinux 8, 9 | Production |
+| Rocky Linux 8, 9 | Production |
+| Fedora 38+ | Только тесты |
 
 **Ресурсы:**
 
@@ -114,11 +114,11 @@ graph TB
 | CPU | 2 ядра | 4 ядра |
 | Диск | 10 GB | 20+ GB |
 
-⚠️ **О RAM:** 2GB только для тестов, 4GB минимум для production
+ **О RAM:** 2GB только для тестов, 4GB минимум для production
 
 ---
 
-## 🚀 1. Подготовка системы
+## 1. Подготовка системы
 
 ### Настройка hostname
 
@@ -132,12 +132,12 @@ getent hosts ipa-master.example.com
 
 ### Файл /etc/hosts
 
-⚠️ Только для начальной установки!
+ Только для начальной установки!
 
 ```bash
 grep -q ipa-master.example.com /etc/hosts || \
 cat >> /etc/hosts << EOF
-192.168.1.10   ipa-master.example.com ipa-master
+192.168.1.10 ipa-master.example.com ipa-master
 EOF
 ```
 
@@ -206,7 +206,7 @@ reboot
 
 ---
 
-## 📦 2. Установка FreeIPA
+## 2. Установка FreeIPA
 
 ### Установка пакетов
 
@@ -223,28 +223,28 @@ ipa-server-install --setup-dns
 
 ### Автоматическая установка
 
-⚠️ **Production:** Используйте пароли из файлов!
+ **Production:** Используйте пароли из файлов!
 
 ```bash
 export IPA_DS_PASSWORD=$(cat /root/.ipa_ds_pass)
 export IPA_ADMIN_PASSWORD=$(cat /root/.ipa_admin_pass)
 
 ipa-server-install \
-    --hostname="ipa-master.example.com" \
-    --domain="example.com" \
-    --realm="EXAMPLE.COM" \
-    --ds-password="$IPA_DS_PASSWORD" \
-    --admin-password="$IPA_ADMIN_PASSWORD" \
-    --setup-dns \
-    --forwarder="8.8.8.8" \
-    --forwarder="1.1.1.1" \
-    --no-ntp \
-    --unattended
+ --hostname="ipa-master.example.com" \
+ --domain="example.com" \
+ --realm="EXAMPLE.COM" \
+ --ds-password="$IPA_DS_PASSWORD" \
+ --admin-password="$IPA_ADMIN_PASSWORD" \
+ --setup-dns \
+ --forwarder="8.8.8.8" \
+ --forwarder="1.1.1.1" \
+ --no-ntp \
+ --unattended
 
 unset IPA_DS_PASSWORD IPA_ADMIN_PASSWORD
 ```
 
-⚠️ **Флаг --no-ntp:** Только если время УЖЕ синхронизировано!
+ **Флаг --no-ntp:** Только если время УЖЕ синхронизировано!
 
 ### Проверка установки
 
@@ -276,7 +276,7 @@ curl -s -o /dev/null -w "%{http_code}\n" https://ipa-master.example.com/ipa/ui
 
 ---
 
-## 👥 3. Управление пользователями
+## 3. Управление пользователями
 
 ### Создание пользователя
 
@@ -310,7 +310,7 @@ ipa user-enable jdoe
 ipa user-del jdoe
 ```
 
-⚠️ **Важно:** После удаления tickets живут до истечения (24ч по умолчанию)
+ **Важно:** После удаления tickets живут до истечения (24ч по умолчанию)
 
 ### SSH ключи
 
@@ -328,7 +328,7 @@ ipa group-show developers
 
 ---
 
-## 🖥️ 4. Подключение клиентов
+## 4. Подключение клиентов
 
 ```bash
 # На клиенте
@@ -351,7 +351,7 @@ su - jdoe
 
 ---
 
-## ⚙️ 5. Правила Sudo
+## 5. Правила Sudo
 
 ### Создание команд
 
@@ -383,7 +383,7 @@ ipa sudorule-add-allow-command sysadmins_full \
     --sudocmdgroups=system-commands
 ```
 
-⚠️ **Production:** Используйте hostgroups вместо `--hostcat=all`
+ **Production:** Используйте hostgroups вместо `--hostcat=all`
 
 ### Тестирование
 
@@ -398,7 +398,7 @@ sss_cache -E
 
 ---
 
-## 🌐 6. Управление DNS
+## 6. Управление DNS
 
 ```bash
 # A запись
@@ -419,7 +419,7 @@ ipa dnsrecord-del example.com web --a-rec=192.168.1.30
 
 ---
 
-## 📊 7. Мониторинг
+## 7. Мониторинг
 
 ```bash
 #!/bin/bash
@@ -427,7 +427,7 @@ ipa dnsrecord-del example.com web --a-rec=192.168.1.30
 
 REALM=$(hostname -d | tr '[:lower:]' '[:upper:]')
 
-echo "🔍 Проверка FreeIPA"
+echo " Проверка FreeIPA"
 
 # Сервисы
 ipactl status
@@ -458,7 +458,7 @@ systemctl is-active "$DS_INSTANCE"
 
 ---
 
-## 💾 8. Резервное копирование
+## 8. Резервное копирование
 
 ```bash
 #!/bin/bash
@@ -478,7 +478,7 @@ tar czf "${BACKUP_DIR}/backup-$(date +%Y%m%d).tar.gz" -C "$(dirname $LATEST)" "$
 find "$BACKUP_DIR" -name "*.tar.gz" -mtime +30 -delete
 ```
 
-⚠️ **Multi-master:** Backup делается на ОДНОЙ реплике
+ **Multi-master:** Backup делается на ОДНОЙ реплике
 
 **Автоматизация:**
 
@@ -498,10 +498,10 @@ ipa-restore /var/lib/ipa/backup/ipa-data-YYYY-MM-DD-HH-MM-SS
 
 ---
 
-## 🔧 Решение проблем
+## Решение проблем
 
 <details>
-<summary><b>❌ Проблема 1: Истёк сертификат</b></summary>
+<summary><b> Проблема 1: Истёк сертификат</b></summary>
 
 **Проверка:**
 
@@ -527,7 +527,7 @@ ipactl restart
 </details>
 
 <details>
-<summary><b>❌ Проблема 2: Kerberos не работает</b></summary>
+<summary><b> Проблема 2: Kerberos не работает</b></summary>
 
 **Проверка времени:**
 
@@ -549,7 +549,7 @@ journalctl -u krb5kdc -n 50
 </details>
 
 <details>
-<summary><b>❌ Проблема 3: LDAP не отвечает</b></summary>
+<summary><b> Проблема 3: LDAP не отвечает</b></summary>
 
 ```bash
 REALM=$(hostname -d | tr '[:lower:]' '[:upper:]')
@@ -567,7 +567,7 @@ ldapsearch -Y GSSAPI -b "dc=example,dc=com" -LLL
 </details>
 
 <details>
-<summary><b>❌ Проблема 4: Web UI недоступен</b></summary>
+<summary><b> Проблема 4: Web UI недоступен</b></summary>
 
 ```bash
 systemctl status httpd
@@ -578,7 +578,7 @@ ipactl status
 </details>
 
 <details>
-<summary><b>❌ Проблема 5: Клиент не подключается</b></summary>
+<summary><b> Проблема 5: Клиент не подключается</b></summary>
 
 **Правильный порядок диагностики:**
 
@@ -616,7 +616,7 @@ ipa-client-install --enable-dns-updates --mkhomedir
 
 ---
 
-## 💡 Полезные команды
+## Полезные команды
 
 ```bash
 # Управление
@@ -638,14 +638,14 @@ ipa group-add/show/del groupname
 
 ---
 
-## 🎯 Заключение
+## Заключение
 
 Развёрнут production-ready FreeIPA:
 
-- ✅ Все типичные ошибки исправлены
-- ✅ Безопасная конфигурация
-- ✅ Готовые скрипты мониторинга
-- ✅ Резервное копирование
+- Все типичные ошибки исправлены
+- Безопасная конфигурация
+- Готовые скрипты мониторинга
+- Резервное копирование
 
 **Ключевые принципы:**
 
@@ -657,15 +657,15 @@ ipa group-add/show/del groupname
 
 ---
 
-## 📚 Следующие статьи
+## Следующие статьи
 
 - **Часть 2:** [NFS + Autofs интеграция](/posts/freeipa-nfs-autofs/)
 - **Часть 3:** [Hashicorp Vault интеграция](/posts/freeipa-vault-integration/)
 
 ---
 
-## 📞 КОНТАКТНАЯ ИНФОРМАЦИЯ
+## КОНТАКТНАЯ ИНФОРМАЦИЯ
 
-📱 **Telegram:** [@DevITWay](https://t.me/DevITWay)
+ **Telegram:** [@DevITWay](https://t.me/DevITWay)
 
-🌐 **Сайт:** [devopsway.ru](https://devopsway.ru/)
+ **Сайт:** [devopsway.ru](https://devopsway.ru/)

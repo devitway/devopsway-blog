@@ -1,5 +1,5 @@
 ---
-title: "🔐 Интеграция Hashicorp Vault с FreeIPA: Управление секретами в DevOps"
+title: "Интеграция Hashicorp Vault с FreeIPA: Управление секретами в DevOps"
 date: 2025-12-15T10:00:00+03:00
 lastmod: 2025-12-15T10:00:00+03:00
 draft: false
@@ -37,19 +37,19 @@ editPost:
     
 ---
 
-## 🏗️ Архитектура интеграции
+## Архитектура интеграции
 
 {{< mermaid >}}
 graph TB
-  A[Пользователь]
-  B[Vault Server]
-  C[FreeIPA LDAP]
-  
-  A -->|1. Логин| B
-  B -->|2. Проверка| C
-  C -->|3. OK| B
-  B -->|4. Token| A
-  A -->|5. Секреты| B
+ A[Пользователь]
+ B[Vault Server]
+ C[FreeIPA LDAP]
+ 
+ A -->|1. Логин| B
+ B -->|2. Проверка| C
+ C -->|3. OK| B
+ B -->|4. Token| A
+ A -->|5. Секреты| B
 {{< /mermaid >}}
 
 **Процесс аутентификации:**
@@ -62,7 +62,7 @@ graph TB
 
 ---
 
-## 💻 Требования
+## Требования
 
 | Компонент | Требования |
 |---|---|
@@ -73,7 +73,7 @@ graph TB
 
 ---
 
-## 🚀 Часть 1: Установка Vault
+## Часть 1: Установка Vault
 
 ### Установка на RHEL/CentOS
 
@@ -98,12 +98,12 @@ cat > /etc/vault.d/vault.hcl << 'EOF'
 # Vault конфигурация для интеграции с FreeIPA
 
 storage "file" {
-  path = "/opt/vault/data"
+ path = "/opt/vault/data"
 }
 
 listener "tcp" {
-  address     = "0.0.0.0:8200"
-  tls_disable = 1
+ address = "0.0.0.0:8200"
+ tls_disable = 1
 }
 
 api_addr = "http://192.168.1.30:8200"
@@ -114,7 +114,7 @@ chown -R vault:vault /opt/vault /etc/vault.d
 chmod 640 /etc/vault.d/vault.hcl
 ```
 
-⚠️ **Важно:** `tls_disable = 1` только для лаборатории! В production используйте TLS!
+ **Важно:** `tls_disable = 1` только для лаборатории! В production используйте TLS!
 
 ### Запуск Vault
 
@@ -156,7 +156,7 @@ Unseal Key 5: bbb...
 Initial Root Token: hvs.xxx...
 ```
 
-⚠️ **КРИТИЧНО:** Сохраните ключи в безопасном месте!
+ **КРИТИЧНО:** Сохраните ключи в безопасном месте!
 
 ### Распечатывание (Unseal)
 
@@ -178,7 +178,7 @@ vault login <root-token>
 
 ---
 
-## 🔗 Часть 2: Интеграция с FreeIPA LDAP
+## Часть 2: Интеграция с FreeIPA LDAP
 
 ### Создание учётной записи для Vault
 
@@ -197,7 +197,7 @@ ipa user-add vault-service \
 ipa passwd vault-service
 ```
 
-⚠️ **Важно:** Сохраните пароль в безопасном месте!
+ **Важно:** Сохраните пароль в безопасном месте!
 
 ### Проверка LDAP подключения
 
@@ -212,7 +212,7 @@ ldapsearch -x -H ldap://ipa-master.example.com \
     "(uid=testuser)"
 ```
 
-Должен вернуть информацию о пользователе ✅
+Должен вернуть информацию о пользователе 
 
 ### Включение LDAP аутентификации в Vault
 
@@ -246,11 +246,11 @@ vault login -method=ldap username=testuser
 vault token lookup
 ```
 
-Успешный вход = интеграция работает! ✅
+Успешный вход = интеграция работает! 
 
 ---
 
-## 🔒 Часть 3: Политики доступа
+## Часть 3: Политики доступа
 
 ### Создание политик
 
@@ -262,17 +262,17 @@ cat > /tmp/dev-policy.hcl << 'EOF'
 
 # Чтение/запись в secret/dev/*
 path "secret/data/dev/*" {
-  capabilities = ["create", "read", "update", "delete", "list"]
+ capabilities = ["create", "read", "update", "delete", "list"]
 }
 
 # Чтение secret/shared/*
 path "secret/data/shared/*" {
-  capabilities = ["read", "list"]
+ capabilities = ["read", "list"]
 }
 
 # Metadata
 path "secret/metadata/*" {
-  capabilities = ["list"]
+ capabilities = ["list"]
 }
 EOF
 
@@ -287,17 +287,17 @@ cat > /tmp/admin-policy.hcl << 'EOF'
 
 # Полный доступ к secret/*
 path "secret/*" {
-  capabilities = ["create", "read", "update", "delete", "list"]
+ capabilities = ["create", "read", "update", "delete", "list"]
 }
 
 # Управление политиками
 path "sys/policies/acl/*" {
-  capabilities = ["create", "read", "update", "delete", "list"]
+ capabilities = ["create", "read", "update", "delete", "list"]
 }
 
 # Просмотр auth методов
 path "sys/auth" {
-  capabilities = ["read", "list"]
+ capabilities = ["read", "list"]
 }
 EOF
 
@@ -329,14 +329,14 @@ vault login -method=ldap username=alice
 vault token lookup | grep policies
 
 # Тест доступа
-vault kv put secret/dev/myapp password=secret123  # OK
-vault kv get secret/dev/myapp                     # OK
-vault kv put secret/prod/myapp password=test      # Denied!
+vault kv put secret/dev/myapp password=secret123 # OK
+vault kv get secret/dev/myapp # OK
+vault kv put secret/prod/myapp password=test # Denied!
 ```
 
 ---
 
-## 🗄️ Часть 4: Управление секретами
+## Часть 4: Управление секретами
 
 > **Примечание:** KV engine должен быть включён **до** использования `vault kv put`.
 > Если вы выполняли примеры из Части 3 — включите engine сейчас.
@@ -418,7 +418,7 @@ vault kv metadata delete secret/dev/database
 
 ---
 
-## 🔄 Часть 5: Динамические секреты
+## Часть 5: Динамические секреты
 
 ### Подключение к PostgreSQL (пример)
 
@@ -428,19 +428,19 @@ vault secrets enable database
 
 # Настройка подключения
 vault write database/config/postgresql \
-    plugin_name=postgresql-database-plugin \
-    allowed_roles="dev-role" \
-    connection_url="postgresql://{{username}}:{{password}}@postgres:5432/mydb" \
-    username="vaultadmin" \
-    password="vaultpass"
+ plugin_name=postgresql-database-plugin \
+ allowed_roles="dev-role" \
+ connection_url="postgresql://{{username}}:{{password}}@postgres:5432/mydb" \
+ username="vaultadmin" \
+ password="vaultpass"
 
 # Создание роли
 vault write database/roles/dev-role \
-    db_name=postgresql \
-    creation_statements="CREATE ROLE \"{{name}}\" WITH LOGIN PASSWORD '{{password}}' VALID UNTIL '{{expiration}}'; \
-        GRANT SELECT ON ALL TABLES IN SCHEMA public TO \"{{name}}\";" \
-    default_ttl="1h" \
-    max_ttl="24h"
+ db_name=postgresql \
+ creation_statements="CREATE ROLE \"{{name}}\" WITH LOGIN PASSWORD '{{password}}' VALID UNTIL '{{expiration}}'; \
+ GRANT SELECT ON ALL TABLES IN SCHEMA public TO \"{{name}}\";" \
+ default_ttl="1h" \
+ max_ttl="24h"
 ```
 
 ### Генерация динамических учётных данных
@@ -450,18 +450,18 @@ vault write database/roles/dev-role \
 vault read database/creds/dev-role
 
 # Вывод:
-# Key                Value
-# lease_id          database/creds/dev-role/xxx
-# lease_duration    1h
-# username          v-token-dev-role-yyy
-# password          A1B2C3D4E5F6
+# Key Value
+# lease_id database/creds/dev-role/xxx
+# lease_duration 1h
+# username v-token-dev-role-yyy
+# password A1B2C3D4E5F6
 ```
 
 Учётные данные действуют 1 час, затем автоматически удаляются!
 
 ---
 
-## 📊 Часть 6: Мониторинг
+## Часть 6: Мониторинг
 
 ### Проверка здоровья Vault
 
@@ -471,7 +471,7 @@ vault read database/creds/dev-role
 
 export VAULT_ADDR='http://127.0.0.1:8200'
 
-echo "🔍 Проверка Vault"
+echo " Проверка Vault"
 
 # Статус
 vault status
@@ -488,7 +488,7 @@ vault secrets list
 # Политики
 vault policy list
 
-echo "✅ Завершено"
+echo " Завершено"
 ```
 
 ### Аудит логи
@@ -506,14 +506,14 @@ tail -f /var/log/vault-audit.log | jq
 
 ---
 
-## 🔧 Часть 7: Использование Vault CLI
+## Часть 7: Использование Vault CLI
 
 ### Настройка окружения
 
 ```bash
 # В ~/.bashrc или ~/.zshrc
 export VAULT_ADDR='http://vault-server:8200'
-export VAULT_TOKEN='hvs.xxx...'  # Или используйте vault login
+export VAULT_TOKEN='hvs.xxx...' # Или используйте vault login
 
 # Или создайте файл
 cat > ~/.vault-env << 'EOF'
@@ -570,7 +570,7 @@ docker run -e DB_PASSWORD="$DB_PASS" -e API_KEY="$API_KEY" myapp
 
 ---
 
-## 🔐 Часть 8: Best Practices
+## Часть 8: Best Practices
 
 ### Безопасность
 
@@ -579,9 +579,9 @@ docker run -e DB_PASSWORD="$DB_PASS" -e API_KEY="$API_KEY" myapp
 ```bash
 # В vault.hcl
 listener "tcp" {
-  address       = "0.0.0.0:8200"
+  address = "0.0.0.0:8200"
   tls_cert_file = "/etc/vault.d/vault.crt"
-  tls_key_file  = "/etc/vault.d/vault.key"
+  tls_key_file = "/etc/vault.d/vault.key"
 }
 ```
 
@@ -628,7 +628,7 @@ systemctl start vault
 # Очистка старых (>30 дней)
 find "$BACKUP_DIR" -name "*.tar.gz" -mtime +30 -delete
 
-echo "✅ Backup завершён: ${DATE}"
+echo " Backup завершён: ${DATE}"
 ```
 
 ### High Availability
@@ -642,10 +642,10 @@ echo "✅ Backup завершён: ${DATE}"
 
 ---
 
-## 🔧 Решение проблем
+## Решение проблем
 
 <details>
-<summary><b>❌ Проблема 1: Vault sealed</b></summary>
+<summary><b> Проблема 1: Vault sealed</b></summary>
 
 ```bash
 # Проверка
@@ -664,7 +664,7 @@ vault status
 </details>
 
 <details>
-<summary><b>❌ Проблема 2: LDAP аутентификация не работает</b></summary>
+<summary><b> Проблема 2: LDAP аутентификация не работает</b></summary>
 
 ```bash
 # Проверка конфигурации
@@ -672,8 +672,8 @@ vault read auth/ldap/config
 
 # Тест LDAP напрямую
 ldapsearch -x -H ldap://ipa-master.example.com \
-    -D "uid=vault-service,cn=users,cn=accounts,dc=example,dc=com" \
-    -W -b "cn=users,cn=accounts,dc=example,dc=com"
+ -D "uid=vault-service,cn=users,cn=accounts,dc=example,dc=com" \
+ -W -b "cn=users,cn=accounts,dc=example,dc=com"
 
 # Проверка групп
 vault read auth/ldap/groups/developers
@@ -689,7 +689,7 @@ vault login -method=ldap username=testuser
 </details>
 
 <details>
-<summary><b>❌ Проблема 3: Permission denied при чтении секрета</b></summary>
+<summary><b> Проблема 3: Permission denied при чтении секрета</b></summary>
 
 ```bash
 # Проверка текущих политик
@@ -709,7 +709,7 @@ vault kv get secret/dev/myapp
 </details>
 
 <details>
-<summary><b>❌ Проблема 4: Token expired</b></summary>
+<summary><b> Проблема 4: Token expired</b></summary>
 
 ```bash
 # Проверка TTL
@@ -726,7 +726,7 @@ vault login -method=ldap username=alice
 
 ---
 
-## 📝 Полезные команды
+## Полезные команды
 
 ```bash
 # Статус и здоровье
@@ -760,17 +760,17 @@ vault kv rollback
 
 ---
 
-## 🎯 Заключение
+## Заключение
 
 Настроена полная интеграция Vault + FreeIPA:
 
 **Результаты:**
 
-- ✅ Централизованная аутентификация через FreeIPA LDAP
-- ✅ Политики доступа на основе групп
-- ✅ Безопасное хранение секретов
-- ✅ Динамические учётные данные
-- ✅ Аудит всех операций
+- Централизованная аутентификация через FreeIPA LDAP
+- Политики доступа на основе групп
+- Безопасное хранение секретов
+- Динамические учётные данные
+- Аудит всех операций
 
 **Ключевые принципы:**
 
@@ -791,7 +791,7 @@ vault kv rollback
 
 ---
 
-## 📚 Дополнительное чтение
+## Дополнительное чтение
 
 **Смотрите также:**
 - [Установка FreeIPA](/posts/freeipa-setup/)
@@ -804,8 +804,8 @@ vault kv rollback
 
 ---
 
-## 📞 КОНТАКТНАЯ ИНФОРМАЦИЯ
+## КОНТАКТНАЯ ИНФОРМАЦИЯ
 
-📱 **Telegram:** [@DevITWay](https://t.me/DevITWay)
+ **Telegram:** [@DevITWay](https://t.me/DevITWay)
 
-🌐 **Сайт:** [devopsway.ru](https://devopsway.ru/)
+ **Сайт:** [devopsway.ru](https://devopsway.ru/)
