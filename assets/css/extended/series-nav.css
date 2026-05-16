@@ -1,0 +1,120 @@
+/* ===== Series Navigation with Progress ===== */
+.series-nav {
+  margin: 2rem 0;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--code-bg);
+}
+
+/* Header: title + counter */
+.series-nav__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.75rem;
+}
+
+.series-nav__title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.series-nav__counter {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Progress bar */
+.series-nav__progress {
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+.series-nav__bar {
+  height: 100%;
+  background: var(--primary);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+/* List */
+.series-nav__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.series-nav__item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+/* Markers */
+.series-nav__marker {
+  flex-shrink: 0;
+  width: 1.1rem;
+  text-align: center;
+  font-size: 0.75rem;
+}
+
+.series-nav__item.is-done .series-nav__marker {
+  color: var(--primary);
+}
+
+.series-nav__item.is-current .series-nav__marker {
+  color: var(--primary);
+  font-size: 0.6rem;
+}
+
+/* Links */
+.series-nav__link {
+  color: var(--secondary);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.series-nav__link:hover {
+  color: var(--primary);
+}
+
+.series-nav__link.is-current {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.series-nav__item.is-done .series-nav__link {
+  color: var(--content);
+}
+
+/* Collapsed state for long series (>8 items) */
+.series-nav__list[data-collapse] .series-nav__item:nth-child(n+4):not(.is-current):not(:nth-last-child(-n+2)) {
+  display: none;
+}
+
+.series-nav__list[data-collapse] .series-nav__item.is-current ~ .series-nav__item:nth-child(-n+2) {
+  display: flex;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .series-nav {
+    padding: 1rem;
+  }
+
+  .series-nav__item {
+    font-size: 0.8rem;
+  }
+}
