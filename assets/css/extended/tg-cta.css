@@ -1,0 +1,76 @@
+/* ===== Telegram CTA Block ===== */
+.tg-cta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 2.5rem 0 1.5rem;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--code-bg);
+  transition: border-color 0.2s;
+}
+
+.tg-cta:hover {
+  border-color: var(--primary);
+}
+
+.tg-cta__icon {
+  flex-shrink: 0;
+  color: #2AABEE;
+}
+
+.tg-cta__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.tg-cta__title {
+  margin: 0 0 0.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.tg-cta__desc {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--secondary);
+  line-height: 1.4;
+}
+
+.tg-cta__btn {
+  flex-shrink: 0;
+  padding: 0.5rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #fff;
+  background: #2AABEE;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.tg-cta__btn:hover {
+  background: #229ED9;
+  transform: translateY(-1px);
+}
+
+.tg-cta__btn:active {
+  transform: translateY(0);
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .tg-cta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+
+  .tg-cta__btn {
+    align-self: stretch;
+    text-align: center;
+  }
+}

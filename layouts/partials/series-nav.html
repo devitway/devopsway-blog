@@ -1,0 +1,52 @@
+{{- /* Series Navigation with Progress — показывает все посты серии и текущую позицию */ -}}
+{{- with .Params.series -}}
+{{- $currentSeries := . -}}
+{{- $currentPage := $ -}}
+
+{{- /* Собираем все посты серии, сортируем по weight → date */ -}}
+{{- $seriesPosts := where site.RegularPages ".Params.series" $currentSeries -}}
+{{- $seriesPosts = sort $seriesPosts ".Params.seriesWeight" "asc" -}}
+
+{{- if gt (len $seriesPosts) 1 -}}
+
+{{- /* Вычисляем позицию текущего поста */ -}}
+{{- $total := len $seriesPosts -}}
+{{- $currentIdx := 0 -}}
+{{- range $i, $p := $seriesPosts -}}
+  {{- if eq $p.Permalink $currentPage.Permalink -}}
+    {{- $currentIdx = add $i 1 -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* Название серии из params или fallback */ -}}
+{{- $seriesTitle := $currentPage.Params.seriesTitle | default (printf "Серия: %s" $currentSeries) -}}
+
+<nav class="series-nav" aria-label="Навигация по серии">
+  <div class="series-nav__header">
+    <span class="series-nav__title">{{ $seriesTitle }}</span>
+    <span class="series-nav__counter">{{ $currentIdx }}/{{ $total }}</span>
+  </div>
+
+  <div class="series-nav__progress">
+    <div class="series-nav__bar" style="width: {{ mul (div (float $currentIdx) (float $total)) 100 }}%"></div>
+  </div>
+
+  <ol class="series-nav__list">
+    {{- range $i, $p := $seriesPosts -}}
+    {{- $isCurrent := eq $p.Permalink $currentPage.Permalink -}}
+    {{- $isPast := lt (add $i 1) $currentIdx -}}
+    <li class="series-nav__item{{ if $isCurrent }} is-current{{ else if $isPast }} is-done{{ end }}">
+      {{- if $isCurrent -}}
+      <span class="series-nav__marker">&#9654;</span>
+      <span class="series-nav__link is-current">{{ $p.Title }}</span>
+      {{- else -}}
+      <span class="series-nav__marker">{{ if $isPast }}&#10003;{{ else }}&#9675;{{ end }}</span>
+      <a class="series-nav__link" href="{{ $p.Permalink }}">{{ $p.Title }}</a>
+      {{- end -}}
+    </li>
+    {{- end -}}
+  </ol>
+</nav>
+
+{{- end -}}
+{{- end -}}
