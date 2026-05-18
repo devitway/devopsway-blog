@@ -1,0 +1,177 @@
+/* ===== Docker Sort Quiz Widget ===== */
+
+.docker-sort {
+  margin: 2rem 0;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--code-bg);
+}
+
+.docker-sort__title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--primary);
+  margin: 0 0 1rem;
+}
+
+/* Sortable list */
+.docker-sort__list {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.docker-sort__item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 44px;
+  padding: 0.5rem 0.75rem;
+  background: var(--entry);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-family: var(--font-code, 'SF Mono', 'Fira Code', 'Courier New', monospace);
+  font-size: 0.85rem;
+  line-height: 1.4;
+  cursor: grab;
+  user-select: none;
+  transition: opacity 0.15s, border-color 0.15s, background 0.15s;
+}
+
+.docker-sort__item:active {
+  cursor: grabbing;
+}
+
+.docker-sort__grip {
+  flex-shrink: 0;
+  color: var(--secondary);
+  font-size: 1rem;
+  line-height: 1;
+  opacity: 0.5;
+}
+
+.docker-sort__text {
+  flex: 1;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Drag states */
+.docker-sort__item.is-dragging {
+  opacity: 0.4;
+}
+
+.docker-sort__item.insert-above {
+  border-top: 2px solid var(--primary);
+}
+
+.docker-sort__item.insert-below {
+  border-bottom: 2px solid var(--primary);
+}
+
+/* Touch ghost element */
+.docker-sort__ghost {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.85;
+  transform: rotate(1deg);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Validation results */
+.docker-sort__item.is-correct {
+  background: rgba(34, 197, 94, 0.12);
+  border-color: rgba(34, 197, 94, 0.4);
+}
+
+.docker-sort__item.is-wrong {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+/* Buttons */
+.docker-sort__actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.docker-sort__btn {
+  padding: 0.5rem 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--entry);
+  color: var(--primary);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.docker-sort__btn:hover {
+  background: var(--border);
+}
+
+.docker-sort__btn--check {
+  background: var(--primary);
+  color: var(--theme, #fff);
+  border-color: var(--primary);
+}
+
+.docker-sort__btn--check:hover {
+  opacity: 0.9;
+}
+
+/* Explanation block */
+.docker-sort__explain {
+  display: none;
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 6px;
+  background: rgba(34, 197, 94, 0.06);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--content);
+}
+
+.docker-sort__explain.is-visible {
+  display: block;
+}
+
+/* Success message */
+.docker-sort__result {
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  min-height: 1.25rem;
+}
+
+.docker-sort__result--success {
+  color: #16a34a;
+}
+
+.docker-sort__result--fail {
+  color: #dc2626;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .docker-sort {
+    padding: 1rem;
+    margin: 1.5rem -0.5rem;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+
+  .docker-sort__item {
+    font-size: 0.78rem;
+    padding: 0.4rem 0.5rem;
+  }
+}

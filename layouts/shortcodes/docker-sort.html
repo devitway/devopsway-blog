@@ -1,0 +1,54 @@
+{{- $id := .Get "id" | default "docker-sort" -}}
+{{- $title := .Get "title" | default "Расставьте строки в правильном порядке" -}}
+
+{{- /* Split .Inner into shuffled / correct / explain sections */ -}}
+{{- $raw := .Inner -}}
+{{- $parts := split $raw "---correct---" -}}
+{{- $shuffled := index $parts 0 -}}
+{{- $rest := index $parts 1 -}}
+{{- $correctAndExplain := split $rest "---explain---" -}}
+{{- $correct := index $correctAndExplain 0 -}}
+{{- $explain := "" -}}
+{{- if gt (len $correctAndExplain) 1 -}}
+  {{- $explain = index $correctAndExplain 1 -}}
+{{- end -}}
+
+{{- /* Parse correct lines into JSON array, base64 encode */ -}}
+{{- $correctLines := slice -}}
+{{- range split (trim $correct "\n ") "\n" -}}
+  {{- $line := trim . " \r" -}}
+  {{- if ne $line "" -}}
+    {{- $correctLines = $correctLines | append $line -}}
+  {{- end -}}
+{{- end -}}
+{{- $answerJSON := $correctLines | jsonify -}}
+{{- $answerB64 := $answerJSON | base64Encode -}}
+
+{{- /* Parse shuffled lines */ -}}
+{{- $shuffledLines := slice -}}
+{{- range split (trim $shuffled "\n ") "\n" -}}
+  {{- $line := trim . " \r" -}}
+  {{- if ne $line "" -}}
+    {{- $shuffledLines = $shuffledLines | append $line -}}
+  {{- end -}}
+{{- end -}}
+
+<div class="docker-sort" id="{{ $id }}" data-answer="{{ $answerB64 }}">
+  <p class="docker-sort__title">{{ $title }}</p>
+  <ul class="docker-sort__list">
+    {{- range $shuffledLines -}}
+    <li class="docker-sort__item">
+      <span class="docker-sort__grip">&#10303;</span>
+      <span class="docker-sort__text">{{ . }}</span>
+    </li>
+    {{- end -}}
+  </ul>
+  <div class="docker-sort__actions">
+    <button class="docker-sort__btn docker-sort__btn--check" type="button">Проверить</button>
+    <button class="docker-sort__btn docker-sort__btn--reset" type="button">Сбросить</button>
+  </div>
+  <div class="docker-sort__result"></div>
+  {{- if ne (trim $explain " \n") "" -}}
+  <div class="docker-sort__explain">{{ trim $explain "\n " | markdownify }}</div>
+  {{- end -}}
+</div>

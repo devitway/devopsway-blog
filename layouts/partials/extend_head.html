@@ -47,6 +47,16 @@ body:not(.dark) .mermaid .node rect,body:not(.dark) .mermaid .node circle,body:n
 {{ end }}
 
 <!-- =============================================================================
+     DOCKER SORT QUIZ
+     ============================================================================= -->
+{{ if findRE `docker-sort` .RawContent }}
+{{ with resources.Get "js/docker-sort.js" }}
+  {{ $js := . | minify | fingerprint }}
+  <script defer src="{{ $js.RelPermalink }}"></script>
+{{ end }}
+{{ end }}
+
+<!-- =============================================================================
      D3.js ДИАГРАММЫ
      ============================================================================= -->
 {{ if .Params.diagrams }}
