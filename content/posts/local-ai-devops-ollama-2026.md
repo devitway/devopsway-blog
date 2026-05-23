@@ -45,7 +45,7 @@ editPost:
 
 ### OpenCode – швейцарский нож
 
-[OpenCode](https://opencode.ai/) – 161K+ звёзд на GitHub, 75+ провайдеров, MIT-лицензия. Go-проект от Anomaly (SST) с терминальным TUI.
+[OpenCode](https://opencode.ai/) – 161K+ звёзд на GitHub, 75+ провайдеров, MIT-лицензия. TypeScript-проект от Anomaly (SST) с терминальным TUI.
 
 **Установка:**
 ```bash
@@ -138,7 +138,7 @@ export OPENAI_API_KEY=ollama
 
 | | OpenCode | Aider | Qwen Code |
 |---|:---:|:---:|:---:|
-| Язык | Go | Python | Node.js |
+| Язык | TypeScript | Python | Node.js |
 | GitHub stars | 161K+ | 30K+ | 25K+ |
 | Ollama | ✅ | ✅ | ✅ |
 | Tool calling | ✅ | ✅ | ✅ |
