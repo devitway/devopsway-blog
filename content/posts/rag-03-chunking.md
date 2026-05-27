@@ -176,15 +176,7 @@ def _split_large_chunk(text: str, section: str) -> list[dict]:
 
 **Ограничение модели:** mxbai-embed-large принимает максимум 512 токенов. При превышении Ollama возвращает HTTP 500 с `"context length exceeded"`.
 
-**Русский текст дороже английского:**
-
-```
-English: "container"     → 1 token
-Русский: "контейнер"     → ~9 tokens  (кириллица дробится на subword-фрагменты)
-Русский: "проксирование" → ~11 tokens
-```
-
-Одно русское слово = 8-11 токенов. При этом URL и markdown-разметка тоже не сжимаются. Worst-case: 912 символов русского markdown с ссылками = 512 токенов. Значит 800 символов – это ~450 токенов, есть запас.
+**Русский текст дороже английского.** Как мы показали в [посте 2/N](/posts/rag-02-embeddings/), одно русское слово занимает 8-11 токенов (кириллица дробится на subword-фрагменты). При этом URL и markdown-разметка тоже не сжимаются. Worst-case: 912 символов русского markdown с ссылками = 512 токенов. Значит 800 символов – это ~450 токенов, есть запас.
 
 **Binary search:**
 
@@ -203,7 +195,7 @@ English: "container"     → 1 token
 
 ## Санитизация: чистим мусор до embedding
 
-Грязный текст = шумный вектор. Шумный вектор "притягивает" нерелевантные результаты при поиске.
+В [посте 2/N](/posts/rag-02-embeddings/) мы показали базовую `sanitize_for_embedding()`. Вот расширенная версия для chunking-pipeline с дополнительными фильтрами. Грязный текст = шумный вектор. Шумный вектор "притягивает" нерелевантные результаты при поиске.
 
 ```python
 CHUNK_SIZE = 800
@@ -311,7 +303,7 @@ md5 от текста чанка – если текст не изменился
 
 ## Progressive truncation: fallback при переполнении
 
-Даже с лимитом 800 символов модель иногда не справляется – markdown со ссылками и таблицами может генерировать больше токенов, чем ожидалось. Решение – progressive truncation:
+В [посте 2/N](/posts/rag-02-embeddings/) мы показали базовый `safe_embed()` с цепочкой 800→600→400. Здесь полная версия с retry и обработкой ошибок. Даже с лимитом 800 символов модель иногда не справляется – markdown со ссылками и таблицами может генерировать больше токенов, чем ожидалось:
 
 ```python
 def get_embedding(text: str, retries: int = 2):
@@ -327,12 +319,12 @@ def get_embedding(text: str, retries: int = 2):
             return None
         for attempt in range(retries + 1):
             try:
-                resp = requests.post(f"http://{OLLAMA_HOST}:{OLLAMA_PORT}/api/embeddings", json={
+                resp = requests.post(f"http://{OLLAMA_HOST}:{OLLAMA_PORT}/api/embed", json={
                     "model": "mxbai-embed-large",
-                    "prompt": prompt
+                    "input": prompt
                 }, timeout=75)
                 if resp.status_code == 200:
-                    return resp.json().get('embedding')
+                    return resp.json().get('embeddings', [None])[0]
                 elif resp.status_code == 500 and "context length" in resp.text:
                     break  # обрезаем и пробуем короче
             except Exception:
@@ -542,7 +534,7 @@ python3 chunk-markdown.py ~/docs/ --stats
 
 ## Продакшен-параметры
 
-Актуальные параметры нашего pipeline (3 010 чанков):
+В [посте 2/N](/posts/rag-02-embeddings/) мы показывали общий объём pipeline: 206K+ векторов (документация + рабочие сессии). Здесь фокус на markdown-файлах базы знаний – это подмножество, для которого chunking критичен. Параметры (3 010 чанков из 180+ файлов):
 
 | Параметр | Значение | Почему |
 |----------|----------|--------|

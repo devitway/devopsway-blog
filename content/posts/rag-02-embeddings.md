@@ -363,6 +363,7 @@ for model in MODELS:
         e2 = get_embedding(model, q2)
         score = cosine_sim(e1, e2)
 
+        # 0.6 = нижняя граница для теста; в продакшене порог выше (0.7+)
         marker = "OK" if (expect == "similar" and score > 0.6) or \
                          (expect == "different" and score < 0.3) else "!!"
         print(f"  [{marker}] {score:.3f}  '{q1}' ↔ '{q2}'")
