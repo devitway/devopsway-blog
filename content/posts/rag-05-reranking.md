@@ -29,9 +29,13 @@ cover:
     caption: "RAG Pipeline: cross-encoder переставляет top-K после поиска"
     relative: false
     hidden: false
+editPost:
+    URL: "https://github.com/devitway/devopsway-blog/tree/main/content"
+    Text: "Предложить изменения"
+    appendFilePath: true
 ---
 
-В предыдущих сериях: [эмбеддинги (2/N)](/posts/rag-02-embeddings/), [нарезка на чанки (3/N)](/posts/rag-03-chunking/), [гибридный поиск (4/N)](/posts/rag-04-hybrid-search/). Нужный чанк стабильно залетает в top-15. Но порядок внутри этих 15 результатов определяет, какой чанк окажется в top-1. А top-1 – это то, что видит пользователь (или LLM при генерации ответа).
+В предыдущих сериях: [Qdrant (1/N)](/posts/rag-01-qdrant-vectors/), [эмбеддинги (2/N)](/posts/rag-02-embeddings/), [нарезка на чанки (3/N)](/posts/rag-03-chunking/), [гибридный поиск (4/N)](/posts/rag-04-hybrid-search/). Нужный чанк стабильно залетает в top-15. Но порядок внутри этих 15 результатов определяет, какой чанк окажется в top-1. А top-1 – это то, что видит пользователь (или LLM при генерации ответа).
 
 Этот пост о том, как заставить систему вчитываться в результаты. Переранжирование: дешёвый двухступенчатый каскад, который не меняет recall, но переставляет результаты так, чтобы лучший оказывался первым.
 
@@ -64,7 +68,7 @@ Query  → [Encoder] → vec_q ─┐
 Doc    → [Encoder] → vec_d ─┘
 ```
 
-Запрос и документ кодируются **отдельно**. Можно предвычислить все doc-векторы и искать по индексу за O(log N). Быстро: ~50ms на 360K чанков.
+Запрос и документ кодируются **отдельно**. Можно предвычислить все doc-векторы и искать по индексу за O(log N). Быстро: embedding + поиск по индексу ~70ms на сотнях тысяч чанков.
 
 Проблема: encoder не видит запрос, когда кодирует документ. Он не может понять, что "3 real failures: circuit breaker got 000000" релевантно запросу "circuit breaker bug" **больше**, чем "Found a bug in NORA. Let me look at the code."
 
@@ -76,15 +80,15 @@ Doc    → [Encoder] → vec_d ─┘
 
 Запрос и документ подаются в трансформер **как единый текст**. Модель видит оба одновременно, может сопоставить слова, понять контекст, выявить парафраз.
 
-Проблема: нельзя предвычислить. Для каждой пары (query, doc) – отдельный forward pass. На корпусе в 360K чанков это нереально. Но для 15 кандидатов из top-K – 15 forward passes – терпимо.
+Проблема: нельзя предвычислить. Для каждой пары (query, doc) – отдельный forward pass. На корпусе в сотни тысяч чанков это нереально. Но для 30 кандидатов из top-K – 30 forward passes – терпимо.
 
 ### Каскад
 
 Архитектурный паттерн: дешёвый фильтр → дорогой scorer.
 
 ```
-360K чанков  → [Bi-encoder: ~50ms]  → top-15
-top-15       → [Cross-encoder: ~3s] → top-5 (переставленные)
+360K чанков  → [Bi-encoder: ~70ms]  → top-30
+top-30       → [Cross-encoder: ~3s] → top-10 (переставленные)
 ```
 
 Тот же принцип, что:
@@ -285,11 +289,11 @@ Chunking (session-level, 7 turns, overlap 3)     [пост 3/N]
   ↓
 Indexing
   ├── Dense vectors (mxbai-embed-large, 1024d)   [пост 2/N]
-  └── Sparse vectors (BM25, pymorphy stemming)   [пост 4/N]
+  └── Sparse vectors (BM25, pymorphy лемматизация) [пост 4/N]
   ↓
 Query
-  ├── Dense search (Qdrant, top-45)
-  └── Sparse search (BM25, top-45)
+  ├── Dense search (Qdrant, top-50)
+  └── Sparse search (BM25, top-50)
   ↓
 RRF Fusion (0.7 dense + 0.3 sparse)             [пост 4/N]
   ↓
