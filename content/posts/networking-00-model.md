@@ -55,24 +55,24 @@ editPost:
 
 ### OSI – 7 уровней (для собеса)
 
-| # | Уровень | Что на нём живёт | Простыми словами |
-|---|---------|------------------|------------------|
-| 7 | Application | HTTP, DNS, SSH, SMTP | "что говорим" |
-| 6 | Presentation | SSL/TLS, сжатие, кодировки | – |
-| 5 | Session | управление сессиями | – |
-| 4 | Transport | TCP, UDP | "кому и как надёжно" |
-| 3 | Network | IP, ICMP, маршрутизация | "по какому адресу" |
-| 2 | Data Link | Ethernet, Wi-Fi, MAC-адреса | "по какому проводу" |
-| 1 | Physical | кабели, сигналы, разъёмы | "физика" |
+| # | Уровень      | Что на нём живёт            | Простыми словами     |
+|---|--------------|-----------------------------|----------------------|
+| 7 | Application  | HTTP, DNS, SSH, SMTP        | "что говорим"        |
+| 6 | Presentation | SSL/TLS, сжатие, кодировки  | –                    |
+| 5 | Session      | управление сессиями         | –                    |
+| 4 | Transport    | TCP, UDP                    | "кому и как надёжно" |
+| 3 | Network      | IP, ICMP, маршрутизация     | "по какому адресу"   |
+| 2 | Data Link    | Ethernet, Wi-Fi, MAC-адреса | "по какому проводу"  |
+| 1 | Physical     | кабели, сигналы, разъёмы    | "физика"             |
 
 ### TCP/IP – 4 уровня (реальность)
 
-| Уровень TCP/IP | Что на нём живёт | Соответствие OSI |
-|----------------|------------------|------------------|
-| Application | HTTP, DNS, SSH, SMTP | 5–7 |
-| Transport | TCP, UDP | 4 |
-| Internet | IP, ICMP | 3 |
-| Link | Ethernet, Wi-Fi | 1–2 |
+| Уровень TCP/IP | Что на нём живёт     | Соответствие OSI |
+|----------------|----------------------|------------------|
+| Application    | HTTP, DNS, SSH, SMTP | 5–7              |
+| Transport      | TCP, UDP             | 4                |
+| Internet       | IP, ICMP             | 3                |
+| Link           | Ethernet, Wi-Fi      | 1–2              |
 
 > **Системное мышление:** OSI и TCP/IP – не конкуренты. OSI – язык для обсуждения ("проблема на уровне 3"). TCP/IP – реальный стек протоколов. На собесе знай оба, но понимай, что TCP/IP – то, с чем работаешь каждый день.
 
@@ -80,12 +80,12 @@ editPost:
 
 Потому что **уровень определяет инструмент диагностики**:
 
-| Уровень | Симптом | Инструмент | Пример |
-|---------|---------|-----------|--------|
-| 1-2 (Link) | "Кабель выдернут", no carrier | `ip link`, `ethtool` | Interface DOWN |
-| 3 (Network) | "Нет маршрута", destination unreachable | `ip route`, `ping`, `traceroute` | Pod не видит сервис |
-| 4 (Transport) | "Connection refused", "Connection timeout" | `ss`, `netstat`, `tcpdump` | Порт не слушает |
-| 7 (Application) | "502 Bad Gateway", "TLS handshake failed" | `curl -v`, `openssl s_client` | Nginx не может до бэкенда |
+| Уровень         | Симптом                                    | Инструмент                       | Пример                    |
+|-----------------|--------------------------------------------|----------------------------------|---------------------------|
+| 1-2 (Link)      | "Кабель выдернут", no carrier              | `ip link`, `ethtool`             | Interface DOWN            |
+| 3 (Network)     | "Нет маршрута", destination unreachable    | `ip route`, `ping`, `traceroute` | Pod не видит сервис       |
+| 4 (Transport)   | "Connection refused", "Connection timeout" | `ss`, `netstat`, `tcpdump`       | Порт не слушает           |
+| 7 (Application) | "502 Bad Gateway", "TLS handshake failed"  | `curl -v`, `openssl s_client`    | Nginx не может до бэкенда |
 
 ---
 
@@ -103,9 +103,9 @@ editPost:
 │ HTTP Body:   (пусто)                         │
 ├──────────────────────────────────────────────┤
 │ TCP Header: src_port=54321, dst_port=8080    │  ← Уровень 4: Transport
-│             SEQ=1, ACK=0, SYN               │
+│             SEQ=1, ACK=0, SYN                │
 ├──────────────────────────────────────────────┤
-│ IP Header:  src=10.0.0.5, dst=10.0.0.10     │  ← Уровень 3: Network
+│ IP Header:  src=10.0.0.5, dst=10.0.0.10      │  ← Уровень 3: Network
 │             TTL=64, Protocol=TCP             │
 ├──────────────────────────────────────────────┤
 │ Ethernet:   src_mac=aa:bb:cc, dst_mac=dd:ee  │  ← Уровень 2: Link
