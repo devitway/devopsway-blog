@@ -1,5 +1,5 @@
 ---
-title: "Git Mastery — серия из 9 уроков + Challenge"
+title: "Git Mastery – серия из 9 уроков + Challenge"
 description: "От SSH-ключа до worktree и bisect. Каждый урок sandbox-verified, с артефактом в ~/.gitconfig и мини-тестом."
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: "Мониторинг"
-description: "Observability и SRE — методологии мониторинга, дашборды, USE/RED/Golden Signals"
+description: "Observability и SRE – методологии мониторинга, дашборды, USE/RED/Golden Signals"
 weight: 4
 ---
 
@@ -8,10 +8,10 @@ weight: 4
 
 ## Что включено
 
-- **Методологии** — USE, RED, Four Golden Signals
-- **Дашборды** — организация и проектирование
-- **SRE практики** — SLI/SLO/SLA, error budgets
-- **Инструменты** — Prometheus, Grafana, алертинг
+- **Методологии** – USE, RED, Four Golden Signals
+- **Дашборды** – организация и проектирование
+- **SRE практики** – SLI/SLO/SLA, error budgets
+- **Инструменты** – Prometheus, Grafana, алертинг
 
 ## Для кого
 

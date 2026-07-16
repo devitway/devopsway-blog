@@ -1,6 +1,6 @@
 ---
 title: "AI и MLOps"
-description: "RAG, LLM, MLOps, векторные базы данных — AI-инфраструктура для DevOps-инженеров"
+description: "RAG, LLM, MLOps, векторные базы данных – AI-инфраструктура для DevOps-инженеров"
 weight: 5
 ---
 
@@ -8,10 +8,10 @@ AI и MLOps глазами DevOps-инженера: инфраструктура
 
 ## Что включено
 
-- **RAG Pipeline** — векторные базы данных, embeddings, семантический поиск
-- **LLM-инструменты** — Claude Code, Qwen Code, локальные модели
-- **MLOps** — roadmap, навыки, карьерный путь
-- **Qdrant** — векторная БД для AI-приложений
+- **RAG Pipeline** – векторные базы данных, embeddings, семантический поиск
+- **LLM-инструменты** – Claude Code, Qwen Code, локальные модели
+- **MLOps** – roadmap, навыки, карьерный путь
+- **Qdrant** – векторная БД для AI-приложений
 
 ## Для кого
 

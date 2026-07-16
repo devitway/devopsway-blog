@@ -1,6 +1,6 @@
 ---
 title: "Linux"
-description: "Linux для DevOps — Bash, автоматизация, принципы работы с системой"
+description: "Linux для DevOps – Bash, автоматизация, принципы работы с системой"
 weight: 7
 ---
 
@@ -8,10 +8,10 @@ weight: 7
 
 ## Что включено
 
-- **Bash** — скрипты, автоматизация, best practices
-- **Systemd** — управление сервисами, timers
-- **Cron** — планирование задач
-- **Принципы** — 10 принципов Linux для DevOps
+- **Bash** – скрипты, автоматизация, best practices
+- **Systemd** – управление сервисами, timers
+- **Cron** – планирование задач
+- **Принципы** – 10 принципов Linux для DevOps
 
 ## Для кого
 

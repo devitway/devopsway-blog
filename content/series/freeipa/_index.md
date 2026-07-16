@@ -1,11 +1,11 @@
 ---
-title: "FreeIPA — серия гайдов по централизованной аутентификации"
+title: "FreeIPA – серия гайдов по централизованной аутентификации"
 description: "От установки FreeIPA до интеграции с Vault и NFS. Production-ready руководства для enterprise-инфраструктуры."
 ---
 
 ## О серии
 
-Серия практических гайдов по FreeIPA — от установки до интеграции с Hashicorp Vault и NFS/Autofs. Каждый гайд проверен в production-среде.
+Серия практических гайдов по FreeIPA – от установки до интеграции с Hashicorp Vault и NFS/Autofs. Каждый гайд проверен в production-среде.
 
 ## Карта серии
 
@@ -17,9 +17,9 @@ description: "От установки FreeIPA до интеграции с Vault
 
 ## Порядок прохождения
 
-1. **[Установка FreeIPA](/posts/freeipa-setup/)** — базовый сервер, без него остальное не работает
-2. **[NFS + Autofs](/posts/freeipa-nfs-autofs/)** — опционально, если нужно централизованное хранилище
-3. **[Vault интеграция](/posts/freeipa-vault-integration/)** — управление секретами поверх FreeIPA
+1. **[Установка FreeIPA](/posts/freeipa-setup/)** – базовый сервер, без него остальное не работает
+2. **[NFS + Autofs](/posts/freeipa-nfs-autofs/)** – опционально, если нужно централизованное хранилище
+3. **[Vault интеграция](/posts/freeipa-vault-integration/)** – управление секретами поверх FreeIPA
 
 ## Технологии
 
