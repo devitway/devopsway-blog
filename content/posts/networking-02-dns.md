@@ -121,8 +121,8 @@ search example.com      ← При запросе "api" дополнит до "a
 | **MX** | Mail-сервер | `example.com → mail.example.com (pri 10)` | Почта |
 | **TXT** | Текст | `example.com → "v=spf1 ..."` | SPF, DKIM, верификация |
 | **NS** | DNS-сервер зоны | `example.com → ns1.example.com` | Делегирование |
-| **SRV** | Сервис + порт | `_http._tcp.example.com → 0 5 8080 api.example.com` | Service discovery |
-| **PTR** | Обратная запись (IP → имя) | `34.216.184.93 → api.example.com` | Reverse DNS |
+| **SRV** | Сервис + порт | `_http._tcp.example.com → 0 5 8080 api.example.com` | Обнаружение сервисов (service discovery) |
+| **PTR** | Обратная запись (IP → имя) | `34.216.184.93 → api.example.com` | Обратный DNS (reverse DNS) |
 | **SOA** | Start of Authority | Serial, refresh, retry, expire | Метаданные зоны |
 
 ---
@@ -177,7 +177,7 @@ nslookup api.example.com
 nslookup -type=MX example.com
 ```
 
-> **20/80:** используй `dig`, не `nslookup`. `dig` показывает TTL, authority section, query time – всё, что нужно для troubleshooting. `nslookup` – deprecated, но знай его для собеса.
+> **20/80:** используй `dig`, не `nslookup`. `dig` показывает TTL, раздел авторитетных серверов (authority section), время запроса (query time) – всё, что нужно для диагностики (troubleshooting). `nslookup` – устаревший (deprecated), но знай его для собеса.
 
 ---
 
@@ -279,7 +279,7 @@ spec:
 
 ---
 
-## Troubleshooting DNS – чеклист
+## Диагностика DNS (troubleshooting) – чеклист
 
 ```bash
 # 1. Резолвится ли имя вообще?
@@ -329,12 +329,12 @@ CNAME: имя → другое имя (алиас)
 ```
 
 **Ограничения CNAME:**
-1. CNAME **нельзя** ставить на apex домена (`example.com` без www). Только на поддомены. Причина: CNAME конфликтует с SOA и NS записями на apex.
-2. CNAME – дополнительный DNS-запрос (latency)
+1. CNAME **нельзя** ставить на корень домена (apex, `example.com` без www). Только на поддомены. Причина: CNAME конфликтует с SOA и NS записями на корне (apex).
+2. CNAME – дополнительный DNS-запрос, а значит задержка (latency)
 
-**Альтернатива:** AWS Route53 и Cloudflare поддерживают ALIAS/ANAME – работают как CNAME, но на apex домена.
+**Альтернатива:** AWS Route53 и Cloudflare поддерживают ALIAS/ANAME – работают как CNAME, но на корне домена (apex).
 
-**На собесе:** "A-запись возвращает IP напрямую. CNAME – перенаправление на другое имя, требующее дополнительного resolve. CNAME нельзя на apex домена. Для балансировки – используют несколько A-записей (round-robin DNS) или ALIAS."
+**На собесе:** "A-запись возвращает IP напрямую. CNAME – перенаправление на другое имя, требующее дополнительного разрешения (resolve). CNAME нельзя на корень домена (apex). Для балансировки – используют несколько A-записей (циклическая выдача, round-robin) или ALIAS."
 
 ---
 
@@ -342,8 +342,8 @@ CNAME: имя → другое имя (алиас)
 
 **Ответ:** TTL кеширования.
 
-DNS – **eventually consistent** система. Запись кешируется на TTL секунд:
-- В resolver-е (8.8.8.8): до TTL
+DNS – система с согласованностью в конечном счёте (**eventually consistent**). Запись кешируется на TTL секунд:
+- В резолвере (resolver, 8.8.8.8): до TTL
 - В ОС: до TTL (или перезагрузки)
 - В браузере: до TTL (Chrome кеширует до 60 секунд)
 - В Java приложении: **НАВСЕГДА** (по умолчанию JVM кеширует DNS бесконечно!)
@@ -355,7 +355,7 @@ dig api.example.com | grep -E "^api"
 #                    ^^^ осталось 127 секунд до протухания
 ```
 
-**На собесе:** "DNS кешируется на каждом уровне: resolver, OS, приложение. TTL определяет, как долго кеш жив. После смены записи нужно ждать TTL – или заранее снизить его. Особый случай – JVM, который по умолчанию кеширует DNS навсегда: нужен `networkaddress.cache.ttl=30` в security policy."
+**На собесе:** "DNS кешируется на каждом уровне: резолвер (resolver), ОС, приложение. TTL определяет, как долго кеш жив. После смены записи нужно ждать TTL – или заранее снизить его. Особый случай – JVM, который по умолчанию кеширует DNS навсегда: нужен `networkaddress.cache.ttl=30` в политике безопасности (security policy)."
 
 ---
 
@@ -364,8 +364,8 @@ dig api.example.com | grep -E "^api"
 **Ответ:**
 
 1. **Кешированные записи** продолжат работать (до истечения TTL)
-2. **Новые запросы** к нерезолвленным именам – fail
-3. **Ошибки:** `getaddrinfo: Name or service not known`, `NXDOMAIN` (или timeout)
+2. **Новые запросы** к неразрешённым именам – ошибка (fail)
+3. **Ошибки:** `getaddrinfo: Name or service not known`, `NXDOMAIN` (или таймаут)
 4. `/etc/hosts` записи работают всегда (не зависят от DNS)
 
 ```bash
@@ -382,7 +382,7 @@ dig +short new-service.example.com    # timeout!
 sudo iptables -D OUTPUT -p udp --dport 53 -j DROP
 ```
 
-**На собесе:** "Если DNS-сервер недоступен, кешированные записи продолжают работать до истечения TTL. Новые DNS-запросы будут timeout-иться. Поэтому в production всегда два DNS-сервера в resolv.conf. В K8s – CoreDNS с несколькими репликами."
+**На собесе:** "Если DNS-сервер недоступен, кешированные записи продолжают работать до истечения TTL. Новые DNS-запросы будут отваливаться по таймауту. Поэтому в продакшене (production) всегда два DNS-сервера в resolv.conf. В K8s – CoreDNS с несколькими репликами."
 
 ---
 
