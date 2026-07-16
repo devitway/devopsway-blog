@@ -118,7 +118,11 @@ linkifyProtocol = "https"
 strikethrough = true
 table = true
 taskList = true
-typographer = true
+[markup.goldmark.extensions.typographer]
+leftDoubleQuote = "&quot;"
+rightDoubleQuote = "&quot;"
+leftSingleQuote = "&#39;"
+rightSingleQuote = "&#39;"
 
 # Настройки содержания (Table of Contents)
 [markup.tableOfContents]
