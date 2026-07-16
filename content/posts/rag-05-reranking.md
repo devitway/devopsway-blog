@@ -194,7 +194,7 @@ Top-1 изменился         —               20/30 (67%)
 | | Без reranker | С reranker |
 |---|---|---|
 | Top-1 | `[{"id": 1, "cat": "IE", "q":...` (JSON файл) | `═══ NORA PIPELINE: fix/521-ui-xss-install-cmd ═══` |
-| Rerank score | — | 0.680 |
+| Rerank score | – | 0.680 |
 
 Без reranker – случайный JSON. С reranker – правильный pipeline fix.
 
@@ -203,7 +203,7 @@ Top-1 изменился         —               20/30 (67%)
 | | Без reranker | С reranker |
 |---|---|---|
 | Top-1 | "Нашёл баг в NORA. Посмотрю код подробнее." | "3 настоящих фейла: circuit breaker: got 000000" |
-| Rerank score | — | 0.975 |
+| Rerank score | – | 0.975 |
 
 Без reranker – бесполезный флуд из issue. С reranker – конкретный лог ошибки.
 

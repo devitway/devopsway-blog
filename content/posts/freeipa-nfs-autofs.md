@@ -525,7 +525,7 @@ xfs_quota -x -c 'limit bsoft=10g bhard=11g testuser' /export
 xfs_quota -x -c 'report -h' /export
 ```
 
-> **Важно:** `quotacheck` и `quotaon` — утилиты для ext4. На XFS (стандарт RHEL 8/9)
+> **Важно:** `quotacheck` и `quotaon` – утилиты для ext4. На XFS (стандарт RHEL 8/9)
 > квоты управляются через `xfs_quota` и включаются mount-опциями `usrquota,grpquota`.
 
 ### SELinux
@@ -670,9 +670,9 @@ systemctl restart nfs-server
 
 ## Что дальше
 
-- **[Часть 3: Hashicorp Vault](/posts/freeipa-vault-integration/)** — управление секретами: LDAP-аутентификация через FreeIPA, политики на основе групп, KV engine
-- **[Часть 1: Установка FreeIPA](/posts/freeipa-setup/)** — если пропустили: полная установка FreeIPA с DNS, CA, Kerberos
-- **[Вся серия FreeIPA](/series/freeipa/)** — карта всех гайдов серии
+- **[Часть 3: Hashicorp Vault](/posts/freeipa-vault-integration/)** – управление секретами: LDAP-аутентификация через FreeIPA, политики на основе групп, KV engine
+- **[Часть 1: Установка FreeIPA](/posts/freeipa-setup/)** – если пропустили: полная установка FreeIPA с DNS, CA, Kerberos
+- **[Вся серия FreeIPA](/series/freeipa/)** – карта всех гайдов серии
 
 ---
 

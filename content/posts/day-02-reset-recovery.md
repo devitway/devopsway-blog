@@ -1,5 +1,5 @@
 ---
-title: "День 2: reflog и fsck — что спасает после git reset --hard, а что нет"
+title: "День 2: reflog и fsck – что спасает после git reset --hard, а что нет"
 date: 2026-04-16T15:00:00+03:00
 lastmod: 2026-04-16T15:00:00+03:00
 draft: false
@@ -37,13 +37,13 @@ searchHidden: false
 
 ## Теория: что такое «потеря данных» в Git
 
-В [Дне 1](/posts/day-01-three-states/) вы видели три состояния — working / staging / committed. Сегодня смотрим на них **под углом reset'а**.
+В [Дне 1](/posts/day-01-three-states/) вы видели три состояния – working / staging / committed. Сегодня смотрим на них **под углом reset'а**.
 
 `git reset --hard HEAD` делает **три разные вещи одновременно**:
 
 1. Сбрасывает **index** (staging) до состояния HEAD
 2. Перезаписывает **tracked** файлы в working дереве до HEAD
-3. **Untracked** файлы не трогает — остаются как есть
+3. **Untracked** файлы не трогает – остаются как есть
 
 Отсюда таблица «что выживает»:
 
@@ -112,7 +112,7 @@ git reflog --date=iso
 <sha1> HEAD@{3} commit (initial): v1
 ```
 
-Reflog — это лог всех движений HEAD: коммиты, reset, checkout, rebase. Git держит его локально ~90 дней по умолчанию.
+Reflog – это лог всех движений HEAD: коммиты, reset, checkout, rebase. Git держит его локально ~90 дней по умолчанию.
 
 Возвращаемся на v3:
 
@@ -121,7 +121,7 @@ git reset --hard HEAD@{1}
 git log --oneline
 ```
 
-Вывод: `v3, v2, v1` — всё на месте.
+Вывод: `v3, v2, v1` – всё на месте.
 
 **Вывод:** reflog спасает всё, что было **закоммичено**. Даже после `reset --hard` коммиты живы ~90 дней в object store.
 
@@ -151,7 +151,7 @@ git reset --hard HEAD
 cat file.txt          # → v1, правка исчезла
 ```
 
-Reflog здесь **не поможет** — коммита не было, HEAD не двигался к v2. Но `git add` уже создал **blob** в object store. Ищем:
+Reflog здесь **не поможет** – коммита не было, HEAD не двигался к v2. Но `git add` уже создал **blob** в object store. Ищем:
 
 ### Шаг 3. Восстановление через fsck
 
@@ -268,7 +268,7 @@ git safe-reset HEAD     # reset --hard с подтверждением
 git recover-staged      # вытащить всё из dangling blobs
 ```
 
-`git undo` = `reset --soft HEAD~1` — возвращает staging к состоянию «до коммита», файлы остаются. Это то, что вам нужно в 90% случаев «я закоммитил слишком рано».
+`git undo` = `reset --soft HEAD~1` – возвращает staging к состоянию «до коммита», файлы остаются. Это то, что вам нужно в 90% случаев «я закоммитил слишком рано».
 
 `git safe-reset` добавляет паузу перед `reset --hard`. Секунды размышлений vs часы восстановления.
 
@@ -278,10 +278,10 @@ git recover-staged      # вытащить всё из dangling blobs
 
 | Ошибка | Почему больно | Как не делать |
 |--------|---------------|---------------|
-| `git reset --hard` на чужой ветке после pull | Теряете локальные коммиты. Reflog HEAD покажет предыдущее состояние, но только если вы знаете, что искать, и до истечения `gc.reflogExpire` (90 дней) | Перед reset — `git status`, `git stash push -u` |
-| `git clean -fd` следом за reset | Удаляет **untracked** файлы — те самые, которые reset --hard пощадил. Ничто не спасёт | Сначала `git stash -u`, потом clean |
+| `git reset --hard` на чужой ветке после pull | Теряете локальные коммиты. Reflog HEAD покажет предыдущее состояние, но только если вы знаете, что искать, и до истечения `gc.reflogExpire` (90 дней) | Перед reset – `git status`, `git stash push -u` |
+| `git clean -fd` следом за reset | Удаляет **untracked** файлы – те самые, которые reset --hard пощадил. Ничто не спасёт | Сначала `git stash -u`, потом clean |
 | `git gc --prune=now` сразу после катастрофы | Выкидывает dangling blobs до того, как вы их нашли | Не трогайте gc, пока не решена проблема |
-| «Я делал правки, Git их съел» без `git add` | Правки не были в Git — нечего восстанавливать | IDE Local History / swap / ФС-бэкапы |
+| «Я делал правки, Git их съел» без `git add` | Правки не были в Git – нечего восстанавливать | IDE Local History / swap / ФС-бэкапы |
 
 ---
 
@@ -289,7 +289,7 @@ git recover-staged      # вытащить всё из dangling blobs
 
 Создайте `~/notes/day-02.md` и ответьте:
 
-1. **Три состояния под углом reset'а**: что выживает, что нет — одной таблицей.
+1. **Три состояния под углом reset'а**: что выживает, что нет – одной таблицей.
 2. **Разница reflog vs fsck**: по одному предложению на каждый.
 3. **Ваш случай из практики**: теряли ли код? В каком состоянии был файл, как спаслись (или не спаслись)?
 4. **Какой алиас вы поставите первым** в свой `~/.gitconfig` и почему?
@@ -303,14 +303,14 @@ git recover-staged      # вытащить всё из dangling blobs
 3. Вы час редактировали `.env`, ни разу не делали `git add`. Потом `git reset --hard`. Что покажет reflog? Что покажет fsck?
 4. Вы сделали `git reset --soft HEAD~1`. Пропали ли правки из staging? А из working?
 
-Ответы — в конце поста.
+Ответы – в конце поста.
 
 ---
 
 ## Что дальше
 
 - **[День 3](/posts/day-03-branches-merge/)** → ветки и merge: когда fast-forward, когда `--no-ff`, как читать `git log --graph`
-- **[Challenge](/posts/git-master-final-challenge/)** → сломанный репозиторий с 10 проблемами. Задача P2 — dangling blob без подсказок, найдёте за 2 команды
+- **[Challenge](/posts/git-master-final-challenge/)** → сломанный репозиторий с 10 проблемами. Задача P2 – dangling blob без подсказок, найдёте за 2 команды
 - **Системно с нуля** → «Курс молодого бойца» DevIT Academy, Git разбираем в Неделе 2
 
 ---
@@ -321,6 +321,6 @@ git recover-staged      # вытащить всё из dangling blobs
 
 2. `git fsck --lost-found` → скопировать SHA из `dangling blob <sha>` → `git cat-file -p <sha>`. Blob живёт в object store ~14 дней до `git gc`.
 
-3. Reflog покажет только операцию `reset: moving to HEAD` и initial commit — содержимого `.env` в reflog нет. Fsck не покажет ничего — blob никогда не создавался, потому что не было `git add`. **Данные потеряны навсегда**. Искать: Local History IDE, swap-файл редактора, ФС-бэкап.
+3. Reflog покажет только операцию `reset: moving to HEAD` и initial commit – содержимого `.env` в reflog нет. Fsck не покажет ничего – blob никогда не создавался, потому что не было `git add`. **Данные потеряны навсегда**. Искать: Local History IDE, swap-файл редактора, ФС-бэкап.
 
 4. `git reset --soft HEAD~1` откатывает **только HEAD**, не трогая index и working. Правки **остаются в staging** (`git status` покажет их как «to be committed»). Working тоже не меняется. Это безопасный способ «отменить последний коммит, чтобы переделать сообщение или перегруппировать файлы».

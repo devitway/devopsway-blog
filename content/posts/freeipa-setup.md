@@ -658,9 +658,9 @@ ipa group-add/show/del groupname
 
 ## Что дальше
 
-- **[Часть 2: NFS + Autofs](/posts/freeipa-nfs-autofs/)** — централизованное хранилище: NFS с root_squash, автомонтирование домашних каталогов через Autofs + FreeIPA LDAP, Kerberos-шифрование
-- **[Часть 3: Hashicorp Vault](/posts/freeipa-vault-integration/)** — управление секретами: LDAP-аутентификация через FreeIPA, политики на основе групп, KV engine
-- **[Вся серия FreeIPA](/series/freeipa/)** — карта всех гайдов серии
+- **[Часть 2: NFS + Autofs](/posts/freeipa-nfs-autofs/)** – централизованное хранилище: NFS с root_squash, автомонтирование домашних каталогов через Autofs + FreeIPA LDAP, Kerberos-шифрование
+- **[Часть 3: Hashicorp Vault](/posts/freeipa-vault-integration/)** – управление секретами: LDAP-аутентификация через FreeIPA, политики на основе групп, KV engine
+- **[Вся серия FreeIPA](/series/freeipa/)** – карта всех гайдов серии
 
 ---
 

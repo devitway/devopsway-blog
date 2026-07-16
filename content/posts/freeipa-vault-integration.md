@@ -343,7 +343,7 @@ vault kv put secret/prod/myapp password=test # Denied!
 ## Часть 4: Управление секретами
 
 > **Примечание:** KV engine должен быть включён **до** использования `vault kv put`.
-> Если вы выполняли примеры из Части 3 — включите engine сейчас.
+> Если вы выполняли примеры из Части 3 – включите engine сейчас.
 
 ### Включение KV секретов
 
@@ -640,7 +640,7 @@ echo " Backup завершён: ${DATE}"
 Для production рекомендуется:
 
 - 3+ серверов Vault
-- Integrated Storage (Raft) — встроенный backend с Vault 1.4+
+- Integrated Storage (Raft) – встроенный backend с Vault 1.4+
 - Load balancer перед Vault
 - Auto-unseal через облачные KMS
 
@@ -800,9 +800,9 @@ vault kv rollback
 Это финальная часть серии FreeIPA. Полная экосистема настроена: FreeIPA для аутентификации, NFS для хранилища, Vault для секретов.
 
 **Предыдущие части:**
-- **[Часть 1: Установка FreeIPA](/posts/freeipa-setup/)** — установка сервера, DNS, CA, Kerberos, управление пользователями
-- **[Часть 2: NFS + Autofs](/posts/freeipa-nfs-autofs/)** — централизованное хранилище с автомонтированием и Kerberos
-- **[Вся серия FreeIPA](/series/freeipa/)** — карта всех гайдов серии
+- **[Часть 1: Установка FreeIPA](/posts/freeipa-setup/)** – установка сервера, DNS, CA, Kerberos, управление пользователями
+- **[Часть 2: NFS + Autofs](/posts/freeipa-nfs-autofs/)** – централизованное хранилище с автомонтированием и Kerberos
+- **[Вся серия FreeIPA](/series/freeipa/)** – карта всех гайдов серии
 
 **Внешние ресурсы:**
 - [Vault Documentation](https://www.vaultproject.io/docs)
