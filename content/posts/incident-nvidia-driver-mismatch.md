@@ -1,7 +1,7 @@
 ---
 title: "Тихий алерт и три пожара: как один ночной apt уронил GPU-сервер"
-date: 2026-07-24T12:00:00+03:00
-lastmod: 2026-07-24T12:00:00+03:00
+date: 2026-07-24T09:15:00+03:00
+lastmod: 2026-07-24T09:15:00+03:00
 draft: false
 categories: ["Инфраструктура", "Мониторинг"]
 tags: ["nvidia", "gpu", "incident-detection", "sre", "observability", "monitoring", "alerting", "docker", "cdi", "systemd", "ollama"]
