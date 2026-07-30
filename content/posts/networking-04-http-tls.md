@@ -75,7 +75,7 @@ Content-Type: application/json  ← формат тела (для POST/PUT)
 ### Ответ
 
 ```
-HTTP/1.1 200 OK                 ← версия, статус-код, причина (reason)
+HTTP/1.1 200 OK                 ← версия, статус-код, причина
 Content-Type: application/json  ← формат тела
 Content-Length: 27              ← размер тела в байтах
 Cache-Control: no-cache         ← не кешировать
@@ -192,20 +192,18 @@ curl -k https://self-signed.example.com
 ```
 Клиент                                    Сервер
    │                                         │
-   │── ClientHello ─────────────────────────→│  "Я умею TLS 1.3, cipher AES-256"
+   │── ClientHello ─────────────────────────→│  "Умею TLS 1.3, шифры + мой ключ (key share)"
    │                                         │
-   │←─ ServerHello + Certificate ───────────│  "OK, вот мой сертификат"
+   │←─ ServerHello + сертификат + Finished ──│  "Мой ключ, серт и подпись – уже шифрованно"
    │                                         │
-   │   [Клиент проверяет сертификат:          │
-   │    - подписан ли доверенным CA?          │
-   │    - не просрочен ли?                    │
-   │    - совпадает ли имя домена?]           │
+   │   [Клиент проверяет сертификат:         │
+   │     - подписан доверенным CA?           │
+   │     - не просрочен?                     │
+   │     - совпадает имя домена?]            │
    │                                         │
-   │── Key Exchange ────────────────────────→│  "Вот ключи для шифрования"
+   │── Finished ────────────────────────────→│  "Проверил – готов"
    │                                         │
-   │←─ Finished ────────────────────────────│  "Готово"
-   │                                         │
-   │   ═══ ШИФРОВАННЫЙ КАНАЛ ═══════════════│
+   │═══ ШИФРОВАННЫЙ КАНАЛ (1 round-trip) ════│
    │                                         │
    │── GET /health HTTP/1.1 (зашифровано) ──→│
 ```
@@ -225,12 +223,12 @@ openssl s_client -connect api.example.com:443 -servername api.example.com </dev/
 #   DNS:api.example.com, DNS:*.example.com  ← все допустимые имена
 
 # Проверить дату истечения:
-echo | openssl s_client -connect api.example.com:443 2>/dev/null | openssl x509 -noout -dates
+echo | openssl s_client -connect api.example.com:443 -servername api.example.com 2>/dev/null | openssl x509 -noout -dates
 # notBefore=May  1 00:00:00 2024 GMT
 # notAfter=Jul 30 00:00:00 2024 GMT
 
 # Одной командой – сколько дней до истечения:
-echo | openssl s_client -connect api.example.com:443 2>/dev/null \
+echo | openssl s_client -connect api.example.com:443 -servername api.example.com 2>/dev/null \
   | openssl x509 -noout -enddate -checkend 2592000
 # Certificate will expire  ← если меньше 30 дней (2592000 сек)
 ```
@@ -285,7 +283,7 @@ HTTP/3 (QUIC):
   → Решение: выдать роль/permission, проверить RBAC
 ```
 
-**На собесе:** "401 – проблема аутентификации (кто ты?), 403 – проблема авторизации (что тебе разрешено?). Название 401 Unauthorized вводит в заблуждение – по смыслу это Unauthenticated. Часть фреймворков путают эти коды, что усложняет диагностику (troubleshooting)."
+**На собесе:** "401 – проблема аутентификации (кто ты?), 403 – проблема авторизации (что тебе разрешено?). Название 401 Unauthorized вводит в заблуждение – по смыслу это Unauthenticated. Часть фреймворков путают эти коды, что усложняет диагностику."
 
 ---
 
@@ -328,12 +326,12 @@ docker logs backend --tail 50
 
 **Ответ:**
 
-1. **Соответствие требованиям (compliance)** – PCI DSS, HIPAA, GDPR требуют шифрование данных в передаче (in transit)
+1. **Соответствие требованиям** – PCI DSS, HIPAA, GDPR требуют шифрование данных при передаче
 2. **Zero Trust** – модель "не доверяй сети": VPC может быть скомпрометирован
-3. **Горизонтальное перемещение (lateral movement)** – атакующий внутри VPC может перехватывать трафик (ARP spoofing)
+3. **Горизонтальное перемещение (lateral movement)** – закрепившийся на одном хосте атакующий может снифать незашифрованный трафик соседних сервисов
 4. **mTLS (mutual TLS)** – обе стороны предъявляют сертификат. Service mesh (Istio, Linkerd) автоматизирует это
 
-**На собесе:** "В модели Zero Trust шифрование необходимо даже внутри VPC. Service mesh решает это автоматически: Istio/Linkerd внедряют mTLS между сервисами без изменения кода. Это текущий отраслевой стандарт (industry standard) для K8s."
+**На собесе:** "В модели Zero Trust шифрование необходимо даже внутри VPC. Service mesh решает это автоматически: Istio/Linkerd внедряют mTLS между сервисами без изменения кода. Это текущий отраслевой стандарт для K8s."
 
 ---
 
