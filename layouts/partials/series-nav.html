@@ -5,7 +5,7 @@
 
 {{- /* Собираем все посты серии, сортируем по weight → date */ -}}
 {{- $seriesPosts := where site.RegularPages ".Params.series" $currentSeries -}}
-{{- $seriesPosts = sort $seriesPosts ".Params.seriesWeight" "asc" -}}
+{{- $seriesPosts = sort $seriesPosts ".Params.weight" "asc" -}}
 
 {{- if gt (len $seriesPosts) 1 -}}
 
