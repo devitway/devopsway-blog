@@ -102,6 +102,11 @@ sudo iptables -L -n -v --line-numbers
 # Показать NAT-правила:
 sudo iptables -t nat -L -n -v
 
+# Разрешить ответы на уже установленные соединения – СТАВИТЬ ПЕРВЫМ
+# (большинство пакетов попадёт сюда и не будет проверять правила ниже):
+sudo iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+# (-m state --state ESTABLISHED,RELATED – устаревший синоним, всё ещё работает)
+
 # Разрешить SSH (порт 22):
 sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT
 
@@ -109,10 +114,7 @@ sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT
 sudo iptables -A INPUT -p tcp --dport 80 -j ACCEPT
 sudo iptables -A INPUT -p tcp --dport 443 -j ACCEPT
 
-# Разрешить ответы на исходящие соединения:
-sudo iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
-
-# Заблокировать всё остальное:
+# Заблокировать всё остальное (доходят только новые входящие, не покрытые выше):
 sudo iptables -A INPUT -j DROP
 
 # Удалить правило по номеру:
@@ -211,7 +213,9 @@ spec:
   # ingress: [] – пустой список = ничего не разрешено
 
 ---
-# 2. Разрешить DNS (без этого pod-ы не смогут резолвить имена!):
+# 2. Egress ТОЛЬКО на DNS. ВНИМАНИЕ: в одиночку эта политика отрежет ВЕСЬ
+#    остальной исходящий трафик у выбранных pod-ов. Применять в паре с
+#    default-deny-egress как "дырку" для DNS (иначе pod-ы не резолвят имена):
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -244,7 +248,7 @@ spec:
     - from:
         - namespaceSelector:
             matchLabels:
-              name: monitoring
+              kubernetes.io/metadata.name: monitoring
       ports:
         - protocol: TCP
           port: 9090
@@ -285,11 +289,16 @@ sudo iptables -L INPUT -n -v --line-numbers | grep 8080
 kubectl get networkpolicy -n prod
 kubectl describe networkpolicy api-allow-frontend -n prod
 
-# 4. Временно отключить (ТОЛЬКО для диагностики!):
-sudo iptables -P INPUT ACCEPT    # ← ОПАСНО в production!
+# 4. Снять блокировку для диагностики (ТОЛЬКО временно, ОПАСНО в production!):
+sudo iptables -F INPUT           # сбросить ВСЕ правила цепочки INPUT
+# Осторожно: "iptables -P INPUT ACCEPT" меняет лишь политику по умолчанию и НЕ
+# поможет, если трафик режется явным правилом "-j DROP" (оно сработает раньше)
 
-# 5. Логирование заблокированных пакетов:
+# 5. Логировать отбрасываемые пакеты. LOG не терминальный, поэтому пару
+#    "LOG, затем DROP" добавляют в КОНЕЦ цепочки – LOG обязан идти ПЕРЕД DROP,
+#    иначе пакет отбросится раньше, чем залогируется:
 sudo iptables -A INPUT -j LOG --log-prefix "DROPPED: " --log-level 4
+sudo iptables -A INPUT -j DROP
 # Логи: dmesg | grep DROPPED
 ```
 
@@ -372,7 +381,7 @@ spec:
     - from:
         - namespaceSelector:
             matchLabels:
-              name: monitoring
+              kubernetes.io/metadata.name: monitoring
       ports:
         - protocol: TCP
           port: 9187
