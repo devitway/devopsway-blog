@@ -8,7 +8,7 @@ categories: ["DevOps основы"]
 tags: ["networking", "firewall", "iptables", "networkpolicy", "security", "kubernetes", "linux", "devops", "собеседование"]
 author: "DevOps Way"
 series: "Networking 20/80"
-description: "Шестой уровень: iptables (таблицы, цепочки, правила и почему их порядок критичен), DROP против REJECT, Kubernetes NetworkPolicy, Security Groups в облаках, чеклист диагностики файрвола. Подвохи с собеса и код-челлендж на написание NetworkPolicy."
+description: "Шестой уровень: iptables (таблицы, цепочки, правила и почему их порядок критичен), DROP против REJECT, Kubernetes NetworkPolicy, Security Groups в облаках, чеклист диагностики межсетевого экрана. Подвохи с собеса и код-челлендж на написание NetworkPolicy."
 showToc: true
 TocOpen: false
 hidemeta: false
@@ -34,10 +34,10 @@ editPost:
     appendFilePath: true
 ---
 
-Шестой из семи уровней. Ты умеешь пускать трафик – теперь про то, как его фильтровать. Firewall – не "стена", а решение для каждого пакета: пропустить, отбросить молча или отказать явно. Разница между DROP и REJECT однажды сэкономит тебе час дебага "зависшего" клиента.
+Шестой из семи уровней. Ты умеешь пускать трафик – теперь про то, как его фильтровать. Межсетевой экран (firewall) – не "стена", а решение для каждого пакета: пропустить, отбросить молча или отказать явно. Разница между DROP и REJECT однажды сэкономит тебе час отладки "зависшего" клиента.
 
 
-> "Firewall – не стена, а фильтр. Он не "блокирует всё", а решает для каждого пакета: пропустить (ACCEPT), отбросить молча (DROP) или отказать явно (REJECT)."
+> "Межсетевой экран – не стена, а фильтр. Он не "блокирует всё", а решает для каждого пакета: пропустить (ACCEPT), отбросить молча (DROP) или отказать явно (REJECT)."
 
 ---
 
@@ -45,13 +45,13 @@ editPost:
 
 **1988 – первый сетевой червь** (Morris Worm). Заразил ~6000 машин из ~60000 подключённых к интернету. Мир осознал: сети нужна защита.
 
-**1989–1992 – packet filter firewalls.** DEC, AT&T Bell Labs. Идея: проверять каждый пакет по набору правил (src/dst IP, порт, протокол). Если правило совпало – пропустить или заблокировать.
+**1989–1992 – пакетные фильтры (packet filter firewalls).** DEC, AT&T Bell Labs. Идея: проверять каждый пакет по набору правил (src/dst IP, порт, протокол). Если правило совпало – пропустить или заблокировать.
 
 **1998 – iptables** (Rusty Russell). Замена ipchains, в ядре с Linux 2.4 (2001). Стал стандартом на 20 лет. Netfilter – подсистема ядра, iptables – интерфейс к ней.
 
 **2014 – nftables.** Замена iptables: единый синтаксис, лучшая производительность, атомарные обновления. В 2026 году – стандарт в RHEL 9, Debian 12.
 
-**2017 – Kubernetes NetworkPolicy.** Firewall как код: YAML вместо iptables rules. Calico, Cilium – реализации.
+**2017 – Kubernetes NetworkPolicy.** Межсетевой экран как код: YAML вместо правил iptables. Calico, Cilium – реализации.
 
 ---
 
@@ -90,7 +90,7 @@ editPost:
 └──────────────┘
 ```
 
-Практическое правило: свои порты закрываешь в **INPUT**, а Docker/K8s и NAT живут в **FORWARD** и **POSTROUTING**. Транзитный трафик (когда хост работает роутером) минует INPUT/OUTPUT.
+Практическое правило: свои порты закрываешь в **INPUT**, а Docker/K8s и NAT живут в **FORWARD** и **POSTROUTING**. Транзитный трафик (когда хост работает маршрутизатором) минует INPUT/OUTPUT.
 
 ### Базовые команды
 
@@ -137,11 +137,11 @@ iptables -A INPUT -j DROP                          # 1. DROP всё ← !!! SSH 
 iptables -A INPUT -p tcp --dport 22 -j ACCEPT     # 2. Никогда не достигнется
 ```
 
-> **20/80:** 90% iptables работы – это INPUT chain с ACCEPT для нужных портов и DROP/REJECT по умолчанию.
+> **20/80:** 90% iptables работы – это цепочка INPUT с ACCEPT для нужных портов и DROP/REJECT по умолчанию.
 
 ---
 
-## DROP vs REJECT – почему это важно
+## DROP против REJECT – почему это важно
 
 ```bash
 # DROP – молча отбросить пакет:
@@ -170,7 +170,7 @@ iptables -A INPUT -p tcp --dport 8080 -j REJECT
 Это как офис без дверей – удобно, но небезопасно.
 ```
 
-### С NetworkPolicy – whitelist
+### С NetworkPolicy – белый список (whitelist)
 
 ```yaml
 # Разрешить трафик к api ТОЛЬКО от frontend (namespace=prod):
@@ -250,11 +250,11 @@ spec:
           port: 9090
 ```
 
-> **Важно:** NetworkPolicy работает только если CNI-плагин поддерживает их. **Calico**, **Cilium** – поддерживают. Flannel – НЕ поддерживает (policy будет создана, но не будет enforced).
+> **Важно:** NetworkPolicy работает только если CNI-плагин поддерживает их. **Calico**, **Cilium** – поддерживают. Flannel – НЕ поддерживает (политика создастся, но действовать не будет).
 
 ---
 
-## Security Groups (облака) – firewall для VM
+## Security Groups (облака) – межсетевой экран для виртуальных машин (VM)
 
 | Правило Security Group (AWS) | Эквивалент в iptables |
 |---|---|
@@ -264,12 +264,12 @@ spec:
 | Outbound: всё из 0.0.0.0/0 | `iptables -A OUTPUT -j ACCEPT` |
 
 **Ключевое отличие от iptables:**
-- Security Groups – **stateful**: если разрешён входящий TCP 80, ответные пакеты автоматически разрешены
-- iptables по умолчанию – **stateless**: нужно явно разрешать `ESTABLISHED,RELATED`
+- Security Groups – **с учётом состояния (stateful)**: если разрешён входящий TCP 80, ответные пакеты автоматически разрешены
+- iptables по умолчанию – **без учёта состояния (stateless)**: нужно явно разрешать `ESTABLISHED,RELATED`
 
 ---
 
-## Troubleshooting firewall – чеклист
+## Диагностика межсетевого экрана – чеклист
 
 ```bash
 # 1. Проверить, есть ли подключение БЕЗ firewall:
@@ -301,14 +301,14 @@ sudo iptables -A INPUT -j LOG --log-prefix "DROPPED: " --log-level 4
 
 | | iptables | Security Groups |
 |---|---|---|
-| **Где** | Linux хост | Cloud VM (AWS, GCP, Azure) |
-| **Statefulness** | Stateless (по умолчанию) | Stateful (автоматически) |
-| **Управление** | CLI (`iptables -A`) | API / Console |
-| **Persistence** | Не сохраняется при reboot | Всегда persistent |
-| **Granularity** | Пакет, интерфейс, chain | Только inbound/outbound rules |
-| **Performance** | Деградирует при >10K правил | Оптимизировано облаком |
+| **Где** | Linux-хост | Облачная ВМ (AWS, GCP, Azure) |
+| **Учёт состояния** | Без состояния (stateless) | С учётом состояния (stateful) |
+| **Управление** | CLI (`iptables -A`) | API / консоль |
+| **Сохранность** | Не сохраняется при перезагрузке | Сохраняется всегда |
+| **Детализация** | Пакет, интерфейс, цепочка | Только правила входящего/исходящего |
+| **Производительность** | Деградирует при >10K правил | Оптимизировано облаком |
 
-**На собесе:** "iptables – host-level firewall в Linux ядре, stateless по умолчанию, требует явного разрешения ответных пакетов. Security Groups – облачный firewall, stateful, автоматически разрешает ответы. В K8s NetworkPolicy – ещё один уровень, работающий на pod-level через CNI (Calico/Cilium)."
+**На собесе:** "iptables – межсетевой экран на уровне хоста (host-level) в ядре Linux, без учёта состояния (stateless) по умолчанию, требует явного разрешения ответных пакетов. Security Groups – облачный межсетевой экран, с учётом состояния (stateful), автоматически разрешает ответы. В K8s NetworkPolicy – ещё один уровень, работающий на уровне подов (pod-level) через CNI (Calico/Cilium)."
 
 ---
 
@@ -316,7 +316,7 @@ sudo iptables -A INPUT -j LOG --log-prefix "DROPPED: " --log-level 4
 
 **Ответ:**
 
-NetworkPolicy – **whitelist**. Как только хотя бы одна NetworkPolicy применяется к pod-у, **весь не-описанный трафик блокируется**.
+NetworkPolicy – **белый список (whitelist)**. Как только хотя бы одна NetworkPolicy применяется к pod-у, **весь не-описанный трафик блокируется**.
 
 ```yaml
 # Добавили deny-all → pod не может:
@@ -327,11 +327,11 @@ NetworkPolicy – **whitelist**. Как только хотя бы одна Netw
 
 **Частые ошибки:**
 1. Забыли разрешить DNS (UDP 53)
-2. Забыли разрешить health check от kubelet
-3. Забыли разрешить egress к external services
-4. Неправильный label selector (policy не применяется к нужным pod-ам)
+2. Забыли разрешить проверку живости (health check) от kubelet
+3. Забыли разрешить egress к внешним сервисам
+4. Неправильный селектор меток (label selector) – политика не применяется к нужным pod-ам
 
-**На собесе:** "NetworkPolicy – additive whitelist. Первая политика блокирует всё неявное. Типичная ошибка – забыть DNS egress: pod не может резолвить имена и все HTTP-вызовы падают с "Name or service not known", хотя это проблема сети, а не DNS."
+**На собесе:** "NetworkPolicy – аддитивный белый список (additive whitelist). Первая политика блокирует всё неявное. Типичная ошибка – забыть DNS egress: pod не может резолвить имена и все HTTP-вызовы падают с "Name or service not known", хотя это проблема сети, а не DNS."
 
 ---
 
@@ -339,8 +339,8 @@ NetworkPolicy – **whitelist**. Как только хотя бы одна Netw
 
 **Задача:** напиши Kubernetes NetworkPolicy, которая:
 
-1. Применяется к pod-ам с label `app: database` в namespace `prod`
-2. Разрешает ingress ТОЛЬКО от pod-ов с label `app: api` на порту TCP 5432
+1. Применяется к pod-ам с меткой (label) `app: database` в namespace `prod`
+2. Разрешает ingress ТОЛЬКО от pod-ов с меткой `app: api` на порту TCP 5432
 3. Разрешает ingress от Prometheus (namespace `monitoring`) на порту TCP 9187
 4. Блокирует весь остальной ingress
 
@@ -386,8 +386,8 @@ spec:
 
 ## Дальше → Уровень 6
 
-Ты умеешь настраивать firewall: iptables для хостов, NetworkPolicy для K8s. Понимаешь DROP vs REJECT, stateful vs stateless, whitelist-подход.
+Ты умеешь настраивать межсетевой экран: iptables для хостов, NetworkPolicy для K8s. Понимаешь DROP против REJECT, разницу "с учётом состояния" и "без" (stateful/stateless), подход белого списка (whitelist).
 
-Но в production трафик идёт не напрямую к pod-у. Между клиентом и приложением – балансировщик нагрузки (L4 или L7), reverse proxy (nginx), Ingress controller. В service mesh – ещё и sidecar proxy (Envoy). Как всё это работает вместе?
+Но в проде трафик идёт не напрямую к pod-у. Между клиентом и приложением – балансировщик нагрузки (L4 или L7), обратный прокси (reverse proxy, nginx), Ingress-контроллер. В сервисной сетке (service mesh) – ещё и прокси-контейнер (sidecar, Envoy). Как всё это работает вместе?
 
-**→ Уровень 6: Load Balancing и K8s networking**
+**→ Уровень 6: Балансировка нагрузки и сети Kubernetes**
