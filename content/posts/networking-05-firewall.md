@@ -8,6 +8,7 @@ categories: ["DevOps основы"]
 tags: ["networking", "firewall", "iptables", "networkpolicy", "security", "kubernetes", "linux", "devops", "собеседование"]
 author: "DevOps Way"
 series: "Networking 20/80"
+seriesTotal: 7
 description: "Шестой уровень: iptables (таблицы, цепочки, правила и почему их порядок критичен), DROP против REJECT, Kubernetes NetworkPolicy, Security Groups в облаках, чеклист диагностики межсетевого экрана. Подвохи с собеса и код-челлендж на написание NetworkPolicy."
 showToc: true
 TocOpen: false

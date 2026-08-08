@@ -8,6 +8,7 @@ categories: ["DevOps основы"]
 tags: ["networking", "osi", "tcp-ip", "ip", "dns", "linux", "devops", "собеседование"]
 author: "DevOps Way"
 series: "Networking 20/80"
+seriesTotal: 7
 description: "Старт мини-курса по сетям для DevOps: 20% знаний, которые закрывают 80% работы. OSI против TCP/IP, инкапсуляция, путь запроса от curl до ответа сервера и какой инструмент диагностики живёт на каждом уровне."
 showToc: true
 TocOpen: false

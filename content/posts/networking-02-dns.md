@@ -8,6 +8,7 @@ categories: ["DevOps основы"]
 tags: ["networking", "dns", "coredns", "kubernetes", "ttl", "linux", "devops", "собеседование"]
 author: "DevOps Way"
 series: "Networking 20/80"
+seriesTotal: 7
 description: "Третий уровень мини-курса по сетям для DevOps: иерархия DNS и порядок резолвинга на Linux, ключевые типы записей, TTL, dig и CoreDNS в Kubernetes (включая ловушку ndots:5). Три подвоха с собеседования и чеклист диагностики 'почему не резолвится'."
 showToc: true
 TocOpen: false

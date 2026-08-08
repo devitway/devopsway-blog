@@ -1,16 +1,25 @@
-{{- /* Series Navigation with Progress — показывает все посты серии и текущую позицию */ -}}
+{{- /* Series Navigation with Progress — показывает все посты серии и текущую позицию.
+       $total берётся из frontmatter-параметра seriesTotal (полный план серии),
+       иначе — число опубликованных. Недостающие (ещё не вышедшие/draft) уровни
+       рисуются как ○ "скоро" БЕЗ ссылки — финал не раскрывается заранее. */ -}}
 {{- with .Params.series -}}
 {{- $currentSeries := . -}}
 {{- $currentPage := $ -}}
 
-{{- /* Собираем все посты серии, сортируем по weight → date */ -}}
+{{- /* Опубликованные посты серии, сортировка по weight */ -}}
 {{- $seriesPosts := where site.RegularPages ".Params.series" $currentSeries -}}
 {{- $seriesPosts = sort $seriesPosts ".Params.weight" "asc" -}}
 
 {{- if gt (len $seriesPosts) 1 -}}
 
-{{- /* Вычисляем позицию текущего поста */ -}}
-{{- $total := len $seriesPosts -}}
+{{- $published := len $seriesPosts -}}
+{{- /* Полный размер серии: seriesTotal (если задан и больше опубликованных), иначе — опубликованные */ -}}
+{{- $total := $published -}}
+{{- with $currentPage.Params.seriesTotal -}}
+  {{- if gt (int .) $published -}}{{- $total = int . -}}{{- end -}}
+{{- end -}}
+
+{{- /* Позиция текущего поста */ -}}
 {{- $currentIdx := 0 -}}
 {{- range $i, $p := $seriesPosts -}}
   {{- if eq $p.Permalink $currentPage.Permalink -}}
@@ -18,7 +27,6 @@
   {{- end -}}
 {{- end -}}
 
-{{- /* Название серии из params или fallback */ -}}
 {{- $seriesTitle := $currentPage.Params.seriesTitle | default (printf "Серия: %s" $currentSeries) -}}
 
 <nav class="series-nav" aria-label="Навигация по серии">
@@ -44,6 +52,15 @@
       <a class="series-nav__link" href="{{ $p.Permalink }}">{{ $p.Title }}</a>
       {{- end -}}
     </li>
+    {{- end -}}
+    {{- /* Ещё не опубликованные уровни (финал придержан): ○ "скоро", без ссылки */ -}}
+    {{- if gt $total $published -}}
+    {{- range $j := (seq (add $published 1) $total) -}}
+    <li class="series-nav__item series-nav__item--upcoming">
+      <span class="series-nav__marker">&#9675;</span>
+      <span class="series-nav__link series-nav__link--upcoming">Уровень {{ sub $j 1 }} – скоро</span>
+    </li>
+    {{- end -}}
     {{- end -}}
   </ol>
 </nav>

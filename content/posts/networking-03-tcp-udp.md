@@ -8,6 +8,7 @@ categories: ["DevOps основы"]
 tags: ["networking", "tcp", "udp", "ss", "tcpdump", "linux", "devops", "собеседование"]
 author: "DevOps Way"
 series: "Networking 20/80"
+seriesTotal: 7
 description: "Четвёртый уровень: чем TCP отличается от UDP, трёхстороннее рукопожатие и состояния соединения, порты, ss и tcpdump, TIME_WAIT. Почему 'Connection refused' и 'Connection timeout' – это разные диагнозы. Три подвоха с собеса и чеклист 'почему не подключается'."
 showToc: true
 TocOpen: false

@@ -8,6 +8,7 @@ categories: ["DevOps основы"]
 tags: ["networking", "loadbalancing", "kubernetes", "ingress", "nginx", "service-mesh", "linux", "devops", "собеседование"]
 author: "DevOps Way"
 series: "Networking 20/80"
+seriesTotal: 7
 description: "Финал мини-курса: L4 против L7 балансировки, четыре типа Service в Kubernetes, Ingress и обратный прокси (reverse proxy) на nginx, алгоритмы балансировки, обзор сервисной сетки (service mesh) и чеклист диагностики сети в K8s. Три подвоха с собеса и итог всего курса."
 showToc: true
 TocOpen: false

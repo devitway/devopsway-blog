@@ -8,6 +8,7 @@ categories: ["DevOps основы"]
 tags: ["networking", "http", "tls", "https", "curl", "letsencrypt", "linux", "devops", "собеседование"]
 author: "DevOps Way"
 series: "Networking 20/80"
+seriesTotal: 7
 description: "Пятый уровень: анатомия HTTP-запроса и ответа, методы и статус-коды по группам, curl как инструмент диагностики, TLS-рукопожатие и сертификаты, Let's Encrypt, различия HTTP/1.1/2/3. Три подвоха с собеса: 401 против 403, дебаг 502 Bad Gateway, зачем TLS внутри VPC."
 showToc: true
 TocOpen: false

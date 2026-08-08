@@ -8,6 +8,7 @@ categories: ["DevOps основы"]
 tags: ["networking", "ip", "cidr", "подсети", "nat", "ipv6", "linux", "devops", "собеседование"]
 author: "DevOps Way"
 series: "Networking 20/80"
+seriesTotal: 7
 description: "Второй уровень мини-курса по сетям для DevOps: как считать подсети и маски CIDR в уме, чем приватные адреса отличаются от публичных, что делает NAT и минимум по IPv6. Степени двойки, /24 против /25, три подвоха с собеседования и код-челлендж на разбиение сети."
 showToc: true
 TocOpen: false
