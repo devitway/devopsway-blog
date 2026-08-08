@@ -8,7 +8,6 @@ categories: ["DevOps основы"]
 tags: ["networking", "firewall", "iptables", "networkpolicy", "security", "kubernetes", "linux", "devops", "собеседование"]
 author: "DevOps Way"
 series: "Networking 20/80"
-seriesTotal: 7
 description: "Шестой уровень: iptables (таблицы, цепочки, правила и почему их порядок критичен), DROP против REJECT, Kubernetes NetworkPolicy, Security Groups в облаках, чеклист диагностики межсетевого экрана. Подвохи с собеса и код-челлендж на написание NetworkPolicy."
 showToc: true
 TocOpen: false
@@ -123,6 +122,10 @@ sudo iptables -D INPUT 3
 
 # Сбросить все правила:
 sudo iptables -F
+
+# Сохранить правила, чтобы пережили перезагрузку (по умолчанию они живут только в памяти ядра):
+sudo iptables-save > /etc/iptables/rules.v4     # Debian/Ubuntu; пакет netfilter-persistent грузит их при boot
+sudo iptables-restore < /etc/iptables/rules.v4  # восстановить вручную
 ```
 
 ### Порядок правил – КРИТИЧЕСКИ ВАЖЕН
@@ -314,7 +317,7 @@ sudo iptables -A INPUT -j DROP
 | **Где** | Linux-хост | Облачная ВМ (AWS, GCP, Azure) |
 | **Учёт состояния** | Без состояния (stateless) | С учётом состояния (stateful) |
 | **Управление** | CLI (`iptables -A`) | API / консоль |
-| **Сохранность** | Не сохраняется при перезагрузке | Сохраняется всегда |
+| **Сохранность** | Правила в памяти ядра; чтобы пережили reboot – сохранить (iptables-save + netfilter-persistent, nftables.conf, Ansible) | Persistent by design (хранит облако) |
 | **Детализация** | Пакет, интерфейс, цепочка | Только правила входящего/исходящего |
 | **Производительность** | Деградирует при >10K правил | Оптимизировано облаком |
 
@@ -342,6 +345,22 @@ NetworkPolicy – **белый список (whitelist)**. Как только �
 4. Неправильный селектор меток (label selector) – политика не применяется к нужным pod-ам
 
 **На собесе:** "NetworkPolicy – аддитивный белый список (additive whitelist). Первая политика блокирует всё неявное. Типичная ошибка – забыть DNS egress: pod не может резолвить имена и все HTTP-вызовы падают с "Name or service not known", хотя это проблема сети, а не DNS."
+
+---
+
+### Подвох 3: "Почему `iptables -F` иногда полностью закрывает сервер?"
+
+**Ответ:**
+
+`-F` (flush) убирает ПРАВИЛА из цепочки, но НЕ трогает её политику по умолчанию (default policy). Если политика выставлена в DROP, после flush исчезают все ACCEPT-правила – и остаётся голый DROP на всю цепочку. Итог: сервер отрезан, вместе с SSH.
+
+```bash
+iptables -P INPUT DROP                          # политика по умолчанию – блокировать
+iptables -A INPUT -p tcp --dport 22 -j ACCEPT   # разрешили SSH
+iptables -F INPUT                               # ← убрали ACCEPT; остался DROP-policy → SSH отвалился
+```
+
+**На собесе:** "`-F` сбрасывает правила, но не политику цепочки. При `-P INPUT DROP` flush оставляет только запрет – доступ теряется. Поэтому на удалённом сервере сначала `iptables -P INPUT ACCEPT`, потом `-F`; и всегда держи под рукой консоль или IPMI."
 
 ---
 
