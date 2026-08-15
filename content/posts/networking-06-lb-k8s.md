@@ -2,7 +2,7 @@
 title: "Networking 20/80, уровень 6: Балансировка нагрузки и сети Kubernetes"
 date: 2026-08-08T14:30:00+03:00
 lastmod: 2026-08-08T14:30:00+03:00
-draft: true
+draft: false
 weight: 7
 categories: ["DevOps основы"]
 tags: ["networking", "loadbalancing", "kubernetes", "ingress", "nginx", "service-mesh", "linux", "devops", "собеседование"]
