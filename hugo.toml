@@ -48,7 +48,7 @@ keepWhitespace = false
 
 [minify.tdewolff.css]
 precision = 0
-keepCSS2 = true
+version = 2
 
 [minify.tdewolff.js]
 precision = 0
