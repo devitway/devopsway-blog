@@ -44,13 +44,13 @@ editPost:
 
 ## Откуда это пошло
 
-**1996 – F5 Networks** создаёт первый аппаратный балансировщик нагрузки (BIG-IP). Стоит $50,000+. Задача: распределить HTTP-запросы между несколькими серверами.
+**1997 – F5 Networks** выпускает аппаратный балансировщик BIG-IP (компания основана в 1996). Стоит $50,000+. Задача: распределить HTTP-запросы между несколькими серверами.
 
 **2004 – nginx** (Игорь Сысоев). Создавался как HTTP-сервер для Rambler.ru (один из крупнейших российских порталов). Стал де-факто стандартом для обратного прокси (reverse proxy) и балансировки нагрузки. Бесплатный, быстрый, конфигурируемый.
 
-**2006 – HAProxy** (Willy Tarreau). Специализированный L4/L7 балансировщик. GitHub, Reddit, Stack Overflow – все используют HAProxy.
+**2001 – HAProxy** (Willy Tarreau). Специализированный L4/L7 балансировщик. GitHub, Reddit, Stack Overflow – все используют HAProxy.
 
-**2014 – Kubernetes Services.** Абстракция поверх iptables/IPVS: стабильный ClusterIP, который распределяет трафик по pod-ам. Не нужен nginx – K8s балансирует сам.
+**2014 – Kubernetes Services.** Абстракция поверх iptables/IPVS: стабильный ClusterIP, который распределяет трафик по pod-ам на L4. Свой nginx/haproxy ради этого держать больше не нужно – kube-proxy балансирует сам. (HTTP-маршрутизация снаружи – это уже L7/Ingress, о нём ниже.)
 
 **2016 – Envoy** (Lyft). Прокси-контейнер (sidecar) для сервисной сетки (service mesh). Основа Istio, AWS App Mesh. Балансировка на L7 с размыканием цепи (circuit breaking), повторами (retries), наблюдаемостью (observability).
 
@@ -81,7 +81,7 @@ L7 (Application):
 | Терминация TLS (SSL termination) | L7 | Нужно расшифровать TLS |
 | Липкие сессии (sticky sessions, по cookie) | L7 | Нужен разбор cookies |
 | Максимальная производительность | L4 | Минимальные накладные расходы (overhead) |
-| gRPC, WebSocket | L7 | Требуют прокси с поддержкой HTTP/2 |
+| gRPC, WebSocket | L7 | gRPC – поверх HTTP/2, WebSocket – через Upgrade; нужен L7-прокси, понимающий эти протоколы |
 
 ---
 
@@ -139,7 +139,7 @@ kubectl get svc api
 # curl http://api:8080          (DNS резолвит в ClusterIP)
 ```
 
-**Как работает:** kube-proxy создаёт правила iptables/IPVS, которые перенаправляют трафик с ClusterIP на реальные IP pod-ов. Круговой перебор (round-robin) между pod-ами.
+**Как работает:** kube-proxy создаёт правила iptables/IPVS, которые перенаправляют трафик с ClusterIP на реальные IP pod-ов. Выбор pod-а: в режиме iptables – случайный с равной вероятностью, в IPVS – round-robin по умолчанию.
 
 ### 2. NodePort
 
@@ -298,7 +298,7 @@ server {
 upstream backend {
     # least_conn;          # к серверу с наименьшим числом активных соединений
     # ip_hash;             # закрепить клиента по его IP (sticky без cookie)
-    # hash $request_uri;   # consistent hashing по ключу (удобно для кеширования)
+    # hash $request_uri consistent;   # consistent hashing (ketama) по ключу – удобно для кеширования
 
     server 10.0.0.1:8080;
     server 10.0.0.2:8080;
@@ -421,7 +421,7 @@ ip link show | grep veth
 # kube-proxy не участвует в пути данных!
 ```
 
-**На собесе:** "kube-proxy – это компонент управляющего слоя (control plane), который синхронизирует Endpoints с правилами iptables/IPVS. Трафик идёт через iptables DNAT, не через процесс kube-proxy. Поэтому kube-proxy можно убить, и существующие соединения продолжат работать – пока не изменятся Endpoints."
+**На собесе:** "kube-proxy – это агент на каждой ноде (не control plane), который синхронизирует Endpoints с правилами iptables/IPVS. Трафик идёт через iptables DNAT, не через процесс kube-proxy. Поэтому kube-proxy можно убить, и существующие соединения продолжат работать – пока не изменятся Endpoints."
 
 ---
 
@@ -462,7 +462,7 @@ ip link show | grep veth
 
 6. Service / iptables (L4):
    - Ingress Controller отправляет запрос на ClusterIP 10.96.45.12:8080
-   - iptables DNAT: 10.96.45.12 → 10.244.1.15 (pod IP, round-robin)
+   - iptables DNAT: 10.96.45.12 → 10.244.1.15 (pod IP, случайный выбор)
 
 7. Pod Network (L3):
    - CNI маршрутизирует пакет к ноде, где живёт pod
