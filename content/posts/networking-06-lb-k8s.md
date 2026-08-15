@@ -44,15 +44,15 @@ editPost:
 
 ## Откуда это пошло
 
-**1997 – F5 Networks** выпускает аппаратный балансировщик BIG-IP (компания основана в 1996). Стоит $50,000+. Задача: распределить HTTP-запросы между несколькими серверами.
+**1997 – F5 Networks** выпускает аппаратный балансировщик BIG-IP. Дорого, железом. Задача: распределить HTTP-запросы между несколькими серверами.
 
-**2004 – nginx** (Игорь Сысоев). Создавался как HTTP-сервер для Rambler.ru (один из крупнейших российских порталов). Стал де-факто стандартом для обратного прокси (reverse proxy) и балансировки нагрузки. Бесплатный, быстрый, конфигурируемый.
+**2001 – HAProxy** (Willy Tarreau). Специализированный L4/L7 балансировщик, до сих пор стандарт.
 
-**2001 – HAProxy** (Willy Tarreau). Специализированный L4/L7 балансировщик. GitHub, Reddit, Stack Overflow – все используют HAProxy.
+**2004 – nginx** (Игорь Сысоев). Изначально HTTP-сервер для Rambler.ru. Стал де-факто стандартом для обратного прокси (reverse proxy) и балансировки. Бесплатный, быстрый, конфигурируемый.
 
 **2014 – Kubernetes Services.** Абстракция поверх iptables/IPVS: стабильный ClusterIP, который распределяет трафик по pod-ам на L4. Свой nginx/haproxy ради этого держать больше не нужно – kube-proxy балансирует сам. (HTTP-маршрутизация снаружи – это уже L7/Ingress, о нём ниже.)
 
-**2016 – Envoy** (Lyft). Прокси-контейнер (sidecar) для сервисной сетки (service mesh). Основа Istio, AWS App Mesh. Балансировка на L7 с размыканием цепи (circuit breaking), повторами (retries), наблюдаемостью (observability).
+**2016 – Envoy** (Lyft). Прокси-контейнер (sidecar) для сервисной сетки (service mesh). Основа Istio. Балансировка на L7 с размыканием цепи (circuit breaking), повторами, наблюдаемостью.
 
 ---
 
@@ -251,37 +251,23 @@ upstream api_backend {
 }
 
 server {
-    listen 443 ssl http2;
+    listen 443 ssl;
     server_name api.example.com;
 
     ssl_certificate     /etc/letsencrypt/live/api.example.com/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/api.example.com/privkey.pem;
-
-    # Security headers:
-    add_header Strict-Transport-Security "max-age=31536000" always;
-    add_header X-Content-Type-Options "nosniff" always;
 
     location /api/ {
         proxy_pass http://api_backend;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
 
-        # Timeouts:
-        proxy_connect_timeout 5s;
-        proxy_read_timeout 60s;
-        proxy_send_timeout 60s;
+        proxy_read_timeout 60s;    # + остальные timeouts и security headers в проде
     }
 
     location / {
         proxy_pass http://frontend:3000;
-    }
-
-    # Health check endpoint:
-    location /healthz {
-        return 200 "OK";
-        access_log off;
     }
 }
 ```
@@ -315,7 +301,7 @@ upstream backend {
 
 ---
 
-## Сервисная сетка (service mesh) – следующий уровень (обзор)
+## Сервисная сетка – следующий уровень (обзор)
 
 ```
 Без mesh:              С mesh (Istio/Linkerd):
@@ -329,7 +315,7 @@ Pod → Pod              Pod → Sidecar → Sidecar → Pod
 - Observability (метрики, traces) без изменения кода
 ```
 
-> **20/80 для джуна и выше:** знать, что сервисная сетка (service mesh) существует и зачем. Не нужно уметь настраивать Istio – это уже сеньорский уровень.
+> **20/80 для джуна и выше:** знать, что сервисная сетка существует и зачем. Не нужно уметь настраивать Istio – это уже сеньорский уровень.
 
 ---
 
@@ -382,7 +368,7 @@ curl -v https://api.example.com
 | **TLS** | Нет (или через pod) | Да (терминация TLS) |
 | **Протоколы** | Любой TCP/UDP | HTTP/HTTPS/gRPC |
 
-**На собесе:** "ClusterIP – балансировка на L4 внутри кластера через iptables/IPVS. Ingress – маршрутизация HTTP-трафика на L7 снаружи через Ingress Controller (nginx, traefik). Ingress – это как виртуальный хост в nginx, а Service – как upstream."
+**На собесе, одной фразой:** "Ingress – это как виртуальный хост в nginx, а Service – как upstream."
 
 ---
 

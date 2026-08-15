@@ -44,15 +44,11 @@ editPost:
 
 ## Откуда это пошло
 
-**1988 – первый сетевой червь** (Morris Worm). Заразил ~6000 машин из ~60000 подключённых к интернету. Мир осознал: сети нужна защита.
+**1988 – первый сетевой червь** (Morris Worm) заразил ~6000 машин из ~60000 подключённых к интернету, и мир осознал: сети нужна защита. К 1989–1992 в DEC и AT&T Bell Labs появились пакетные фильтры – проверять каждый пакет по правилам (src/dst IP, порт, протокол) и пропускать либо блокировать.
 
-**1989–1992 – пакетные фильтры (packet filter firewalls).** DEC, AT&T Bell Labs. Идея: проверять каждый пакет по набору правил (src/dst IP, порт, протокол). Если правило совпало – пропустить или заблокировать.
+**1998 – Netfilter** (Rusty Russell). iptables вышел с ядром Linux 2.4 (2001), заменив ipchains, и стал стандартом на 20 лет. Netfilter – подсистема ядра, iptables – интерфейс к ней. С 2014 его сменяет nftables (единый синтаксис, атомарные обновления) – в 2026 стандарт в RHEL 9 и Debian 12.
 
-**1998 – Netfilter** (Rusty Russell). Проект стартовал в 1998; iptables вышел с ядром Linux 2.4 (2001), заменив ipchains. Стал стандартом на 20 лет. Netfilter – подсистема ядра, iptables – интерфейс к ней.
-
-**2014 – nftables.** Замена iptables: единый синтаксис, лучшая производительность, атомарные обновления. В 2026 году – стандарт в RHEL 9, Debian 12.
-
-**2017 – Kubernetes NetworkPolicy.** Межсетевой экран как код: YAML вместо правил iptables. Calico, Cilium – реализации.
+**2017 – Kubernetes NetworkPolicy.** Межсетевой экран как код: YAML вместо правил iptables. Реализуют Calico, Cilium.
 
 ---
 
@@ -103,10 +99,10 @@ sudo iptables -L -n -v --line-numbers
 # Показать NAT-правила:
 sudo iptables -t nat -L -n -v
 
-# Разрешить ответы на уже установленные соединения – СТАВИТЬ ПЕРВЫМ
-# (большинство пакетов попадёт сюда и не будет проверять правила ниже):
+# Ответы на уже установленные соединения – СТАВИТЬ ПЕРВЫМ
+# (большинство пакетов попадёт сюда, правила ниже не проверяются):
 sudo iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
-# (-m state --state ESTABLISHED,RELATED – устаревший синоним, всё ещё работает)
+# (-m state --state ... – устаревший синоним, всё ещё работает)
 
 # Разрешить SSH (порт 22):
 sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT
@@ -124,8 +120,8 @@ sudo iptables -D INPUT 3
 # Сбросить все правила:
 sudo iptables -F
 
-# Сохранить правила, чтобы пережили перезагрузку (по умолчанию они живут только в памяти ядра):
-sudo iptables-save > /etc/iptables/rules.v4     # Debian/Ubuntu; пакет netfilter-persistent грузит их при boot
+# Сохранить правила (по умолчанию они живут только в памяти ядра):
+sudo iptables-save > /etc/iptables/rules.v4     # netfilter-persistent грузит их при boot
 sudo iptables-restore < /etc/iptables/rules.v4  # восстановить вручную
 ```
 
@@ -219,8 +215,8 @@ spec:
 
 ---
 # 2. Egress ТОЛЬКО на DNS. ВНИМАНИЕ: в одиночку эта политика отрежет ВЕСЬ
-#    остальной исходящий трафик у выбранных pod-ов. Применять в паре с
-#    default-deny-egress как "дырку" для DNS (иначе pod-ы не резолвят имена):
+#    остальной исходящий трафик. Ставить как "дырку" для DNS в паре
+#    с default-deny-egress (иначе pod-ы не резолвят имена):
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -263,7 +259,7 @@ spec:
 
 ---
 
-## Security Groups (облака) – межсетевой экран для виртуальных машин (VM)
+## Security Groups (облака) – межсетевой экран для виртуальных машин
 
 | Правило Security Group (AWS) | Эквивалент в iptables |
 |---|---|
@@ -283,8 +279,8 @@ spec:
 ```bash
 # 1. Проверить, есть ли подключение БЕЗ firewall:
 nc -zv target-host 8080
-# timeout → firewall DROP или хост недоступен
-# refused → порт не слушает (firewall не при чём)
+# timeout → firewall DROP или хост недоступен; refused → порт не слушает
+# (что значит timeout/refused по сути – разбирали в уровне 3)
 
 # 2. Проверить iptables INPUT:
 sudo iptables -L INPUT -n -v --line-numbers | grep 8080
@@ -296,12 +292,11 @@ kubectl describe networkpolicy api-allow-frontend -n prod
 
 # 4. Снять блокировку для диагностики (ТОЛЬКО временно, ОПАСНО в production!):
 sudo iptables -F INPUT           # сбросить ВСЕ правила цепочки INPUT
-# Осторожно: "iptables -P INPUT ACCEPT" меняет лишь политику по умолчанию и НЕ
-# поможет, если трафик режется явным правилом "-j DROP" (оно сработает раньше)
+# "iptables -P INPUT ACCEPT" меняет лишь политику и НЕ поможет,
+# если трафик режется явным правилом "-j DROP" (оно сработает раньше)
 
-# 5. Логировать отбрасываемые пакеты. LOG не терминальный, поэтому пару
-#    "LOG, затем DROP" добавляют в КОНЕЦ цепочки – LOG обязан идти ПЕРЕД DROP,
-#    иначе пакет отбросится раньше, чем залогируется:
+# 5. Логировать отбрасываемые пакеты. LOG не терминальный, поэтому
+#    LOG обязан идти ПЕРЕД DROP – иначе пакет отбросится до записи в лог:
 sudo iptables -A INPUT -j LOG --log-prefix "DROPPED: " --log-level 4
 sudo iptables -A INPUT -j DROP
 # Логи: dmesg | grep DROPPED
@@ -322,7 +317,7 @@ sudo iptables -A INPUT -j DROP
 | **Детализация** | Пакет, интерфейс, цепочка | Только правила входящего/исходящего |
 | **Производительность** | Деградирует при >10K правил | Оптимизировано облаком |
 
-**На собесе:** "iptables – межсетевой экран на уровне хоста (host-level) в ядре Linux, без учёта состояния (stateless) по умолчанию, требует явного разрешения ответных пакетов. Security Groups – облачный межсетевой экран, с учётом состояния (stateful), автоматически разрешает ответы. В K8s NetworkPolicy – ещё один уровень, работающий на уровне подов (pod-level) через CNI (Calico/Cilium)."
+**На собесе:** "iptables – firewall на уровне хоста в ядре Linux, stateless по умолчанию, требует явно разрешать ответные пакеты. Security Groups – облачный firewall, stateful, ответы разрешает сам. NetworkPolicy – третий уровень, на уровне подов через CNI (Calico/Cilium)."
 
 ---
 
@@ -330,7 +325,7 @@ sudo iptables -A INPUT -j DROP
 
 **Ответ:**
 
-NetworkPolicy – **белый список (whitelist)**. Как только хотя бы одна NetworkPolicy применяется к pod-у, **весь не-описанный трафик блокируется**.
+NetworkPolicy – **белый список**. Как только хотя бы одна политика применяется к pod-у, **весь не-описанный трафик блокируется**.
 
 ```yaml
 # Добавили deny-all → pod не может:
@@ -341,11 +336,11 @@ NetworkPolicy – **белый список (whitelist)**. Как только �
 
 **Частые ошибки:**
 1. Забыли разрешить DNS (UDP 53)
-2. Забыли разрешить проверку живости (health check) от kubelet
+2. Забыли разрешить health check от kubelet
 3. Забыли разрешить egress к внешним сервисам
-4. Неправильный селектор меток (label selector) – политика не применяется к нужным pod-ам
+4. Неправильный селектор меток – политика не применяется к нужным pod-ам
 
-**На собесе:** "NetworkPolicy – аддитивный белый список (additive whitelist). Первая политика блокирует всё неявное. Типичная ошибка – забыть DNS egress: pod не может резолвить имена и все HTTP-вызовы падают с "Name or service not known", хотя это проблема сети, а не DNS."
+**На собесе:** "NetworkPolicy – аддитивный белый список: первая же политика блокирует всё неявное. Классика – забыть DNS egress: pod не резолвит имена, HTTP-вызовы падают с "Name or service not known" – похоже на DNS, а виновата сеть."
 
 ---
 
@@ -369,7 +364,7 @@ iptables -F INPUT                               # ← убрали ACCEPT; ос�
 
 **Задача:** напиши Kubernetes NetworkPolicy, которая:
 
-1. Применяется к pod-ам с меткой (label) `app: database` в namespace `prod`
+1. Применяется к pod-ам с меткой `app: database` в namespace `prod`
 2. Разрешает ingress ТОЛЬКО от pod-ов с меткой `app: api` на порту TCP 5432
 3. Разрешает ingress от Prometheus (namespace `monitoring`) на порту TCP 9187
 4. Блокирует весь остальной ingress
@@ -416,7 +411,7 @@ spec:
 
 ## Дальше → Уровень 6
 
-Ты умеешь настраивать межсетевой экран: iptables для хостов, NetworkPolicy для K8s. Понимаешь DROP против REJECT, разницу "с учётом состояния" и "без" (stateful/stateless), подход белого списка (whitelist).
+Ты умеешь настраивать межсетевой экран: iptables для хостов, NetworkPolicy для K8s. Понимаешь DROP против REJECT, stateful против stateless, подход белого списка.
 
 Но в проде трафик идёт не напрямую к pod-у. Между клиентом и приложением – балансировщик нагрузки (L4 или L7), обратный прокси (reverse proxy, nginx), Ingress-контроллер. В сервисной сетке (service mesh) – ещё и прокси-контейнер (sidecar, Envoy). Как всё это работает вместе?
 
