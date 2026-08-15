@@ -226,6 +226,14 @@ spec:
 4. Routing: Ingress Controller → Service api-service:8080 → Pod
 ```
 
+> **⚠️ Статус на 2026:** сообщество вывело контроллер **ingress-nginx** в отставку
+> (март 2026) – репозиторий заморожен, без релизов и security-патчей. Планировавшийся
+> преемник InGate не взлетел. Направление развития – **Gateway API** (эволюция Ingress).
+> При этом сам nginx как reverse proxy и Ingress API как таковой живы – на пенсию
+> отправлен именно этот один Kubernetes-контроллер. Для новых кластеров – Gateway API
+> или другой ingress-контроллер (Traefik, HAProxy, облачные). Концепции ниже (L4/L7,
+> Service, терминация TLS, upstream) переносятся на любой из них.
+
 ---
 
 ## nginx как обратный прокси (reverse proxy) – конфигурация для DevOps
@@ -495,6 +503,7 @@ ip link show | grep veth
 ### Что дальше
 
 - **Практика:** настрой полный путь на своём кластере: Ingress → Service → Pod с NetworkPolicy
+- **Актуальное (2026):** маршрутизация в K8s смещается с Ingress на **Gateway API** – после отставки ingress-nginx это направление по умолчанию для новых кластеров
 - **Глубже:** Julia Evans Zines (wizardzines.com) – DNS, HTTP, сети в картинках
 - **Практикум:** [Kubernetes the Hard Way](https://github.com/kelseyhightower/kubernetes-the-hard-way) – настроить K8s вручную, понять каждый сетевой компонент
 - **Сертификация:** CKA (Certified Kubernetes Administrator) – 30% вопросов про сети
