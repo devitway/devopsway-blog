@@ -8,6 +8,7 @@ categories: ["DevOps основы"]
 tags: ["networking", "firewall", "iptables", "networkpolicy", "security", "kubernetes", "linux", "devops", "собеседование"]
 author: "DevOps Way"
 series: "Networking 20/80"
+seriesTotal: 7
 description: "Шестой уровень: iptables (таблицы, цепочки, правила и почему их порядок критичен), DROP против REJECT, Kubernetes NetworkPolicy, Security Groups в облаках, чеклист диагностики межсетевого экрана. Подвохи с собеса и код-челлендж на написание NetworkPolicy."
 showToc: true
 TocOpen: false
@@ -47,7 +48,7 @@ editPost:
 
 **1989–1992 – пакетные фильтры (packet filter firewalls).** DEC, AT&T Bell Labs. Идея: проверять каждый пакет по набору правил (src/dst IP, порт, протокол). Если правило совпало – пропустить или заблокировать.
 
-**1998 – iptables** (Rusty Russell). Замена ipchains, в ядре с Linux 2.4 (2001). Стал стандартом на 20 лет. Netfilter – подсистема ядра, iptables – интерфейс к ней.
+**1998 – Netfilter** (Rusty Russell). Проект стартовал в 1998; iptables вышел с ядром Linux 2.4 (2001), заменив ipchains. Стал стандартом на 20 лет. Netfilter – подсистема ядра, iptables – интерфейс к ней.
 
 **2014 – nftables.** Замена iptables: единый синтаксис, лучшая производительность, атомарные обновления. В 2026 году – стандарт в RHEL 9, Debian 12.
 

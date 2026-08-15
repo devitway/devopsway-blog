@@ -38,7 +38,7 @@ editPost:
 Четвёртый из семи уровней. Адреса и имена уже пройдены – данные знают, куда ехать. Теперь про то, КАК они едут: TCP с гарантией доставки против UDP без гарантий, трёхстороннее рукопожатие, состояния соединения и два самых частых диагноза на дежурстве, которые новички путают – "refused" и "timeout".
 
 
-> "Connection refused" и "Connection timeout" – две самых частых ошибки в DevOps. Они означают совершенно разные вещи, и различие – в TCP."
+> "Connection refused" и "Connection timeout" – две самых частых ошибки в DevOps. Они означают совершенно разные вещи, и различие – в TCP.
 
 ---
 
@@ -170,7 +170,7 @@ cat /proc/sys/net/ipv4/ip_local_port_range
 Отсюда то, что обычно и спрашивают:
 
 - **Почему nginx на одном порту 8080 держит тысячи соединений?** Порт сервера один, но каждый клиент приходит со своим `src IP:порт` – каждая четвёрка уникальна.
-- **Почему на клиенте кончаются порты** (`Cannot assign requested address`)? При массе исходящих к одному `dst` уникальным остаётся только `src port`, а их всего ~28000.
+- **Почему на клиенте кончаются порты** (`Cannot assign requested address`)? При массе исходящих к одному `dst` уникальным остаётся только `src port`, а их всего ~28000 (тот самый диапазон 60999-32768).
 - Колонки `Local Address:Port` и `Peer Address:Port` в `ss -tnp` (ниже) – это и есть две половины четвёрки.
 
 **И не путать – сокетов много:**
@@ -260,7 +260,7 @@ ss -tn state time-wait | wc -l
 # → "Cannot assign requested address"
 
 # Решение (в /etc/sysctl.conf):
-net.ipv4.tcp_tw_reuse = 1          # переиспользовать TIME_WAIT сокеты
+net.ipv4.tcp_tw_reuse = 1          # переиспользовать TIME_WAIT (только исходящие)
 net.core.somaxconn = 65535         # увеличить очередь соединений (backlog)
 ```
 
@@ -276,7 +276,7 @@ sudo tcpdump -i eth0
 sudo tcpdump -i eth0 tcp port 8080
 
 # TCP-рукопожатие (SYN, SYN-ACK, ACK):
-sudo tcpdump -i eth0 'tcp[tcpflags] & (tcp-syn|tcp-ack) != 0' -c 10
+sudo tcpdump -i eth0 'tcp[tcpflags] & tcp-syn != 0' -c 10
 
 # DNS-запросы:
 sudo tcpdump -i eth0 udp port 53
