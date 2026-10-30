@@ -48,3 +48,9 @@ jobs:
           chmod 600 ~/.ssh/id_deploy
           echo '[185.117.152.39]:22223 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICKoS5HJn2tAkcs+yr7MVUNYQpZxkkWzfN05pRK35UsC' > ~/.ssh/known_hosts
           ssh -i ~/.ssh/id_deploy -p 22223 -o BatchMode=yes -o IdentitiesOnly=yes devitway-bot@185.117.152.39
+
+      - name: Smoke – live site answers over HTTPS
+        run: |
+          for p in / /posts/ /sitemap.xml; do
+            curl -fsS -o /dev/null -w "%{http_code} $p\n" "https://devopsway.ru$p"
+          done
