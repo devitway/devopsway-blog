@@ -1,0 +1,50 @@
+name: Deploy to bots
+
+# Сборка-проверка в Actions, затем bots сам собирает origin/main и подменяет релиз:
+# ключ BOTS_DEPLOY_KEY на bots ограничен command="/opt/devopsway-blog/bin/deploy.sh",restrict (см. deploy/).
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: bots-deploy
+  cancel-in-progress: false
+
+jobs:
+  build-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout with submodules
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: recursive
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: '0.161.1'
+          extended: true
+
+      - name: Build site
+        run: hugo --minify --gc
+        env:
+          HUGO_ENVIRONMENT: production
+
+  deploy:
+    needs: build-check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build and publish on bots
+        env:
+          KEY: ${{ secrets.BOTS_DEPLOY_KEY }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$KEY" > ~/.ssh/id_deploy
+          chmod 600 ~/.ssh/id_deploy
+          echo '[185.117.152.39]:22223 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICKoS5HJn2tAkcs+yr7MVUNYQpZxkkWzfN05pRK35UsC' > ~/.ssh/known_hosts
+          ssh -i ~/.ssh/id_deploy -p 22223 -o BatchMode=yes -o IdentitiesOnly=yes devitway-bot@185.117.152.39

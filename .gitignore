@@ -11,6 +11,7 @@ resources/_gen/
 
 # ===== СЛУЖЕБНЫЕ ФАЙЛЫ =====
 *.sh
+!deploy/deploy.sh
 *.backup.*
 *.backup
 *.pre-*

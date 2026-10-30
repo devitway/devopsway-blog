@@ -1,0 +1,16 @@
+# devopsway.ru – nginx со статикой блога в сети входного Caddy bots.
+# На bots лежит в /opt/devopsway-blog/bin вместе с nginx.conf: docker compose -f /opt/devopsway-blog/bin/compose.yml up -d
+services:
+  web:
+    image: nginx:1.27-alpine
+    container_name: devopsway-blog
+    restart: unless-stopped
+    volumes:
+      - /opt/devopsway-blog:/site:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    networks: [edge]
+
+networks:
+  edge:
+    external: true
+    name: telegram-bot-factory_telegram-network
