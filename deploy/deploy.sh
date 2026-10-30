@@ -6,9 +6,11 @@ set -euo pipefail
 D=/opt/devopsway-blog
 HUGO_IMAGE=ghcr.io/gohugoio/hugo:v0.161.1
 KEEP=3
+BUILD=devopsway-blog-build   # имя контейнера сборки: обрыв деплоя не оставляет его висеть с блокировкой hugo
 
 exec 9>"$D/.lock"
 flock 9
+docker rm -f "$BUILD" >/dev/null 2>&1 || true
 
 cd "$D/src"
 git fetch -q origin main
@@ -20,10 +22,10 @@ rel="releases/$rev-$(date +%Y%m%d%H%M%S)"
 mkdir -p "$D/$rel"
 # оборванная сборка (ошибка, обрыв ssh) не оставляет недособранный релиз
 ok=0
-trap '[ "$ok" = 1 ] || rm -r -- "${D:?}/$rel"' EXIT
+trap 'docker rm -f "$BUILD" >/dev/null 2>&1 || true; [ "$ok" = 1 ] || rm -r -- "${D:?}/$rel"' EXIT
 trap 'exit 1' HUP INT TERM
 
-docker run --rm -u "$(id -u):$(id -g)" -e HUGO_ENVIRONMENT=production \
+timeout 300 docker run --rm --name "$BUILD" -u "$(id -u):$(id -g)" -e HUGO_ENVIRONMENT=production \
   -v "$D/src:/project" -v "$D/$rel:/out" -w /project \
   --entrypoint hugo "$HUGO_IMAGE" \
   --minify --gc --destination /out --cacheDir /tmp/hugo_cache
